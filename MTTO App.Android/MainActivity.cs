@@ -52,7 +52,7 @@ namespace MTTO_App.Droid
             //==============================================================================================
             //==============================================================================================
             //INICIALIZACION DE LA BASE DE DATOS
-            string fileName = "DB4_2_4_1.db3";
+            string fileName = "DB4_2_4_2.db3";
             string folderPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
             string CompletePath = Path.Combine(folderPath, fileName);
             LoadApplication(new App(CompletePath));
