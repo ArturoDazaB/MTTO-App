@@ -85,8 +85,10 @@ namespace MTTO_App
             Console.WriteLine("=================================================");
             Console.WriteLine("=================================================\n");
 
+            //SE APERTURA LA CONEXION CON LA BASE DE DATOS
             using (SQLiteConnection connection = new SQLiteConnection(App.FileName))
             {
+                //DE NO EXISTIR SE CREAN LAS TABLAS "Personas" y "Usuarios"
                 connection.CreateTable<Personas>();
                 connection.CreateTable<Usuarios>();
 
