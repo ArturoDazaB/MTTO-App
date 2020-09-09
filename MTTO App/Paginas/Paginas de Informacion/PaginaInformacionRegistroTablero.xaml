@@ -1,0 +1,171 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 mc:Ignorable="d"
+                 xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+                 xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+                 x:Class="MTTO_App.Paginas.Paginas_de_Informacion.PaginaInformacionRegistroTablero">
+
+    <!--===============================================================================-->
+    <!--===============================================================================-->
+
+    <!--CONFIGURACION DE LA ANIMACION DE LA PAGINA INFORMACION COMO UNA PAGINA POP UP-->
+
+    <pages:PopupPage.Animation>
+
+        <animations:ScaleAnimation  PositionIn="Center"
+                                    PositionOut="Center"
+                                    ScaleIn="1.4"
+                                    ScaleOut="1.0"
+                                    DurationIn="500"        
+                                    DurationOut="500"
+                                    EasingIn="SinOut"
+                                    EasingOut="SinIn"
+                                    HasBackgroundAnimation="True"/>
+
+    </pages:PopupPage.Animation>
+
+    <!--===============================================================================-->
+    <!--===============================================================================-->
+
+    <Frame BorderColor="Black"
+           BackgroundColor="{Binding BackGroundColor}"
+           CornerRadius="10"
+           HorizontalOptions="Center"
+           VerticalOptions="Center">
+
+        <ScrollView>
+
+            <StackLayout Orientation="Vertical"
+                         BackgroundColor="{Binding BackGroundColor}">
+
+                <!--===========================================================================================-->
+                <!--===========================================================================================-->
+                <!--DISEÑO Y CONFIGURACION DEL BOTON CERRAR CON IMAGEBUTTON PARA PAGINAS POP-UP-->
+
+                <ImageButton    Source="Cerrar24px2.png"
+                                HorizontalOptions="End"
+                                VerticalOptions="Start"
+                                Clicked="OnClose"
+                                Aspect="AspectFit"/>
+
+                <!--https://iconos8.es/icons/set/close-window"
+                    Cerrar ventana  icon by a target="_blank" 
+                    href "https://iconos8.es"-->
+
+                <!--===========================================================================================-->
+                <!--===========================================================================================-->
+
+                <!--CONTENIDO-->
+
+                <Grid>
+
+                    <Grid.RowDefinitions>
+
+                        <RowDefinition Height="3"/>
+                        <RowDefinition Height="auto"/>
+                        <!--TITULO-->
+                        <RowDefinition Height="3"/>
+
+                    </Grid.RowDefinitions>
+
+                    <Label  Text="Informacion"
+                            FontSize="{Binding HeaderFontSize}"
+                            FontAttributes="Bold"
+                            TextColor="Black"
+                            Grid.Row="1"
+                            HorizontalOptions="Center"
+                            HorizontalTextAlignment="Center"/>
+
+                </Grid>
+
+                <Label  TextColor="Black"
+                        FontSize="{Binding EntryFontSize}"
+                        HorizontalTextAlignment="Center">
+
+                    <Label.FormattedText>
+
+                        <FormattedString>
+
+                            <Span   Text="Bienvenido, "
+                                        FontAttributes="Bold"
+                                        FontSize="{Binding EntryFontSize}"/>
+                            <Span   Text=" en la siguiente pagina obtendra toda la informacion necesaria en lo que "/>
+                            <Span   Text="respecta a condiciones minimas para poder registrar un tablero."/>
+
+                        </FormattedString>
+
+                    </Label.FormattedText>
+
+                </Label>
+
+                <Label  TextColor="Black"
+                        FontSize="{Binding EntryFontSize}">
+
+                    <Label.FormattedText>
+
+                        <FormattedString>
+
+                            <Span   Text="1)"
+                                        FontAttributes="Bold"
+                                        FontSize="{Binding EntryFontSize}"/>
+                            <Span   Text=" Ningun campo debe quedar vacio o nulo"/>
+
+                        </FormattedString>
+
+                    </Label.FormattedText>
+
+                </Label>
+
+                <Label  TextColor="Black"
+                            FontSize="{Binding EntryFontSize}">
+
+                    <Label.FormattedText>
+
+                        <FormattedString>
+
+                            <Span   Text="2)"
+                                        FontAttributes="Bold"
+                                        FontSize="{Binding EntryFontSize}"/>
+                            <Span   Text=" No se permite"/>
+                            <Span   Text=" espacios en blanco"
+                                        FontAttributes="Bold"
+                                        FontSize="{Binding EntryFontSize}"/>
+                            <Span   Text=" al momento de ingresar el ID del tablero"/>
+
+                        </FormattedString>
+
+                    </Label.FormattedText>
+
+                </Label>
+
+                <Label  TextColor="Black"
+                            FontSize="{Binding EntryFontSize}">
+
+                    <Label.FormattedText>
+
+                        <FormattedString>
+
+                            <Span   Text="3)"
+                                        FontAttributes="Bold"
+                                        FontSize="{Binding EntryFontSize}"/>
+                            <Span   Text=" Ademas, no se permiten ninguno de los siguientes caracteres: "/>
+                            <Span   Text="!, @, #, $, %, (, ), +, =, /, | ."
+                                    FontSize="{Binding EntryFontSize}"
+                                    FontAttributes="Bold"/>
+
+                        </FormattedString>
+
+                    </Label.FormattedText>
+
+                </Label>
+
+            </StackLayout>
+
+        </ScrollView>
+
+    </Frame>
+
+</pages:PopupPage>

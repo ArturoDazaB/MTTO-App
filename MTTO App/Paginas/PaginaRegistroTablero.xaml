@@ -1,0 +1,227 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:zxing="clr-namespace:ZXing.Net.Mobile.Forms;assembly=ZXing.Net.Mobile.Forms"
+             xmlns:zxcm="clr-namespace:ZXing.Common;assembly=zxing.portable"
+             mc:Ignorable="d"
+             x:Class="MTTO_App.Paginas.PaginaRegistroTablero"
+             Title="{Binding TituloRegistro}"
+             BackgroundColor="{Binding BackGroundColor}">
+
+    <ContentPage.ToolbarItems>
+
+        <ToolbarItem Text="INFO"
+                     Clicked="OnInfoClicked"/>
+
+    </ContentPage.ToolbarItems>
+
+    <ScrollView Margin="5,5,5,5">
+
+        <StackLayout>
+
+            <Frame BorderColor="Black"
+                   Margin="5,5,5,5"
+                   CornerRadius="0">
+
+                <StackLayout>
+
+                    <!--====================================================================================-->
+                    <!--====================================================================================-->
+                    <!--TITULO DE LA PAGINA-->
+
+                    <Grid>
+
+                        <Grid.RowDefinitions>
+
+                            <RowDefinition Height="*"/>
+                            <!--0) -->
+                            <RowDefinition Height="auto"/>
+                            <!--1) TITULO-->
+                            <RowDefinition Height="*"/>
+                            <!--2) -->
+
+                        </Grid.RowDefinitions>
+
+                        <!--TITULO-->
+                        <Label  Text="Registro de Tablero"       
+                                FontSize="{Binding HeaderFontSize}"
+                                FontAttributes="Bold"
+                                TextColor="Black"
+                                Grid.Row="1"
+                                HorizontalOptions="Center"
+                                HorizontalTextAlignment="Center"/>
+
+                    </Grid>
+
+                    <!--====================================================================================-->
+                    <!--====================================================================================-->
+                    <!--DATOS BASICOS-->
+
+                    <Frame  BorderColor="Black"
+                            CornerRadius="10"
+                            BackgroundColor="{Binding BackGroundColor}">
+
+                        <Grid>
+
+                            <Grid.RowDefinitions>
+
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="auto"/>
+                                <!--1) TITULO GENERAL: DATOS BASICOS-->
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="auto"/>
+                                <!--3) TITULO: TABLERO ID-->
+                                <RowDefinition Height="auto"/>
+                                <!--4) TABLERO ID (ENTRADA)-->
+                                <RowDefinition Height="auto"/>
+                                <!--5) TITULO: FILIAL-->
+                                <RowDefinition Height="auto"/>
+                                <!--6) FILIAL (ENTRADA: Entry o Picker)-->
+                                <RowDefinition Height="auto"/>
+                                <!--7) TITULO: AREA FILIAL-->
+                                <RowDefinition Height="auto"/>
+                                <!--8) AREA FILIAL (ENTRADA: Entry)-->
+                                <RowDefinition Height="*"/>
+
+                            </Grid.RowDefinitions>
+
+                            <Label  Text="Datos Basicos"
+                                    TextColor="Black"
+                                    FontAttributes="Bold"
+                                    FontSize="{Binding HeaderFontSize}"
+                                    HorizontalOptions="Center"
+                                    Grid.Row="1"/>
+
+                            <!--TITULO: TABLERO ID-->
+                            <Label  Text="Tablero ID (codigo del tablero)"
+                                FontSize="{Binding LabelFontSize}"
+                                Grid.Row="3"/>
+
+                            <!--TABLERO ID-->
+                            <Entry  x:Name="entryTableroID"
+                                    Text="{Binding TableroID}"
+                                    Placeholder="{Binding TableroIDPH}"
+                                    TextColor="Black"
+                                    FontSize="{Binding EntryFontSize}"
+                                    Grid.Row="4"
+                                    Unfocused="OnUnfocusedTableroID"
+                                    Keyboard="Text"/>
+
+                            <!--TITULO: FILIAL-->
+                            <Label  Text="Filial"
+                                    FontSize="{Binding LabelFontSize}"
+                                    Grid.Row="5"/>
+
+                            <!--FILIAL-->
+                            <Entry  x:Name="entryFilial"
+                                    Text="{Binding Filial}"
+                                    Placeholder="{Binding FilialPH}"
+                                    TextColor="Black"
+                                    FontSize="{Binding EntryFontSize}"
+                                    Grid.Row="6"
+                                    Unfocused="OnUnfocusedFilial"
+                                    Keyboard="Text"/>
+
+                            <!--TITULO: AREAFILIAL-->
+                            <Label  Text="Area (Filial)"
+                                    FontSize="{Binding LabelFontSize}"
+                                    Grid.Row="7"/>
+
+                            <!--AREA DE LA FILIAL-->
+                            <Entry  x:Name="entryArea"
+                                    Text="{Binding Area}"
+                                    Placeholder="{Binding AreaPH}"
+                                    TextColor="Black"
+                                    FontSize="{Binding EntryFontSize}"
+                                    Grid.Row="8"
+                                    Unfocused="OnUnfocusedArea"
+                                    Keyboard="Text"/>
+
+                        </Grid>
+
+                    </Frame>
+
+                    <!--==================================================================================>
+                    <===================================================================================-->
+                    <!--SECCION VISUALIZACION DE CODIGO, SOLO VISIBLE CUANDO SE CUMPLAN LAS CONDICIONES
+                        MINIMAS PARA GENERAR UN CODIGO QR-->
+
+                    <Frame  BorderColor="Black"
+                            CornerRadius="10"
+                            BackgroundColor="{Binding BackGroundColor}"
+                            x:Name="CODIGO">
+
+                        <Frame BorderColor="Black">
+
+                            <StackLayout x:Name="StackQR"/>
+
+                        </Frame>
+
+                    </Frame>
+
+                    <!--==================================================================================>
+                    <===================================================================================-->
+
+                    <!--BOTON PARA GENERAR CODIGOS QR-->
+                    <Button VerticalOptions="Center"
+                            Text="{Binding GenerarTableroPH}"
+                            Margin="2,2,2,4"
+                            Clicked="GenerarCodigo"
+                            BorderColor="Black"
+                            BorderWidth="1"
+                            BackgroundColor="{Binding ButtonColor}"
+                            TextColor="White"
+                            FontAttributes="Bold"
+                            HeightRequest="35"
+                            CornerRadius="10"
+                            x:Name="BotonGenerar"/>
+
+                    <!--BOTON PARA ALMACENAR EL REGISTRO DEL NUEVO TABLERO-->
+                    <Button VerticalOptions="Center"
+                            Text="{Binding GuardarTableroPH}"
+                            Margin="2,2,2,4"
+                            Clicked="GuardarImagen"
+                            BorderColor="Black"
+                            BorderWidth="1"
+                            BackgroundColor="{Binding ButtonColor}"
+                            TextColor="White"
+                            FontAttributes="Bold"
+                            HeightRequest="35"
+                            CornerRadius="10"
+                            IsVisible="False"
+                            x:Name="BotonImagen"/>
+
+                    <Button VerticalOptions="Center"
+                            Text="{Binding RegistrarTableroPH}"
+                            Margin="2,2,2,4"
+                            Clicked="RegistrarTablero"
+                            BorderColor="Black"
+                            BorderWidth="1"
+                            BackgroundColor="{Binding ButtonColor}"
+                            TextColor="White"
+                            FontAttributes="Bold"
+                            HeightRequest="35"
+                            CornerRadius="10"
+                            IsVisible="False"
+                            x:Name="BotonRegistrar"/>
+
+                    <!--==================================================================================>
+                    <===================================================================================-->
+
+                    <ActivityIndicator  x:Name="ActivityIndicator"
+                                        HeightRequest="30"/>
+
+                    <!--====================================================================================-->
+                    <!--====================================================================================-->
+
+                </StackLayout>
+
+            </Frame>
+
+        </StackLayout>
+
+    </ScrollView>
+
+</ContentPage>

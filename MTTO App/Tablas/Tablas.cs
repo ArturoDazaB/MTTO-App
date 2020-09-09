@@ -1,0 +1,504 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using Android.Telephony;
+using Java.Lang;
+using Java.Sql;
+using SQLite;
+
+namespace MTTO_App
+{
+    //======================================================================================================
+    //======================================================================================================
+    public class Personas
+    {
+        public string Nombres { get; set; }
+        public string Apellidos { get; set; }
+        //--------------------------------------------------------------------------------------------------
+        //ID IDENTIFICATIVO
+        [PrimaryKey]
+        public int Cedula { get; set; }
+        [Unique, MaxLength(4)]
+        public int NumeroFicha { get; set; }
+        //--------------------------------------------------------------------------------------------------
+        [MaxLength(10)]
+        public Int64 Telefono { get; set; }
+        public string Correo { get; set; }
+        public DateTime FechaNacimiento { get; set; }
+        public DateTime FechaCreacion { get; set; }
+
+        //======================================================================================================
+        //======================================================================================================
+        // PARA PROXIMAS ACTUALIZACIONES SE TRABAJARA CON LA FICHA COMO PRIMARY KEY
+
+        //SE ADICIONA EL DEPARTAMENTO AL CUAL SE ENCUENTRA ASIGNADO   
+        /*public string Dpto { get; set; }*/
+
+        //EL CARGO QUE DESEMPEÑA
+        /*public string Cargo {get; set; }*/
+
+        //EL SEXO (GENERO)
+        //public char Sexo {get; set;}
+
+        //======================================================================================================
+        //======================================================================================================
+        //FUNCION QUE AL SER LLAMADA PERMITE LLENAR TODOS LOS ATRIBUTOS DE UN OBJETO PERSONA
+
+        public Personas NewPersona(Personas persona)
+        {
+            return new Personas()
+            {
+                Nombres = persona.Nombres,
+                Apellidos = persona.Apellidos,
+                Cedula = persona.Cedula,
+                NumeroFicha = persona.NumeroFicha,
+                Telefono = persona.Telefono,
+                Correo = persona.Correo,
+                FechaNacimiento = persona.FechaNacimiento,
+                FechaCreacion = persona.FechaCreacion,
+            };
+        }
+
+        public Personas NewPersona(DateTime fechacreacion, string nombres, string apellidos, string cedula, string numeroficha,
+            DateTime fechanacimiento, string telefono, string correo)
+        {
+            return new Personas()
+            {
+                Nombres = nombres, Apellidos = apellidos,
+                Cedula = int.Parse(cedula), NumeroFicha = int.Parse(numeroficha),
+                Telefono = Int64.Parse(telefono),
+                Correo = correo,
+                FechaCreacion = fechacreacion, FechaNacimiento = fechanacimiento,
+            };
+        }
+
+        //======================================================================================================
+        //======================================================================================================
+        //ADICIONALMENTE SE CONFIGURAN LAS PERSONAS QUE EXISTIRAN POR DEFECTO DENTRO DE LA APLICACION
+        public List<Personas> GetDefaultPersonas()
+        {
+            List<Personas> DefaultPersonas = new List<Personas>()
+            {
+                //PERSONA ADMINISTRATOR
+                new Personas()
+                {
+                    Nombres = null,
+                    Apellidos = null,
+                    Cedula = 0,                     //ID ADMINISTRATOR
+                    NumeroFicha = 0,
+                    FechaNacimiento = default,
+                    Telefono = 0,
+                    Correo = null,
+                    FechaCreacion = default
+                },
+
+                //PERSONA CARLOS ARTURO DAZA
+                new Personas()
+                {
+                    Nombres = "Carlos Arturo",
+                    Apellidos = "Daza Bohorquez",
+                    Cedula = 24778839,
+                    NumeroFicha = 2929,
+                    FechaNacimiento = new DateTime(1996, 06, 03),
+                    Telefono = 4147391846,
+                    Correo = "carlos.arturo.dazab@gmail.com",
+                    FechaCreacion = default,
+                },
+
+                //PERSONA JOSE ESCALONA
+                new Personas()
+                {
+                    Nombres = "José Gregorio",
+                   Apellidos = "Escalona Torres",
+                    Cedula = 20943030,
+                    NumeroFicha = 2867,
+                    FechaNacimiento = new DateTime(1994, 02, 22),
+                    Telefono = 4143511786,
+                    Correo = "jose_escalona@corimon.com",
+                    FechaCreacion = default,
+                },
+
+                //PERSONA ALEJANDRO PADRA
+                new Personas()
+                {
+                    Nombres = "Alejandro Rafael",
+                    Apellidos = "Padra Salom",
+                    Cedula = 22515348,
+                    NumeroFicha = 2824,
+                    FechaNacimiento = new DateTime(1993, 12, 09),
+                    Telefono = 4142022189,
+                    Correo = "alejandro_padra@corimon.com",
+                    FechaCreacion = default,
+                },
+            };
+
+            return DefaultPersonas;
+        }
+
+        //======================================================================================================
+        //======================================================================================================
+        //FUNCION PARA RETORNAR LOS NIVELES DE USUARIOS 
+    }
+
+    //======================================================================================================
+    //======================================================================================================
+
+    public class Usuarios
+    {
+        [MaxLength(15)]
+        public string Username { get; set; }
+        [MaxLength(15)]
+        public string Password { get; set; }
+        [PrimaryKey]
+        public int Cedula { get; set; }
+        public DateTime FechaCreacion { get; set; }
+        //------------------------------------------------------------------------------------------------------
+        public int NivelUsuario { get; set; }
+        /*LOS NIVELES DE USUARIO VAN A SER JERARQUIZADOS EN UNA ESCALA DEL 0 - 10, DONDE:
+            -0  => Nivel Basico
+                * Consulta de Tableros.
+                * Modificacion de datos personales.
+            -5  => Nivel Medio
+                * Consulta y escritura de tableros.
+                * Creacion de Usuarios (?).
+                * Creacion de Tableros (?).
+            -10 => Nivel Alto
+                * Consulta, escritura y Modificacion de Tableros.
+                * Creacion y Modificacion de Usuarios.
+                * Creacion de Tableros.*/
+        //------------------------------------------------------------------------------------------------------
+        //======================================================================================================
+        //======================================================================================================
+        //FUNCION QUE REGRESA UN OBJETO DEL TIPO USUARIO CON TODOS LOS ATRIBUTOS LLENOS.
+        public Usuarios NewUsuario(Usuarios usuario)
+        {
+            return new Usuarios()
+            {
+                Cedula = usuario.Cedula,
+                Username = usuario.Username,
+                Password = usuario.Password,
+                FechaCreacion = usuario.FechaCreacion,
+                NivelUsuario = usuario.NivelUsuario,
+            };
+        }
+        public Usuarios NewUsuario(string username, string password, string cedula, DateTime fechacreacion, int nivelusuario)
+        {
+            return new Usuarios()
+            {
+                Username = username, Password = password, Cedula = int.Parse(cedula), FechaCreacion = fechacreacion, NivelUsuario = nivelusuario,
+            };
+        }
+
+        //======================================================================================================
+        //======================================================================================================
+        //ADICIONALMENTE SE CONFIGURAN LOS USUARIOS QUE EXISTIRAN POR DEFECTO DENTRO DE LA APLICACION
+        public List<Usuarios> GetDefaultUsuarios()
+        {
+            List<Usuarios> DefaultUsuarios = new List<Usuarios>()
+            {
+                //USUARIO ADMINISTRATOR
+                new Usuarios
+                {
+                    Username = "Administrator",
+                    Cedula = 0,                         //ID USUARIO ADMINISTRATOR
+                    Password = "4dm1n1str4t0r",
+                    FechaCreacion = default,
+                    NivelUsuario = 10,
+                },
+
+                //USUARIO CARLOS ARTURO DAZA
+                new Usuarios
+                {
+                    Username = "ArturoDazaB",
+                    Cedula = 24778839,
+                    Password = "*960205*",
+                    FechaCreacion = default,
+                    NivelUsuario = 0,
+                },
+
+                //USUARIO JOSE ESCALONA
+                new Usuarios
+                {
+                    Username = "jescalona",
+                    Cedula = 20943030,
+                    Password = "MaJo.,01*",
+                    FechaCreacion = default,
+                    NivelUsuario = 5,
+                },
+
+                //USUARIO ALEJANDRO PADRA
+                new Usuarios
+                {
+                    Username = "apadra",
+                    Cedula = 22515348,
+                    Password = "arlettesofia",
+                    FechaCreacion = default,
+                    NivelUsuario = 5,
+                },
+
+            };
+
+            return DefaultUsuarios;
+        }
+
+        //======================================================================================================
+        //======================================================================================================
+        //FUNCION PARA RETORNAR LOS NIVELES DE USUARIOS
+        public List<string> NivelUsuarioLista()
+        {
+            return new List<string>()
+            {
+                "Nivel bajo (0)", 
+                "Nivel medio (5)", 
+                "Nivel alto (10)",
+            };
+        }
+    }
+
+    //======================================================================================================
+    //======================================================================================================
+
+    public class UltimaConexion
+    {
+        [AutoIncrement, PrimaryKey]
+        public int ID { get; set; }
+
+        public DateTime LastConection { get; set; }
+
+        public string Username { get; set; }
+
+        public int Cedula { get; set; }
+
+        //===============================================================================================
+        //===============================================================================================
+        //SE MANDAN LOS DATOS NECESARIOS PARA PODER LLENAR TODOS LOS ATRIBUTOS
+        //CADA QUE SE GENERE UN NUEVO REGISTRO EN LA TABLA UltimaConexion
+
+        //FUNCION CON PARAMETROS Personas Y Usuarios
+        public UltimaConexion NewUltimaConexion(Personas Persona, Usuarios Usuario)
+        {
+            return new UltimaConexion
+            {
+                LastConection = DateTime.Now,
+                Username = Usuario.Username,
+                Cedula = Persona.Cedula,
+            };
+        }
+
+        //FUNCION CON PARAMETRO UltimaConexion
+        public UltimaConexion NewUltimaConexion (UltimaConexion UltimaConexion)
+        {
+            return new UltimaConexion
+            {
+                LastConection = UltimaConexion.LastConection,
+                Username = UltimaConexion.Username,
+                Cedula = UltimaConexion.Cedula,
+            };
+        }
+    }
+
+    //======================================================================================================
+    //======================================================================================================
+
+    public class ModificacionesUsuarios
+    {
+        [PrimaryKey, AutoIncrement]
+        public int ID { get; set; }
+
+        //ID DE LA PERSONA Y USUARIO A LA CUAL SE LE REALIZO MODIFICACIONES
+        public int IDModificado { get; set; }
+        //ID DE LA PERSONA Y USUARIO QUE REALIZO LA MODIFICACION
+        public int IDModificador { get; set; }
+        //FECHA Y HORA EN LA CUAL SE REALIZO LA MODIFICACION
+        public DateTime FechaHora { get; set; }
+
+        //===============================================================================
+        //===============================================================================
+        //QUE TIPO DE MODIFICACION SE REALIZO EN EL MOMENTO
+
+        //ATRIBUTOS MODIFICABLES POR EL ADMINISTRADOR
+        public bool ModificacionNombres { get; set; }
+        public bool ModificacionApellidos { get; set; }
+        public bool ModificacionUsername { get; set; }
+
+        //ATRIBUTOS MODIFICACBLES POR EL ADMINISTRATOR Y POR USUARIOS DE BAJO NIVEL
+
+        public bool ModificacionFecha { get; set; }
+        public bool ModificacionTelefono { get; set; }
+        public bool ModificacionCorreo { get; set; }
+        public bool ModificacionPassword { get; set; }
+
+        //===============================================================================
+        //===============================================================================
+
+        public ModificacionesUsuarios NewModificacionesUsuarios (Personas Persona, Personas PrevPersona, 
+                                                                    Usuarios Usuario, Usuarios PrevUsuario, DateTime fechahora)
+        {
+            //SE CREA UN NUEVO OBJETO ModificacionesUsuarios
+            ModificacionesUsuarios Modificaciones = new ModificacionesUsuarios();
+            Modificaciones.FechaHora = DateTime.Now;
+
+            //SE VERIFICA SI SE ACCEDIO DESDE LA PAGINA DE ADMINISTRATOR
+            if (App.ConfigChangedAdminFlag)
+            {
+                //SE LLENA EL ATRIBUTO MODIFICADOR CON EL ID DEL USUARIO ADMINISTRATOR
+                Modificaciones.IDModificador = 0;
+            }
+            else
+                Modificaciones.IDModificador = Persona.Cedula;
+
+            Modificaciones.IDModificado = Persona.Cedula;
+            
+            //SE EVALUA CUAL FUE EL CAMBIO REALIZADO
+            if (Persona.Nombres != PrevPersona.Nombres)
+                Modificaciones.ModificacionNombres = true;
+            if (Persona.Apellidos != PrevPersona.Apellidos)
+                Modificaciones.ModificacionApellidos = true;
+            if (Persona.FechaNacimiento != PrevPersona.FechaNacimiento)
+                Modificaciones.ModificacionFecha = true;
+            if (Persona.Telefono != PrevPersona.Telefono)
+                Modificaciones.ModificacionTelefono = true;
+            if (Persona.Correo != PrevPersona.Correo)
+                Modificaciones.ModificacionCorreo = true;
+            if (Usuario.Username != PrevUsuario.Username)
+                Modificaciones.ModificacionUsername = true;
+            if (Usuario.Password != PrevUsuario.Password)
+                Modificaciones.ModificacionPassword = true;
+
+            return Modificaciones;
+
+        }
+    }
+
+    //======================================================================================================
+    //======================================================================================================
+
+    public class Tableros
+    {
+        //[AutoIncrement, Unique]
+        //ID DE REGISTROS, TOTALMENTE DISTINTO AL CODIGO ASIGNADO
+        //PARA IDENTIFICAR TABLEROS EN PLANTA
+        //public int ID { get; set; }
+
+        [PrimaryKey, Unique]
+        //CODIGO DE TABLERO EN PLANTA
+        public string TableroID { get; set; }
+
+        //CODIGO DE TABLERO EN PLATAFORMA SAP
+        public string SapID { get; set; }
+
+        //ID DEL USUARIO QUE REALIZAO EL NUEVO REGISTRO
+        public int IDCreador { get; set; }
+
+        //FILIAL A LA QUE PERTENECE EL TABLERO
+        public string Filial { get; set; }
+        
+        //AREA DE LA FILIAL AL QUE PERTENECE
+        public string AreaFilial { get; set; }
+
+        //FECHA EN LA CUAL FUE REGISTRADO DICHO TABLERO EN LA PLATAFORMA
+        public DateTime FechaRegistro { get; set; }
+
+        public string CodigoQRData { get; set; }
+
+        public string CodigoQRFilename { get; set; }
+
+        //========================================================================================================
+        //========================================================================================================
+        //FUNCION PARA LLENAR LOS ATRIBUTOS DE LA TABLA TABLEROS 
+        //CADA QUE SE GENERA UN NUEVO REGISTRO
+
+        //METODO QUE RECIBE UN OBJETO TABLERO COMO PARAMETRO
+        public static Tableros NuevoTablero(Tableros Tablero, int IDCreador)
+        {
+            return new Tableros
+            {
+                TableroID = Tablero.TableroID.ToUpper(),
+                Filial = Tablero.Filial,
+                AreaFilial = Tablero.AreaFilial,
+                FechaRegistro = Tablero.FechaRegistro,
+                CodigoQRData = Tablero.CodigoQRData,
+                CodigoQRFilename = Tablero.CodigoQRFilename,
+
+                IDCreador = IDCreador,
+            };
+        }
+
+        //========================================================================================================
+        //========================================================================================================
+        //METODO QUE RECIBE LOS ATRIBUTOS POR SEPARADOS COMO PARAMETROS
+
+        public static Tableros NuevoTablero(string TableroID, string Filial, string Area, DateTime FechaRegistro, 
+            string CodigoQRData, string CodigoQRFilename, int ID)
+
+        {
+            return new Tableros
+            {
+                //INFORMACION DEL TABLERO
+                TableroID = TableroID.ToUpper(),
+                Filial = Filial,
+                AreaFilial = Area,
+                FechaRegistro = FechaRegistro,
+                CodigoQRData = CodigoQRData,
+                CodigoQRFilename = CodigoQRFilename,
+
+                //ID DEL USUARIO QUE ACABA DE CREAR EL TABLERO
+                IDCreador = ID,
+            };
+        }
+    }
+
+    //======================================================================================================
+    //======================================================================================================
+
+    public class HistorialTableros
+    {
+        [PrimaryKey, AutoIncrement, Unique]
+        //ID PARA CADA NUEVA ENTRADA EN LA TABLA "HistorialTableros"
+        public int ID { get; set; }
+
+        public string TipoDeConsulta { get; set; }
+
+        //ID DEL TABLERO
+        public string TableroID { get; set; }
+
+        //ID DEL EMPLEADO QUE REALIZO LA ULTIMA REVISION DE TABLERO
+        public int UsuarioID { get; set; }
+
+        //ULTIMA REVISION DEL TABLERO
+        public DateTime FechaDeConsulta {get; set; }
+
+        //========================================================================================================
+        //========================================================================================================
+        //FUNCION PARA LLENAR LOS ATRIBUTOS DE LA TABLA HISTORIAL 
+        //TABLEROS CADA QUE SE GENERA UN NUEVO REGISTRO
+
+        //METODO QUE RECIBE UN OBJETO TABLERO COMO PARAMETRO
+        public HistorialTableros NewRegistroHistorial (HistorialTableros Historial)
+        {
+            return new HistorialTableros
+            {
+                ID = Historial.ID,
+                TipoDeConsulta = Historial.TipoDeConsulta,
+                TableroID = Historial.TableroID,
+                UsuarioID = Historial.UsuarioID,
+                FechaDeConsulta = Historial.FechaDeConsulta,
+            };
+        }
+
+        //========================================================================================================
+        //========================================================================================================
+        //METODO QUE RECIBE LOS ATRIBUTOS POR SEPARADOS COMO PARAMETROS
+        public HistorialTableros NewRegistroHistorial (string TableroID, int Cedula, DateTime Fecha, string TipoDeConsulta)
+        {
+            return new HistorialTableros 
+            {
+                TableroID = TableroID,
+                TipoDeConsulta = TipoDeConsulta,
+                UsuarioID = Cedula,
+                FechaDeConsulta = Fecha,
+            };
+        }
+    }
+}
+

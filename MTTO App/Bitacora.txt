@@ -1,0 +1,433 @@
+﻿==========================================================================================================
+==========================================================================================================
+												READ ME
+==========================================================================================================
+==========================================================================================================
+
+
+VERSION DE BASE DE DATOS LOCAL		=		MODIFICACIONES
+==========================================================================================================
+		DB4_1.db3					=		
+==========================================================================================================
+		DB4_1_1.db3					=		*Se agrego como atributo a la tabla personas la fecha de 
+									=		nacimiento de la persona a registrar, ademas estructurar la
+									=		la logica de validacion que cumplan las condiciones del dato
+									=		suministrado.
+									=
+									=		*Se valido la des-seleccion de la opcion de menu que es seleccionada
+									=		por el usuario al navegar.
+									=
+									=		*Cuando un usuario ingresa, en su pagina de informacion 
+									=		(MasterDetail MainPage) se registra cual fue su ultima conexion
+									=		(es decir la fecha y hora del reciente ingreso) y se muestra
+									=		la fecha y hora del ingreso previo.
+									=
+									=		*Se preparo una pre-configuracion -no habilitada en el momento-
+									=		de Persona y Usuarios que exitiran por default en la aplicacion.
+									=		Hasta el momento solo hay tres usuarios registrados: Administrator,
+									=		ArturoDazaB, y RamonColina.
+									=
+									=		*Se creo la pagina de configuracion para usuarios de bajo nivel.
+									=		Esta solo permite que el usuario modifique los siguientes campos:
+									=			-FECHA DE NACIMIENTO
+									=			-NUMERO TELEFONICO
+									=			-DIRECCION DE CORREO
+									=			-CONTRASEÑA
+									=
+									=		*Se adicionaron una variedad de iconos utilizados para representar
+									=		el boton de salida o 'X' que cierra la pagina. Esto solo sera visible
+									=		en paginas del tipo Pop-Up:
+									=			Iconos: -Cerrar24px1.png
+									=					-Cerrar24px2.png
+									=					-Cerrar32px.png
+									=
+									=		*Se creo un objeto en la clase Personas, el cual registra los
+									=		los datos previos y las modificaciones realizadas a los objetos
+									=		Personas y Usuario asignados a una usuario de la aplicacion.
+									=
+									=
+									=		*Se modifico la seccion de informacion de usuario para la MasterPage
+									=		la cual sera populada mediante MVVM
+									=
+									=		*En la clase Configuracion.xaml.cs se estructuro el comando de 
+									=		clausura de la navegacion para que todos los datos que han sido
+									=		modificados puedan ser refrescado para las otras paginas
+									=
+									=		*Se agrego el diseño de la pagina ConfiguracionAdmin.xaml.cs, la
+									=		cual es una ventana solo disponible para el usuario administrador.
+									=		Esta permite hacer busqueda de registros mediante la solicitud de
+									=		datos como: Cedula (ID), Nombre(s), Apellido(s) y Username (nombre
+									=		de usuario). Luego de realizar la busqueda los registros encontrados
+									=		seran desplegados en un ListView (ListViewPersonas), el cual solo sera
+									=		visible bajo dos condiciones:
+									=
+									=		1) Al dar click en el boton "Buscar" debe de existir al menos un caracter
+									=		o dato. 
+									=
+									=		2) Se debe consegui al menos un resultado de busqueda para que 
+									=		este pueda ser desplegado, de lo contrario la ListViewPersonas
+									=		(la cual cada que se realiza una busqueda se inicializa como
+									=		nulo) no tendra ningun valor almacenado.
+									=		
+									=		Luego de todo esto, el usuario Administrator puede realizar
+									=		las modificaciones pertinentes sobre los usuarios suministrados
+									=		luego de la busqueda. Esto se logra haciendo click sobre el registro
+									=		que se desea en la ListView "ListViewPersonas". Al hacerlo, la
+									=		aplicacion arrojara un mensaje tipo PopUp realizando la pregunta
+									=		"¿Desea modificar datos de este usuario?". De ser "Si" la respuesta
+									=		se realizara un salto a una nueva ventana con todos los datos "Personales"
+									=		y de "Usuarios" que esa persona tiene registrada en la aplicacion.
+									=
+									=		*Se adiciono los plugin Zxing.Net.Mobile y Zxing.Net.Mobile.Forms
+									=		los cuales son los encargados de aperturar la camara y realizar la 
+									=		lectura de codigo de barras.
+									=		
+									=		*Se creo una nueva tabla que registra cuando, quien y que atributo 
+									=		fue modificado en 
+==========================================================================================================
+==========================================================================================================
+		DB4_1_2.db3					=		*Se modifico el ingreso del usuario a la plataforma. El 
+									=		metodo de loggeo se realizara directamente desde la pagina
+									=		principal, eliminando asi la pagina del tipo PopupPage que era
+									=		llamada luego de presionar el boton "Ingresar" en la MainPage.xaml.cs
+									=
+									=		*Se adiciono el "MTTP APP.iOS" al proyecto
+									=
+									=		*Se creo la pagina PaginaQueryAdmin, la cual generara la busqueda
+									=		de usuarios dentro de la aplicacion, para luego ser enviados a la
+									=		pagina PaginaConfiguracionAdmin, la cual permite modificar todos
+									=		los campos excepto el campo Cedula (ID)
+									=
+									=		*Se preparo el terreno para la inclusion de la arquitectura de 
+									=		programacion MVVM para las paginas PaginaConfiguracionAdmin y
+									=		PaginaConfiguracion
+									=
+									=		*Se crearon las tablas de Tableros y HistorialTableros
+==========================================================================================================
+==========================================================================================================
+		DB4_1_3.db3					=		*Se adiciono el atributo ID a la tabla UltimaConexion
+									=		
+									=		*Con el proposito de adicionar la arquitectura MVVM sobre
+									=		la pagina PaginaConfiguracionAdmin se decidio trabajar solo
+									=		con la clase ViewModel, esto puesto que esta pagina trabaja
+									=		como una pagina de lectura y escritura (de haber sido unicamente
+									=		lectura de informacion se trabajaria con el modelo Model - View
+									=		ViewModel), de esta manera se creo la pagina/ventana
+									=		"PaginaConfiguracionAdmin.xaml.cs", la cual llamara a la clase
+									=		ViewModel "ConfiguracionAdmin2ViewModel". Esta ultima clase
+									=		puede ser usada tambien en la pagina/ventana
+									=		"PaginaConfiguracion" (Pagina para usuarios de bajo nivel)
+									=		
+									=		*Tambien se creo la pagina "PaginaConfiguracion2.xaml.cs"
+									=		bajo el mismo esquema que la pagina "PaginaConfiguracionAdmin2.xaml.cs"
+									=		para que estas dos paginas trabajaran con la misma clase ViewModel
+									=		"ConfiguracionAdmin2ViewModel" (Se recomienda cambiar el nombre
+									=		de la clase a uno pueda englobar a las dos paginas de configuracion
+									=		de datos: "ConfiguracionViewModel")
+									=
+									=		*Se agregaron nuevas propiedades a la clase "ConfiguracionAdmin2ViewModel.cs"
+									=		para que pueda funcionar como ViewModel para la pagina "PaginaRegistro.xaml"
+									=
+									=		*Se modifico la clase "PaginaRegistro.xaml.cs" con la finalidad
+									=		de que trabajara bajo el esquema MVVM utilizando la clase
+									=		"ConfiguracionAdmin2ViewModel.cs". De esta manera, las paginas
+									=		"PaginaRegistro", "PaginConfiguracion2" y "PaginaConfiguracionAdmin2"
+									=		(puesto que trabajan con la modificacion y creacion de objetos del tipo
+									=		Personas, Usuarios y UltimasModificaciones -Caso unico para las paginas
+									=		PaginaConfiguracion2 y PaginaConfiguracionAdmin2- ) utilizaran las misma
+									=		clase ViewModel, de esta manera todo el arreglo de la data para estas 3 
+									=		paginas quedara comandada o dictada por la clase "ConfiguracionAdmin2ViewModel.cs".
+									=
+									=		*Se crearon dos clases nuevas para sustituir a las clases
+									=		MasterPageUserinfo.cs, DetailPageUserInfo.cs(la cual funcionaba como clase Modelo
+									=		para la pagina MasterPage.xaml.cs y DetailPage.xaml.cs) y las
+									=		clases MasterPageUserInfoViewModel.cs y DetailPaerUserinfo.cs
+									=		(las cuales funcionaban como clases ViewModel para sus res-
+									=		pectibas paginas), estas nuevas clases llevan por nombre
+									=		MasterPageUserInfoModel.cs y MasterPageUserInfoViewModel.cs.
+									=		Esto se hizo con la finalidad de evitar crear muchas clases
+									=		que manejaran casi la misma informacion, ademas estas nuevas clases
+									=		se crearon bajo el mismo concepto de la clase ConfiguracionAdmin2ViewModel.cs.
+									=
+									=		*Se creo la pagina de registro de tablero y la clase RegistroTableroViewModel.cs
+									=		que acompaña a esta como su clase ViewModel.
+									=
+									=		*Se utilizo el mismo plugin (ZXing) para generar un coigo QR desde
+									=		la aplicacion. 
+									=		NOTA: SE PLANEA UTILIZAR OTRA CLASE COMO PLAN B
+									=
+									=		*Se adiciono un segundo plugin (QRCoder) como metodo alternativo
+									=		para generar los codigos QR. De esta manera la aplicacion cuenta
+									=		con dos plugin para los codigos QR:
+									=			1) ZXing => Lectura de COdigo QR
+									=			2) QRCoder => Creacion de codigo QR
+									=
+									=		*Se creo la interface IPicture para poder activar el metodo 
+									=		save picture en cada una de las plataformas que soporta el
+									=		proyecto (Android y iOS) junto con la clase Picture.cs (la
+									=		cual existe en cada una de las plataformas). Este metodo 
+									=		permite que los codigos QR que se creen en la aplicacion
+									=		puedan ser almacenados en la galeria del telefono.
+==========================================================================================================
+==========================================================================================================
+		DB4_1_4.db3					=		*Se adicinaron nuevos atributos en la clase Tableros, que llevan
+									=		por nombre: CodigoQRData(Informacion de la imagen en forma de texto)
+									=		y CodigoQRFilename (nombre del archivo imagen que representara
+									=		el codigo QR).
+									=
+									=		*En un primer escenario se creo en la clase "RegistroTableroViewModel.cs"
+									=		un metodo para realizar el llamado a la pagina de scaneo (ZXing.NET.Mobile scanPage)
+									=		sin embargo esto genero muchos conflictos entre los tiempos de ejecucion
+									=		(a veces se realizaba el escaneo y lectura del codigo sin obtener
+									=		de vueltas el payload que este contiene apesar de haber sido
+									=		leido satisfactoriamente), debido a todo lo previamente expuesto
+									=		se decidio mover este metodo para que sea ejecutado en la clase
+									=		"PaginaConsultaTablero.xaml.cs".
+									=
+									=		*Se modifico el metodo Mayuscula de la clase Metodos.
+									=
+									=		*Se escribio el codigo usado en el metodo Registro llamado desde
+									=		la pagina "PaginaRegistroTableros.xaml.cs". En este se evalua si:
+									=			1)Existe algun registro de tableros (de no exitir ningun registro
+									=			  previo se procedera a saltar los metodos consulta de registro y
+									=			  se procedera a realizar el primer registro de tablero).
+									=			2)El ID del tablero que se desea registrar ya lo posee algun otro
+									=			  tablero que se encuentra registrado.
+									=			3)La data del codigo QR del tablero que se desea registrar ya lo posee
+									=			  otro tablero que se encuentra registrado.
+									=
+									=		*Se creo la pagina "PaginaConsultaTablero.xaml.cs" (mencionado
+									=		previamente), en la cual alberga dos botones: Consulta por escaneo
+									=		(ESCANEO) y consulta por ID (Busqueda de ID del tablero). Cualquiera
+									=		que sea la opcion seleccionada, al obtener el payload de algun codigo
+									=		qr (SCANEAR) o ingresar el ID del tablero (consulta por tablero), este 
+									=		es comparado con el ID de cada registro de la tabla "Tableros". De ser
+									=		acertiva la consulta y encontrar el tablero que se desea consultar toda
+									=		la informacion de este sera desplegada en la parte inferior a los botones
+									=		de consulta y se mostrara (como informacion basica): ID del tablero, Filial
+									=		a la que pertenece el tablero, area de la filial a la que pertenece el tablero
+									=		la ultima vez que se realizo una consulta a ese tablero y el codigo qr
+									=		asignado a ese tablero (imagen).
+									=
+									=		*Se creo una clase del tipo ViewModel que lleva por nombre
+									=		"PaginaInformacionViewModel.cs". Esta clase contendra la 
+									=		configuracion basica (tamaño de fuente y colores, etc).
+									=
+									=		*Se realizaron modificaciones sobre la clase "ConfiguracionAdminViewModel.cs"
+									=		donde se adicionaron nuevas propiedades estaticas para que las 
+									=		paginas que utilizan esta clase para organizar la data
+									=		sepan que puedan tener las mismas etiquetas.
+==========================================================================================================
+==========================================================================================================
+		DB4_2						=		*Se agrego el atributo "SapID" a la tabla "Tableros".
+									=		Esto se hizo con la finalidad de crear un paralelismo con
+									=		la base de datos de SAP.
+									=
+									=		*Se modifico la pagina "PaginaRegistro.xaml.cs". Se elimino
+									=		el ingreso del nombre de usuario, en vez de esto el nombre de
+									=		usuario se generara bajo la siguiente premisa:
+									=
+									=			Username = Inicial 1er Nombre + apellido
+									=
+									=		En caso de que exista personas que compartan la misma inicial
+									=		del primer nombre y el mismo apellido el nombre de usuario
+									=		se generara bajo la siguiente premisa:
+									=		
+									=			Username = Inicial 1er Nombre + Inicial 2do Nombre + apellido
+									=
+									=		Para realizar todas estas modificaciones se creo una nueva pagina
+									=		del tipo ContentPage llamada "PaginRegistro2.xaml.cs".
+==========================================================================================================
+==========================================================================================================
+		DB4_2_3						=		*Se modificaron las secciones de fechas en las paginas
+									=		"PaginaConfiguracion.xaml.cs" y "PaginaConfiguracionAdmin.xaml.cs"
+									=		modificando: En la pagina "PaginaConfiguracion.xaml.cs" se 
+									=		removio la posibilidad de realizar modificaciones sobre la 
+									=		fecha de nacimiento, sigue desplegandose mediante el input/output
+									=		DatePicker, sin embargo para evitar modificaciones se deshabilito
+									=		la posibilidad de interaccion con el usuario, ademas de replicar
+									=		lo mismo para la "Fecha de Creacion".
+									=
+									=		En la pagina "PaginaConfiguracionAdmin.xaml.cs" se realizo lo mismo
+									=		con la informacion de la "Fecha de Creacion".
+									=
+									=		*Se agregaron a la clase "Usuarios" la propiedad "NivelUsuario"
+									=		del tipo int. Esta variable sera usada para jerarquizar a los 
+									=		usuarios de la plataforma, esto con la finalidad de seleccionar
+									=		
+									=		*Se agrego a la clase "Personas" la propiedad "NumeroFicha" del
+									=		tipo int. Esta variable sera usada como un atributo guia extra.
+									=		Este representara el numero de ficha que poseen los trabajadores
+									=		dentro de la red corporativa.
+									=
+									=		*Se modificaron las clases:
+									=			-ConfiguracionAdmin.cs
+									=			-PaginaRegistro2.xaml.cs
+									=			-PaginaConfiguracion.xaml.cs
+									=			-PaginaConfiguracionAdmin.xaml.cs
+									=		Todo esto para poder agregar los campos "Numero de Ficha" y 
+									=		"Nivel de Usuario".
+									=
+									=		*Se modificaron las clases:
+									=			-Opciones.cs
+									=			-OpcionesViewModel.cs
+									=		Se agregaron nuevas listas de opciones, ademas de cambiar
+									=		llamados entre clases.
+									=
+									=		*Se modifico la clase MasterPage.xaml.cs, cambiando el metodo
+									=		de llamado a la lista de opciones y determinar que lista de 
+									=		opciones corresponde al usuario de acuerdo al nivel de usuario
+									=		que este posea.
+==========================================================================================================
+==========================================================================================================
+		DB4_2_4						=		*Se modificaron todas las clases pertenecientes a las paginas
+									=		de informacion: 
+									=			-Pagina Informacion Configuracion
+									=			-Pagina Informacion Consulta Tablero
+									=			-Pagina Informacion Registro
+									=			-Pagina Informacion Registro Tablero
+									=
+									=		Ademas de agregar nuevas propiedades y funciones a la clase
+									=		"PaginaInformacionViewModel.cs"
+									=		
+									=		*Se adiciono la funcion "OnBackButtonPressed" a la clase
+									=		"DetailPage.xaml.cs" el cual bloquea el boton fisico del 
+									=		sistema Android, causando de esta manera que la unica manera
+									=		de desloggearse o dejar de navegar con un usuario en la plataforma
+									=		sea mediante la opcion "Salir" en el menu de opciones de la clase
+									=		"MasterPage.xaml.cs".
+									=
+									=		*Se migro el codigo de las clases "PaginaRegistro2.xaml" y
+									=		"PaginaRegistro2.xaml.cs" a las clases "PaginaRegistro.xaml" y
+									=		"PaginaRegistro.xaml.cs".
+									=
+									=		*Se creo la clase "PaginaPrincipalViewModel.cs".
+									=
+									=		*Se modifico la clase "PaginaQueryViewModel.cs" dotandola 
+									=		de nuevas propiedades y metodos.
+									=
+									=		*Se adiciono a las paginas: "PaginaPrincipal.xaml.cs" y 
+									=		"PaginaQuery.xaml.cs" objeto "ActivityIndicator"
+									=
+									=		
+==========================================================================================================
+==========================================================================================================
+NOTAS:
+
+1) MODIFICACION DE LAS VARIABLES DEL TIPO DateTime por variables del tipo Date
+	-CONSIDERAR LA HORA TAMBIEN 
+
+3) VERIFICAR EN LA PAGINA DE INGRESO LA SECCION DE ULTIMO REGISTRO.
+
+4) PROPONER LA CREACION DE UNA CLAVE ESPECIAL PARA USUARIOS DE ALTO NIVEL, ESTO CON LA FINALIDAD DE 
+   SOLOCITAR DICHA CLAVE CADA QUE SE DECIDA CREAR UN USUARIO O UN NUEVO TABLERO DENTRO DE LA PLATAFORMA
+
+5) SE ADICIONO EL OBJETO "ActivityIndicator" SIN EMBARGO TODO EL CODIGO QUE CONTROLA LA ACTIVACION
+   Y LA VISUALIZACION DEL CIRCULO DE CARGA SE ENCUENTRA EN EL METODO "OnIngresar" DE LA CLASE
+   "PaginaPrincipal.xaml.cs". SEGUIR AVERGUANDO LA MANERA DE INCLUIRLO MEDIANTE EL CONTROL DE MVVM
+==========================================================================================================
+==========================================================================================================
+NOTAS: 
+-JSON Data Type: In JSON, values MUST be one of the following data types:
+	*String
+		{"name":"John"}
+	*Number
+		{"age":30}
+	*Object (JSON Object)
+		{
+			"employee":{"name":John, "age":30, "city":"New York"}
+		}
+	*Array (Vector - Matriz)
+		{
+			"employees":["John", "Anna", "Peter"]
+		}
+	*Boolean
+		{"sale":true}
+
+//--------------------------------------------------------------------------------------------------------
+
+-JSON values cannot be one of the following data types:
+	*function
+	*date
+
+//--------------------------------------------------------------------------------------------------------
+
+-When receiving data from a web service, the DATA IS ALWAYS STRING.
+
+//--------------------------------------------------------------------------------------------------------
+
+-JSON Objects are written in KEY/VALUE pairs. Keys must be a valid 
+JSON data type (string, number, object, array boolean or null). Values
+must be surrounded by "". Keys and value are separated by a colon (:).
+Each key/value pair is separeted by a comma.
+
+//--------------------------------------------------------------------------------------------------------
+
+-Nested JSON Object: Values in a JSON object can be another JSON object.
+	myObj = 
+	{
+		"name":"John", "age":30,
+		"cars":
+		{
+			"car1":"Ford",
+			"car2":"BWM",
+			"car3":"Fiat"
+		}
+	}
+
+//--------------------------------------------------------------------------------------------------------
+
+-Array in JSON Objects can be values of an object property:
+	{
+		"name":"John", 
+		"age":30, 
+		"cars":["Ford", "BWM", "Fiat"]
+	}
+
+//--------------------------------------------------------------------------------------------------------
+
+-Arrays values can be access by using the INDEX NUMBER
+	x = myObj.cars[0];
+
+//--------------------------------------------------------------------------------------------------------
+
+-Nested arrays in JSON Objects: Values in a array can also
+be ANOTHER ARRAY, or even another JSON OBJECT.
+var myObj = 
+	{
+		"name":"John", 
+		"age":30, 
+		"cars":
+		[
+			{"name":"Ford", "models":["Fiesta", "Focus", "Mustang"]},
+			{"name":"BWM", "models":["320", "X3", "X5"]},
+			{"name":"Fiat", "models":["500", "Panda"]}
+		]
+	}
+
+//--------------------------------------------------------------------------------------------------------
+
+-Nested object can be access by using the dot notation:
+	x = myObj.cars.car2;
+	x = myObj.cars["car2"];
+
+//--------------------------------------------------------------------------------------------------------
+
+-Delete object properties: Use the "delete" keyword to 
+delete properties from JSON object.
+	delete myObj.cars.car2;
+
+//--------------------------------------------------------------------------------------------------------
+
+-PHP is a server side programming lenguage and can be used to access a DATABASE
+	*Imagine you have a DATABASE on your server, and you want to send a request to it from the 
+	client you ask for the 10 first rows in a table called "customers".
+
+	*On the client, make a JSON object that DESCRIBES the number of rows you want to return.
+	Before you send the request to the server, convert the JSON object into a STRING and send it 
+	as a PARAMETRE to the URL of the PHP page:
+
+//--------------------------------------------------------------------------------------------------------
+
+-When sending data to the server, it is often best to use the HTTP POST METHOD
+
