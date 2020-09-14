@@ -375,34 +375,15 @@ namespace MTTO_App
 
     public class Tableros
     {
-        //[AutoIncrement, Unique]
-        //ID DE REGISTROS, TOTALMENTE DISTINTO AL CODIGO ASIGNADO
-        //PARA IDENTIFICAR TABLEROS EN PLANTA
-        //public int ID { get; set; }
-
         [PrimaryKey, Unique]
-        //CODIGO DE TABLERO EN PLANTA
         public string TableroID { get; set; }
-
-        //CODIGO DE TABLERO EN PLATAFORMA SAP
         public string SapID { get; set; }
-
-        //ID DEL USUARIO QUE REALIZAO EL NUEVO REGISTRO
         public int IDCreador { get; set; }
-
-        //FILIAL A LA QUE PERTENECE EL TABLERO
         public string Filial { get; set; }
-        
-        //AREA DE LA FILIAL AL QUE PERTENECE
         public string AreaFilial { get; set; }
-
-        //FECHA EN LA CUAL FUE REGISTRADO DICHO TABLERO EN LA PLATAFORMA
         public DateTime FechaRegistro { get; set; }
-
         public string CodigoQRData { get; set; }
-
         public string CodigoQRFilename { get; set; }
-
         //========================================================================================================
         //========================================================================================================
         //FUNCION PARA LLENAR LOS ATRIBUTOS DE LA TABLA TABLEROS 

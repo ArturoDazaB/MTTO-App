@@ -264,14 +264,51 @@ namespace MTTO_App.ViewModel
 		{
 			get 
 			{
+				//EVALUAMOS DESDE QUE PAGINA ESTAMOS INGRESANDO
 				if(!flagLecturaEscritura)
 				{
+					//SE INICIALIZA LA VARIABLE 
 					username = string.Empty;
 
+					//SE EVALUA QUE LOS ATRIBUTOS "Nombre(s)" Y "Apellido(s)" NO SE ENCUENTREN VACIAS
 					if (!string.IsNullOrEmpty(Nombres) && !string.IsNullOrEmpty(Apellidos))
 					{
-						username = char.ToUpper(Nombres[0]) + Metodos.FirstString(Apellidos.ToLower());
-						ConsoleWriteline("Username", username);
+						//SE APERTURA LA CONEXION CON LA BASE DE DATOS
+						using (SQLite.SQLiteConnection connection = new SQLite.SQLiteConnection(App.FileName))
+						{
+							//CREAMOS E INICIALIZAMOS UNA VARIABLE BANDERA
+							bool flagregistro = false;
+
+							//DE NO EXISTIR SE CREA LA TABLA Usuarios
+							connection.CreateTable<Usuarios>();
+
+							//SE GENERA EL NOMBRE
+							username = char.ToUpper(Nombres[0]) + Metodos.FirstString(Apellidos.ToLower());
+
+							//RECORREMOS TODOS LOS REGISTROS EN LA TABLA USUARIOS
+							foreach (Usuarios registro in connection.Table<Usuarios>().ToList())
+							{
+								//COMPARAMOS EL Username DE CADA REGISTRO CON EL Username QUE ACABAMOS DE GENERAR
+								if (registro.Username.ToLower() == username.ToLower())
+								{
+									//DAMOS SET A LA BANDERA DE REGISTRO
+									flagregistro = true;
+									//DETENEMOS EL RECORRIDO DE LOS REGISTROS
+									break;
+								}
+							}
+
+							//EVALUAMOS EL ESTADO DE LA BANDERA
+							if (flagregistro)
+							{
+								//SE VUELVE A GENERAR EL NOMBRE DE USUARIO BAJO LA SIGUIENTE PREMISA
+								//USERNAME = INICIAL PRIMER NOMBRE + INICIAL SEGUNDO NOMBRE + PRIMER APELLIDO
+								username = char.ToUpper((Metodos.FirstString(Nombres))[0]) + char.ToUpper((Metodos.SecondString(Nombres))[0]) + Metodos.FirstString(Apellidos.ToLower());
+							}
+
+							//SE IMPRIME POR CONSOLA EL NOMBRE DE USUARIO
+							ConsoleWriteline("Username", username);
+						}
 					}
 				}
 
