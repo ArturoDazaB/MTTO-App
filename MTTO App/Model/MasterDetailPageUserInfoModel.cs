@@ -30,7 +30,7 @@ namespace MTTO_App.Model
                 else
                     fullname = Persona.Apellidos + ", " + Persona.Nombres + ".";
 
-                ultimaconexion = Ultima.LastConection.ToString();
+                ultimaconexion = Ultima.UltimaCon.ToString();
                 usericonfile = "UserIcon.png";
             }
         }

@@ -262,11 +262,8 @@ namespace MTTO_App
     {
         [AutoIncrement, PrimaryKey]
         public int ID { get; set; }
-
-        public DateTime LastConection { get; set; }
-
+        public DateTime UltimaCon { get; set; }
         public string Username { get; set; }
-
         public int Cedula { get; set; }
 
         //===============================================================================================
@@ -279,7 +276,7 @@ namespace MTTO_App
         {
             return new UltimaConexion
             {
-                LastConection = DateTime.Now,
+                UltimaCon = DateTime.Now,
                 Username = Usuario.Username,
                 Cedula = Persona.Cedula,
             };
@@ -290,7 +287,7 @@ namespace MTTO_App
         {
             return new UltimaConexion
             {
-                LastConection = UltimaConexion.LastConection,
+                UltimaCon = UltimaConexion.UltimaCon,
                 Username = UltimaConexion.Username,
                 Cedula = UltimaConexion.Cedula,
             };
@@ -304,25 +301,19 @@ namespace MTTO_App
     {
         [PrimaryKey, AutoIncrement]
         public int ID { get; set; }
-
         //ID DE LA PERSONA Y USUARIO A LA CUAL SE LE REALIZO MODIFICACIONES
         public int IDModificado { get; set; }
         //ID DE LA PERSONA Y USUARIO QUE REALIZO LA MODIFICACION
         public int IDModificador { get; set; }
         //FECHA Y HORA EN LA CUAL SE REALIZO LA MODIFICACION
         public DateTime FechaHora { get; set; }
-
-        //===============================================================================
-        //===============================================================================
+        //---------------------------------------------------------------------------
         //QUE TIPO DE MODIFICACION SE REALIZO EN EL MOMENTO
-
         //ATRIBUTOS MODIFICABLES POR EL ADMINISTRADOR
         public bool ModificacionNombres { get; set; }
         public bool ModificacionApellidos { get; set; }
         public bool ModificacionUsername { get; set; }
-
         //ATRIBUTOS MODIFICACBLES POR EL ADMINISTRATOR Y POR USUARIOS DE BAJO NIVEL
-
         public bool ModificacionFecha { get; set; }
         public bool ModificacionTelefono { get; set; }
         public bool ModificacionCorreo { get; set; }
@@ -373,9 +364,9 @@ namespace MTTO_App
     //======================================================================================================
     //======================================================================================================
 
-    public class Tableros : ActivoSAP
+    public class Tableros   : ActivoSAP
     {
-        [PrimaryKey, Unique]
+        [PrimaryKey, Unique, MaxLength(20)]
         public string TableroID { get; set; }
         public int IDCreador { get; set; }
         public string Filial { get; set; }
@@ -415,7 +406,7 @@ namespace MTTO_App
         //========================================================================================================
         //METODO QUE RECIBE LOS ATRIBUTOS POR SEPARADOS COMO PARAMETROS
 
-        public static Tableros NuevoTablero(string tableroid, int sapid, string descripcion, string filial, string area, DateTime fecharegistro,
+        public static Tableros NuevoTablero(string tableroid, string sapid, string descripcion, string filial, string area, DateTime fecharegistro,
             string codigoqrdata, string codigoqrfilename, int id)
 
         {
@@ -448,15 +439,11 @@ namespace MTTO_App
         [PrimaryKey, AutoIncrement, Unique]
         //ID PARA CADA NUEVA ENTRADA EN LA TABLA "HistorialTableros"
         public int ID { get; set; }
-
         public string TipoDeConsulta { get; set; }
-
         //ID DEL TABLERO
         public string TableroID { get; set; }
-
         //ID DEL EMPLEADO QUE REALIZO LA ULTIMA REVISION DE TABLERO
         public int UsuarioID { get; set; }
-
         //ULTIMA REVISION DEL TABLERO
         public DateTime FechaDeConsulta { get; set; }
 
@@ -498,13 +485,10 @@ namespace MTTO_App
 
     public class ActivoSAP
     {
-        [PrimaryKey]
-        public int SapID { get; set; }
+        [PrimaryKey, MaxLength(20)]
+        public string SapID { get; set; }
         public string Descripcion { get; set; }
     }
-
-    //======================================================================================================
-    //======================================================================================================
 
     //======================================================================================================
     //======================================================================================================
@@ -531,7 +515,7 @@ namespace MTTO_App
         }
 
         //FUNCION PARA LA CREACION DE UN NUEVO OBJETO EN BASE A CADA UNO DE LOS PARAMETROS
-        public Item NewItem(int sapid, string descripcion, string presentacion, int cant)
+        public Item NewItem(string sapid, string descripcion, string presentacion, int cant)
         {
             return new Item
             {

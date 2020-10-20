@@ -23,7 +23,7 @@ namespace MTTO_App.ViewModel
         //                              CodigoQRData (Pagina de consulta)
         //                              CodigoQRFilename (Pagina de registro y consulta)
 
-        protected string tableroID, filial, area;
+        protected string sapid, tableroID, filial, area, descripcion;
         protected Personas Persona;
         protected Usuarios Usuario;
         protected string codigoqrdata;
@@ -88,6 +88,18 @@ namespace MTTO_App.ViewModel
         //==================================================================================================
         //SE DECLARAN LAS PROPIEDADES/ATRIBUTOS DE LA CLASE
 
+        public string SapID 
+        {
+            get { return sapid; }
+            set
+            {
+                //TODOS LOS ID DEBEN IR EN MINUSCULA
+                sapid = value;
+                OnPropertyChanged();
+                NotificacionCambio("SapID", SapID);
+            }
+        }
+
         public string TableroID
         {
             get  { return tableroID; }
@@ -97,6 +109,18 @@ namespace MTTO_App.ViewModel
                 tableroID = value;
                 OnPropertyChanged();
                 NotificacionCambio("TableroID", TableroID);
+            }
+        }
+
+        public string Descripcion
+        {
+            get { return descripcion; }
+            set
+            {
+                descripcion = value;
+                OnPropertyChanged();
+
+                NotificacionCambio("Descripcion", Descripcion);
             }
         }
 
@@ -497,7 +521,7 @@ namespace MTTO_App.ViewModel
                             if (Evaluacion3(connection.Table<Tableros>().ToList())) 
                             {
                                 //SE INSERTA EL NUEVO REGISTRO 
-                                connection.Insert(Tableros.NuevoTablero(TableroID, Filial, Area, FechaRegistro,
+                                connection.Insert(Tableros.NuevoTablero(TableroID, SapID, Descripcion, Filial, Area, FechaRegistro,
                                     CodigoQRData, CodigoQRFileName, Usuario.Cedula));
 
                                 //SE CIERRA LA CONEXION CON LA BASE DE DATOS
@@ -516,7 +540,8 @@ namespace MTTO_App.ViewModel
                         else
                         {
                             //SE INSERTA LA INFORMACION DEL TABLERO DENTRO DE LA TABLA "Tableros"
-                            connection.Insert(Tableros.NuevoTablero(TableroID, Filial, Area, FechaRegistro, CodigoQRData, CodigoQRFileName, Usuario.Cedula));
+                            connection.Insert(Tableros.NuevoTablero(TableroID, SapID, Descripcion, Filial, Area, FechaRegistro,
+                                CodigoQRData, CodigoQRFileName, Usuario.Cedula));
 
                             //SE CIERRA LA CONEXION CON LA BASE DE DATOS
                             connection.Close();
