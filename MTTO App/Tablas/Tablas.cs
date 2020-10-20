@@ -248,8 +248,8 @@ namespace MTTO_App
         {
             return new List<string>()
             {
-                "Nivel bajo (0)", 
-                "Nivel medio (5)", 
+                "Nivel bajo (0)",
+                "Nivel medio (5)",
                 "Nivel alto (10)",
             };
         }
@@ -286,7 +286,7 @@ namespace MTTO_App
         }
 
         //FUNCION CON PARAMETRO UltimaConexion
-        public UltimaConexion NewUltimaConexion (UltimaConexion UltimaConexion)
+        public UltimaConexion NewUltimaConexion(UltimaConexion UltimaConexion)
         {
             return new UltimaConexion
             {
@@ -331,7 +331,7 @@ namespace MTTO_App
         //===============================================================================
         //===============================================================================
 
-        public ModificacionesUsuarios NewModificacionesUsuarios (Personas Persona, Personas PrevPersona, 
+        public ModificacionesUsuarios NewModificacionesUsuarios(Personas Persona, Personas PrevPersona,
                                                                     Usuarios Usuario, Usuarios PrevUsuario, DateTime fechahora)
         {
             //SE CREA UN NUEVO OBJETO ModificacionesUsuarios
@@ -348,7 +348,7 @@ namespace MTTO_App
                 Modificaciones.IDModificador = Persona.Cedula;
 
             Modificaciones.IDModificado = Persona.Cedula;
-            
+
             //SE EVALUA CUAL FUE EL CAMBIO REALIZADO
             if (Persona.Nombres != PrevPersona.Nombres)
                 Modificaciones.ModificacionNombres = true;
@@ -377,7 +377,7 @@ namespace MTTO_App
     {
         [PrimaryKey, Unique]
         public string TableroID { get; set; }
-        public string SapID { get; set; }
+        public int SAPID { get; set; }
         public int IDCreador { get; set; }
         public string Filial { get; set; }
         public string AreaFilial { get; set; }
@@ -409,7 +409,7 @@ namespace MTTO_App
         //========================================================================================================
         //METODO QUE RECIBE LOS ATRIBUTOS POR SEPARADOS COMO PARAMETROS
 
-        public static Tableros NuevoTablero(string TableroID, string Filial, string Area, DateTime FechaRegistro, 
+        public static Tableros NuevoTablero(string TableroID, string Filial, string Area, DateTime FechaRegistro,
             string CodigoQRData, string CodigoQRFilename, int ID)
 
         {
@@ -447,7 +447,7 @@ namespace MTTO_App
         public int UsuarioID { get; set; }
 
         //ULTIMA REVISION DEL TABLERO
-        public DateTime FechaDeConsulta {get; set; }
+        public DateTime FechaDeConsulta { get; set; }
 
         //========================================================================================================
         //========================================================================================================
@@ -455,7 +455,7 @@ namespace MTTO_App
         //TABLEROS CADA QUE SE GENERA UN NUEVO REGISTRO
 
         //METODO QUE RECIBE UN OBJETO TABLERO COMO PARAMETRO
-        public HistorialTableros NewRegistroHistorial (HistorialTableros Historial)
+        public HistorialTableros NewRegistroHistorial(HistorialTableros Historial)
         {
             return new HistorialTableros
             {
@@ -470,14 +470,51 @@ namespace MTTO_App
         //========================================================================================================
         //========================================================================================================
         //METODO QUE RECIBE LOS ATRIBUTOS POR SEPARADOS COMO PARAMETROS
-        public HistorialTableros NewRegistroHistorial (string TableroID, int Cedula, DateTime Fecha, string TipoDeConsulta)
+        public HistorialTableros NewRegistroHistorial(string TableroID, int Cedula, DateTime Fecha, string TipoDeConsulta)
         {
-            return new HistorialTableros 
+            return new HistorialTableros
             {
                 TableroID = TableroID,
                 TipoDeConsulta = TipoDeConsulta,
                 UsuarioID = Cedula,
                 FechaDeConsulta = Fecha,
+            };
+        }
+    }
+
+    //======================================================================================================
+    //======================================================================================================
+
+    public class SubActivoItem
+    {
+        [PrimaryKey]
+        public int SAPID { get; set; }
+        public string Descripcion { get; set; }
+        public string Presentacion { get; set; }
+        public int Cantidad { get; set; }
+
+        //========================================================================================================
+        //========================================================================================================
+        //FUNCIONES PARA LA CREACION DE UN NUEVO OBJETO DLE TIPO "SubActivoItem"
+        public SubActivoItem NewSubActivoItem(SubActivoItem sub)
+        {
+            return new SubActivoItem()
+            {
+                SAPID = sub.SAPID,
+                Descripcion = sub.Descripcion.ToLower(),
+                Presentacion = sub.Presentacion.ToLower(),
+                Cantidad = sub.Cantidad,
+            };
+        }
+
+        public SubActivoItem NewSubActivoItem (int sapid, string descripcion, string presentacion, int cant)
+        {
+            return new SubActivoItem()
+            {
+                SAPID = sapid,
+                Descripcion = descripcion,
+                Presentacion = presentacion,
+                Cantidad = cant,
             };
         }
     }

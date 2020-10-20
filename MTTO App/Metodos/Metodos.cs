@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Xamarin.Forms;
-using SQLite;
-using Android.Speech;
 
 namespace MTTO_App
 {
-    //EN ESTA CLASE INTRODUCIREMOS LAS OPERACIONES LOGICAS 
+    //EN ESTA CLASE INTRODUCIREMOS LAS OPERACIONES LOGICAS
     //QUE LA APLICACION UTILIZA EN TODO EL CODIGO
     public static class Metodos
     {
@@ -17,7 +14,7 @@ namespace MTTO_App
         public static string Mayuscula(string word)
         {
             //Se hace un llamado a la funcion Mayuscula almacenada en la clase Metodos
-            //Esta recibe una variable String, detecta donde hay espacios en blanco, y 
+            //Esta recibe una variable String, detecta donde hay espacios en blanco, y
             //transforma en mayuscula los caracteres asignados a representar la primera
             //letra del nombre la cual puede que esten en minuscula, mientras que al resto
             //de caracteres los transforma en minisculas.
@@ -27,7 +24,7 @@ namespace MTTO_App
             int cont = 0;
             bool flag = false;
             string resultado = string.Empty;
-            string primero = string.Empty, 
+            string primero = string.Empty,
                    segundo = string.Empty,
                    tercero = string.Empty;
             char[] first = null,
@@ -37,13 +34,13 @@ namespace MTTO_App
             //ESTO LO LOGRAMOS HACIENDO LLAMADO DEL METODO LOCAL "CuantosEspaciosBlanco"
             cuantosespaciosblanco = Metodos.CuantosEspaciosBlanco(word);
 
-            //SE CREA E INICIALIZA EL VECTOR DE ENTEROS QUE CONTENDRAN LA POSICION EXACTA DE LOS ESPACIOS EN BLANCO DENTRO DE 
+            //SE CREA E INICIALIZA EL VECTOR DE ENTEROS QUE CONTENDRAN LA POSICION EXACTA DE LOS ESPACIOS EN BLANCO DENTRO DE
             //LA VARIABLE DEL TIPO STRING QUE ES ENVIADA COMO PARAMETRO (word)
             int[] posicionespaciosblanco = new int[cuantosespaciosblanco];
 
             //SE RECORRE LA CADENA DE CARACTERES PARA UBICAR EN QUE POSICION DE LA CADENA DE CARACTERES SE ENCUENTRAN LOS ESPACIOS
-            //EN BLANCO QUE FUERON ENCONTRADOS PREVIAMENTE 
-            for (int i=0;i<word.Length;i++)
+            //EN BLANCO QUE FUERON ENCONTRADOS PREVIAMENTE
+            for (int i = 0; i < word.Length; i++)
             {
                 //SE EVALUA SI EN LA POSICION QUE NOS ENCONTRAMOS EXISTE COMO UN ESPACIO EN BLANCO
                 if (word[i] == ' ')
@@ -56,7 +53,7 @@ namespace MTTO_App
                     cont++;
 
                     //SE EVALUA SI EL CONTADOR YA RECORRIO TODOS LOS ESPACIOS EN BLANCO PREVIAMENTE CONTADOS
-                    if(cont == cuantosespaciosblanco)
+                    if (cont == cuantosespaciosblanco)
                     {
                         //DE HABER RECORRIDO TODOS LOS ESPACIOS EN BLANCO SE PROCEDE A CERRAR EL CICLO FOR
                         break;
@@ -64,15 +61,15 @@ namespace MTTO_App
                 }
             }
 
-            //SI SE ENCONTRO AL MENOS UN ESPACIO EN BLANCO SE PROCEDE A 
-            if(flag)
+            //SI SE ENCONTRO AL MENOS UN ESPACIO EN BLANCO SE PROCEDE A
+            if (flag)
             {
                 //SE EVALUA SI EL TEXTO INGRESADO TIENE MAS DE UN ESPACIO EN BLANCO
-                if(cuantosespaciosblanco >= 1)
+                if (cuantosespaciosblanco >= 1)
                 {
                     //SI TIENE MAS DE UN ESPACIO EN BLANCO (USUALMENTE USADO EN NOMBRES) SE PROCEDE A
                     //IDENTIFICAR CUALES SON LAS PALABRAS QUE FORMAN EL TEXTO COMPLETO
-                    switch(cuantosespaciosblanco)
+                    switch (cuantosespaciosblanco)
                     {
                         //------------------------------------------------------------------------------------------------------------------------------------------
                         //CASO UN SOLO ESPACIO EN BLANCO (USUALMENTE DOS NOMBRES)
@@ -81,21 +78,21 @@ namespace MTTO_App
                             first = new char[(word.Length - (word.Length - posicionespaciosblanco[0]))];
 
                             //SE RECORRE EL TEXTO COMPLETO
-                            for (int i=0; i < posicionespaciosblanco[0]; i++)
+                            for (int i = 0; i < posicionespaciosblanco[0]; i++)
                             {
                                 first[i] = word[i];
                             }
 
                             //TRANSFORMAMOS EL VECTOR DE CARACTERES EN SU EQUIVALENTE STRING
                             primero = new string(first).ToLower();
-                            
+
                             //SE COLOCA LA PRIMERA LETRA DE LA PALABRA EN MAYUSCULA Y EL RESTO EN MINUSCULA
                             primero = char.ToUpper(primero[0]) + primero.Substring(1).ToLower();
-                            
+
                             //PARA LA SEGUNDA PALABRA QUE CONFORMA EL TEXTO SOLO ES NECESARIO TOMAR LA PALABRA RESTANTE Y COLOCAR LA PRIMERA LETRA EN MAYUSCULA
                             segundo = char.ToUpper(word[(posicionespaciosblanco[0] + 1)]) + word.Substring((posicionespaciosblanco[0] + 2)).ToLower();
-                            
-                            //POR ULTIMO SE JUNTAN LAS DOS VARIABLES EN UNA SOLA CON SU ESPACIO EN BLANCO SEPARADOR     
+
+                            //POR ULTIMO SE JUNTAN LAS DOS VARIABLES EN UNA SOLA CON SU ESPACIO EN BLANCO SEPARADOR
                             resultado = primero + ' ' + segundo;
 
                             break;
@@ -129,21 +126,21 @@ namespace MTTO_App
                             //PARA LA TERCERA PALABRA QUE CONFORMA EL TEXTO SOLO ES NECESARIO TOMAR LA PALABRA RESTANTE Y COLOCAR LA PRIMERA LETRA EN MAYUSCULA
                             tercero = char.ToUpper(word[(posicionespaciosblanco[1] + 1)]) + word.Substring((posicionespaciosblanco[1] + 2)).ToLower();
 
-                            //POR ULTIMO SE JUNTAN LAS DOS VARIABLES EN UNA SOLA CON SU ESPACIO EN BLANCO SEPARADOR    
+                            //POR ULTIMO SE JUNTAN LAS DOS VARIABLES EN UNA SOLA CON SU ESPACIO EN BLANCO SEPARADOR
                             resultado = primero + ' ' + segundo + ' ' + tercero;
                             break;
-                        //------------------------------------------------------------------------------------------------------------------------------------------
+                            //------------------------------------------------------------------------------------------------------------------------------------------
                     }
                 }
             }
-            
+
             //SI NO SE ENCONTRO NINGUN ESPACIO EN BLANCO
-            if(!flag)
+            if (!flag)
                 //SE PROCEDE A TOMAR TODO EL TEXTO Y TRANSFORMAR EN MAYUSCULA SOLO LA PRIMERA LETRA
                 resultado = char.ToUpper(word[0]) + word.Substring(1);
 
             //SE RETORNA LA INFORMACION QUE CONTIENE LA VARIABLE "resultado"
-            return resultado;            
+            return resultado;
         }
 
         //===============================================================================
@@ -154,9 +151,9 @@ namespace MTTO_App
         {
             //SE CREA E INICIALIZA (FALSE) LA BANDERA
             bool flag = false;
-            
+
             //SE VERIFICA SI LA VARIABLE DEL TIPO TEXTO ENVIADA COMO PARAMETRO NO SE ENCUENTRA VACIA O NULA
-            if(!string.IsNullOrEmpty(word))
+            if (!string.IsNullOrEmpty(word))
             {
                 //SE RECORRE CADA UNO DE LOS CARACTERES QUE CREAN LA VARIABLE DEL TIPO STRING
                 for (int i = 0; i < word.Length; i++)
@@ -187,7 +184,7 @@ namespace MTTO_App
             int cont = 0;
 
             //SE EVALUA QUE EL PARAMETRO DEL TIPO STRING NO ES VACIO O NULO
-            if(!string.IsNullOrEmpty(word))
+            if (!string.IsNullOrEmpty(word))
             {
                 //SE RECORRE TODO EL TEXTO MEDIANTE UN CICLO CLOR
                 for (int i = 0; i < word.Length; i++)
@@ -215,7 +212,7 @@ namespace MTTO_App
             bool flag = false;
 
             //SE VERIFICA QUE EL PARAMETRO ENVIADO, DEL TIPO STRING, NO SEA VACIO O NULO
-            if(!string.IsNullOrEmpty(word))
+            if (!string.IsNullOrEmpty(word))
             {
                 //SE RECORRE TODO EL TEXTO MEDIANTE UN CICLO FOR
                 for (int i = 0; i < word.Length; i++)
@@ -245,7 +242,7 @@ namespace MTTO_App
         //===============================================================================
         //===============================================================================
         //Busqueda de CEDULA (ID)
-        public static bool MatchCedula (List<Personas> personas, string word)
+        public static bool MatchCedula(List<Personas> personas, string word)
         {
             //SE CREA E INICIALIZA LA VARIABLE LOCAL QUE FUNCIONARA COMO BANDERA
             bool flag = false;
@@ -275,9 +272,9 @@ namespace MTTO_App
 
         //===============================================================================
         //===============================================================================
-        //Busqueda de USERNAME (UserName) 
+        //Busqueda de USERNAME (UserName)
         //MISMO PROCEDIMIENTO USADO EN EL METODO "MatchCedula"
-        public static bool MatchUsername (List<Usuarios> usuarios, string word)
+        public static bool MatchUsername(List<Usuarios> usuarios, string word)
         {
             bool flag = false;
 
@@ -302,9 +299,9 @@ namespace MTTO_App
             //SE CREA E INICIALIZA LA VARIABLE LOCAL QUE FUNCIONARA COMO BANDERA
             bool flag = false;
 
-            foreach(Personas registro in personas)
+            foreach (Personas registro in personas)
             {
-                if(registro.NumeroFicha.ToString() == word)
+                if (registro.NumeroFicha.ToString() == word)
                 {
                     Mensaje("Se consiguio un registro que contiene el mismo numero de ficha que se intenta registrar");
                     flag = true;
@@ -318,13 +315,13 @@ namespace MTTO_App
         //===============================================================================
         //===============================================================================
         //Busqueda de tableros (TableroID)
-        public static bool MatchTableroID (List<Tableros> Registros, string tableroid)
+        public static bool MatchTableroID(List<Tableros> Registros, string tableroid)
         {
-            //SE CREA E INICIALIZA LA VARIABLE QUE FUNCIONARA COMO BANDERA 
+            //SE CREA E INICIALIZA LA VARIABLE QUE FUNCIONARA COMO BANDERA
             bool flag = false;
 
             //SE CADA ITEM PERTENECIENTE A LA LISTA "Registros" QUE ES ENVIADA COMO PARAMETRO
-            foreach(Tableros tablero in Registros)
+            foreach (Tableros tablero in Registros)
             {
                 //SE VERIFICA QUE LA PROPIEDAD "TableroID" DEL ITEM QUE SE ESTA EVALUANDO
                 //ES IGUAL AL PARAMETRO DEL TIPO STRING QUE TAMBIEN ES ENVIADO JUNTO A LA LISTA
@@ -347,9 +344,9 @@ namespace MTTO_App
         //===============================================================================
         //===============================================================================
         //Busqueda de tableros (CodigoQRData)
-        public static bool MatchCodigoQRData (List<Tableros> registros, string codigoqrdata)
+        public static bool MatchCodigoQRData(List<Tableros> registros, string codigoqrdata)
         {
-            //SE CREA E INICIALIZA LA VARIABLE QUE FUNCIONARA COMO BANDERA 
+            //SE CREA E INICIALIZA LA VARIABLE QUE FUNCIONARA COMO BANDERA
             bool flag = false;
 
             //SE CADA ITEM PERTENECIENTE A LA LISTA "Registros" QUE ES ENVIADA COMO PARAMETRO
@@ -357,7 +354,7 @@ namespace MTTO_App
             {
                 //SE COMPARA LA PROPIEDAD "CodigoQRData" DE CADA UNO DE LOS ITEMS DE LA LISTA DE REGISTROS
                 //CON EL PARAMETRO "codigoqrdata" (EL CUAL VIENE COMO ATRIBUTO DEL TABLERO QUE SE INTENTA REGISTRAR).
-                if(tablero.CodigoQRData == codigoqrdata)
+                if (tablero.CodigoQRData == codigoqrdata)
                 {
                     Mensaje("SE CONSIGUIO UN REGISTRO PREVIO QUE CONTIENE LA MISMA DATA DEL CODIGO QR DEL TABLERO QUE SE INTENTA REGISTRAR");
                     //SI SE CONSIGUIO UN REGISTRO QUE CONTENGA LA MISMA INFORMACION DE CODIGO QR SE DA SET A LA BANDERA
@@ -369,26 +366,25 @@ namespace MTTO_App
 
             //SE RETORNA EL VALOR DE LA BANDERA
             //TRUE => SE CONSIGUIO UN REGISTRO QUE CONTIENE LAS MISMA INFORMACION DEL TABLERO QUE SE INTENTA REGISTRAR
-            //FALSE => NO SE CONSIGUIO NINGUN REGISTRO QUE CONTENTA LA MISMA INFORMACION DEL TABLERO QUE SE INTENTA REGISTRAR 
+            //FALSE => NO SE CONSIGUIO NINGUN REGISTRO QUE CONTENTA LA MISMA INFORMACION DEL TABLERO QUE SE INTENTA REGISTRAR
             return flag;
         }
 
         //===============================================================================
         //===============================================================================
         //METODO QUE SEPARA DOS PALABRAS DE UN TEXTO Y RETORNA LA PRIMERA PALABRA
-        public static string FirstString (string text)
+        public static string FirstString(string text)
         {
             //CREACION E INICIALIZACION DE VARIABLES
             int posicion = 0;
             bool flag = false;
             string resultado = string.Empty;
-            
 
             //CICLO PARA RECORRER TODAS LAS POSICIONES DE LA CADENA DE CARACTERES (STRING)
-            for(int i=0; i<text.Length; i++)
+            for (int i = 0; i < text.Length; i++)
             {
                 //SE EVALUA SI LA POSICION DE LA CADENA DE CARACTERES EN LA QUE NOS ENCONTRAMOS ES UN ESPACIO EN BLANCO
-                if(text[i] == ' ')
+                if (text[i] == ' ')
                 {
                     //DAMOS SET A LA BANDERA
                     flag = true;
@@ -408,7 +404,7 @@ namespace MTTO_App
                 char[] resultadoarray = new char[posicion];
 
                 //LA BANDERA ESTA ACTIVADA: SE ENCONTRO UN ESPACIO EN BLANCO
-                for (int i=0; i<posicion; i++)
+                for (int i = 0; i < posicion; i++)
                 {
                     //SE CREA UN VECTOR DE CARACTERES PARA TOMAR Y ORGANIZAR TODOS LOS CARACTERES QUE SE ENCUENTRAN ANTES DEL ESPACIO EN BLANCO
                     resultadoarray[i] = text[i];
@@ -436,11 +432,11 @@ namespace MTTO_App
             bool flag = false;
             string resultado;
 
-            //SE DETECTA EN QUE PUNTO DE LA CADENA DE CARACTERES 
-            for(int i=0; i<text.Length; i++) 
+            //SE DETECTA EN QUE PUNTO DE LA CADENA DE CARACTERES
+            for (int i = 0; i < text.Length; i++)
             {
                 //SE EVALUA SI LA POSICION EN LA QUE NOS ENCONTRAMOS ES UN ESPACIO EN BLANCO
-                if(text[i] == ' ')
+                if (text[i] == ' ')
                 {
                     //SE GUARDA LA POSICION EN LA QUE SE ENCUENTRA EL ESPACIO EN BLANCO
                     posicion = i;
@@ -452,7 +448,7 @@ namespace MTTO_App
             }
 
             //SE EVALUA EL ESTADO DE LA BANDERA
-            if(flag)
+            if (flag)
             {
                 //SE CONSIGUIO UN ESPACIO EN BLANCO Y SE PROCEDE A CORTAR EL TEXTO Y ELIMINAR TODO CONTENIDO QUE SE ENCUENTRE POSICIONES
                 //ANTES DEL ESPACIO EN BLANCL

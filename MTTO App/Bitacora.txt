@@ -308,8 +308,13 @@ VERSION DE BASE DE DATOS LOCAL		=		MODIFICACIONES
 									=
 									=		*Se adiciono a las paginas: "PaginaPrincipal.xaml.cs" y 
 									=		"PaginaQuery.xaml.cs" objeto "ActivityIndicator"
-									=
-									=		
+==========================================================================================================
+==========================================================================================================
+		DB4_2_4_2					=		*Se creo una nueva clase en el conjunto tablas. Esta
+									=		lleva por nombre "SubActivoItem". Dicha tabla representa
+									=		la pieza o componente más minimo de un activo, de esta manera
+									=		para poder describir que elementos conforman al activo solo
+									=		se necesita crear una lista de objetos del tipo "SubActivoItem".
 ==========================================================================================================
 ==========================================================================================================
 NOTAS:
