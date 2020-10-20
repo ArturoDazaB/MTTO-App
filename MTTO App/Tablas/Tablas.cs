@@ -373,11 +373,10 @@ namespace MTTO_App
     //======================================================================================================
     //======================================================================================================
 
-    public class Tableros
+    public class Tableros : ActivoSAP
     {
         [PrimaryKey, Unique]
         public string TableroID { get; set; }
-        public int SAPID { get; set; }
         public int IDCreador { get; set; }
         public string Filial { get; set; }
         public string AreaFilial { get; set; }
@@ -394,13 +393,20 @@ namespace MTTO_App
         {
             return new Tableros
             {
+                //------------------------------------------
+                //INFORMACION DEL TABLERO
                 TableroID = Tablero.TableroID.ToUpper(),
-                Filial = Tablero.Filial,
-                AreaFilial = Tablero.AreaFilial,
+                SapID = Tablero.SapID,
+                Descripcion = Tablero.Descripcion.ToLower(),
+                Filial = Tablero.Filial.ToLower(),
+                AreaFilial = Tablero.AreaFilial.ToLower(),
                 FechaRegistro = Tablero.FechaRegistro,
+                //------------------------------------------
+                //INFORMACION DEL CODIGO QR
                 CodigoQRData = Tablero.CodigoQRData,
                 CodigoQRFilename = Tablero.CodigoQRFilename,
-
+                //------------------------------------------
+                //ID DEL USUARIO QUE ACABA DE CREAR EL TABLERO
                 IDCreador = IDCreador,
             };
         }
@@ -409,22 +415,27 @@ namespace MTTO_App
         //========================================================================================================
         //METODO QUE RECIBE LOS ATRIBUTOS POR SEPARADOS COMO PARAMETROS
 
-        public static Tableros NuevoTablero(string TableroID, string Filial, string Area, DateTime FechaRegistro,
-            string CodigoQRData, string CodigoQRFilename, int ID)
+        public static Tableros NuevoTablero(string tableroid, int sapid, string descripcion, string filial, string area, DateTime fecharegistro,
+            string codigoqrdata, string codigoqrfilename, int id)
 
         {
             return new Tableros
             {
+                //------------------------------------------
                 //INFORMACION DEL TABLERO
-                TableroID = TableroID.ToUpper(),
-                Filial = Filial,
-                AreaFilial = Area,
-                FechaRegistro = FechaRegistro,
-                CodigoQRData = CodigoQRData,
-                CodigoQRFilename = CodigoQRFilename,
-
+                TableroID = tableroid.ToUpper(),
+                SapID = sapid,  
+                Descripcion = descripcion.ToLower(),
+                Filial = filial.ToLower(),
+                AreaFilial = area.ToLower(),
+                FechaRegistro = fecharegistro,
+                //------------------------------------------
+                //INFORMACION DEL CODIGO QR
+                CodigoQRData = codigoqrdata,
+                CodigoQRFilename = codigoqrfilename,
+                //------------------------------------------
                 //ID DEL USUARIO QUE ACABA DE CREAR EL TABLERO
-                IDCreador = ID,
+                IDCreador = id,
             };
         }
     }
@@ -485,38 +496,52 @@ namespace MTTO_App
     //======================================================================================================
     //======================================================================================================
 
-    public class SubActivoItem
+    public class ActivoSAP
     {
         [PrimaryKey]
-        public int SAPID { get; set; }
+        public int SapID { get; set; }
         public string Descripcion { get; set; }
+    }
+
+    //======================================================================================================
+    //======================================================================================================
+
+    //======================================================================================================
+    //======================================================================================================
+
+    public class Item : ActivoSAP
+    {
         public string Presentacion { get; set; }
         public int Cantidad { get; set; }
 
-        //========================================================================================================
-        //========================================================================================================
-        //FUNCIONES PARA LA CREACION DE UN NUEVO OBJETO DLE TIPO "SubActivoItem"
-        public SubActivoItem NewSubActivoItem(SubActivoItem sub)
+        //======================================================================================================
+        //======================================================================================================
+        //FUNCIONES PARA LA CREACION DE UN NUEVO OBJETO DEL TIPO Item
+
+        //FUNCION PARA LA CREACION DE UN NUEVO OBJETO EN BASE A UN OBJETO EXISTENTE
+        public Item NewItem(Item item)
         {
-            return new SubActivoItem()
+            return new Item
             {
-                SAPID = sub.SAPID,
-                Descripcion = sub.Descripcion.ToLower(),
-                Presentacion = sub.Presentacion.ToLower(),
-                Cantidad = sub.Cantidad,
+                SapID = item.SapID,
+                Descripcion = item.Descripcion.ToLower(),
+                Presentacion = item.Presentacion.ToLower(),
+                Cantidad = item.Cantidad,
             };
         }
 
-        public SubActivoItem NewSubActivoItem (int sapid, string descripcion, string presentacion, int cant)
+        //FUNCION PARA LA CREACION DE UN NUEVO OBJETO EN BASE A CADA UNO DE LOS PARAMETROS
+        public Item NewItem(int sapid, string descripcion, string presentacion, int cant)
         {
-            return new SubActivoItem()
+            return new Item
             {
-                SAPID = sapid,
-                Descripcion = descripcion,
-                Presentacion = presentacion,
+                SapID = sapid,
+                Descripcion = descripcion.ToLower(),
+                Presentacion = presentacion.ToLower(),
                 Cantidad = cant,
             };
         }
+
     }
 }
 

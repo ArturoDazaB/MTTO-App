@@ -310,11 +310,36 @@ VERSION DE BASE DE DATOS LOCAL		=		MODIFICACIONES
 									=		"PaginaQuery.xaml.cs" objeto "ActivityIndicator"
 ==========================================================================================================
 ==========================================================================================================
-		DB4_2_4_2					=		*Se creo una nueva clase en el conjunto tablas. Esta
-									=		lleva por nombre "SubActivoItem". Dicha tabla representa
-									=		la pieza o componente más minimo de un activo, de esta manera
-									=		para poder describir que elementos conforman al activo solo
-									=		se necesita crear una lista de objetos del tipo "SubActivoItem".
+		DB4_2_4_2					=		*Se crearon nuevos objetos dentro de la clase "Tablas.cs":
+									=			-ActivoSAP
+									=			-Items
+									=
+									=		Ademas de la modificacion del objeto "Tableros".
+									=
+									=		El objeto "ActivoSAP" se encuentra destinado a acompañar a 
+									=		cualquier objeto, dentro de la aplicacion, que represente 
+									=		algun activo fisico (como es el caso de los tableros).
+									=
+									=		Este posee los siguientes campos/atributos:
+									=			-SapID -> Codigo SAP para dicho elemento
+									=			-Descripcion -> Descripcion del elemento
+									=		
+									=		El objeto "Items" se encuentra destinado a representar de manera
+									=		individual cada uno de los componentes, piezas o elementos
+									=		que forman parte de un objeto activo. Estos, al igual que los 
+									=		activos poseen un codigo y una descripcion. Es a razon de lo
+									=		previamente planteado que estos objetos son "derivados" de 
+									=		los objetos del tipo "ActivoSAP".
+									=
+									=		Este posee los siguientes campos atributos:
+									=			-Atributos heredados del objeto "ActivoSAP"
+									=			-Presentacion -> En que tipo de presentacion viene la
+									=							 minima expresion de dicho item.
+									=			-Cantidad -> Cantidad de items.
+									=		
+									=		Por ultimo, se modifico el objeto "Tableros" para que
+									=		fueran un objeto derivado del objeto "ActivoSAP", esto
+									=		para poder heredar los atributos "SapID" y "Descripcion"
 ==========================================================================================================
 ==========================================================================================================
 NOTAS:
@@ -322,10 +347,13 @@ NOTAS:
 1) MODIFICACION DE LAS VARIABLES DEL TIPO DateTime por variables del tipo Date
 	-CONSIDERAR LA HORA TAMBIEN 
 
+2) Puesto que se adicionaron y modificaron objetos dentro de la clase "Tableros.cs", todas las paginas
+que interactuan con el objeto "Tableros" deben ser modificadas.
+
 3) VERIFICAR EN LA PAGINA DE INGRESO LA SECCION DE ULTIMO REGISTRO.
 
 4) PROPONER LA CREACION DE UNA CLAVE ESPECIAL PARA USUARIOS DE ALTO NIVEL, ESTO CON LA FINALIDAD DE 
-   SOLOCITAR DICHA CLAVE CADA QUE SE DECIDA CREAR UN USUARIO O UN NUEVO TABLERO DENTRO DE LA PLATAFORMA
+   SOLICITAR DICHA CLAVE CADA QUE SE DECIDA CREAR UN USUARIO O UN NUEVO TABLERO DENTRO DE LA PLATAFORMA
 
 5) SE ADICIONO EL OBJETO "ActivityIndicator" SIN EMBARGO TODO EL CODIGO QUE CONTROLA LA ACTIVACION
    Y LA VISUALIZACION DEL CIRCULO DE CARGA SE ENCUENTRA EN EL METODO "OnIngresar" DE LA CLASE
