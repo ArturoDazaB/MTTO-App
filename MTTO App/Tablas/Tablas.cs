@@ -82,13 +82,13 @@ namespace MTTO_App
                 //PERSONA ADMINISTRATOR
                 new Personas()
                 {
-                    Nombres = null,
-                    Apellidos = null,
+                    Nombres = "N/A",
+                    Apellidos = "N/A",
                     Cedula = 0,                     //ID ADMINISTRATOR
                     NumeroFicha = 0,
                     FechaNacimiento = default,
                     Telefono = 0,
-                    Correo = null,
+                    Correo = "N/A",
                     FechaCreacion = default
                 },
 
@@ -109,7 +109,7 @@ namespace MTTO_App
                 new Personas()
                 {
                     Nombres = "José Gregorio",
-                   Apellidos = "Escalona Torres",
+                    Apellidos = "Escalona Torres",
                     Cedula = 20943030,
                     NumeroFicha = 2867,
                     FechaNacimiento = new DateTime(1994, 02, 22),

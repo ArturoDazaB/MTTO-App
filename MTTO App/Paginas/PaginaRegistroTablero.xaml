@@ -76,13 +76,17 @@
                                 <RowDefinition Height="auto"/>
                                 <!--4) TABLERO ID (ENTRADA)-->
                                 <RowDefinition Height="auto"/>
-                                <!--5) TITULO: FILIAL-->
+                                <!--5) TITULO: SAP ID-->
                                 <RowDefinition Height="auto"/>
-                                <!--6) FILIAL (ENTRADA: Entry o Picker)-->
+                                <!--6) SAP ID (ENTRADA)-->
                                 <RowDefinition Height="auto"/>
-                                <!--7) TITULO: AREA FILIAL-->
+                                <!--7) TITULO: FILIAL-->
                                 <RowDefinition Height="auto"/>
-                                <!--8) AREA FILIAL (ENTRADA: Entry)-->
+                                <!--8) FILIAL (ENTRADA: Entry o Picker)-->
+                                <RowDefinition Height="auto"/>
+                                <!--9) TITULO: AREA FILIAL-->
+                                <RowDefinition Height="auto"/>
+                                <!--10) AREA FILIAL (ENTRADA: Entry)-->
                                 <RowDefinition Height="*"/>
 
                             </Grid.RowDefinitions>
@@ -109,10 +113,25 @@
                                     Unfocused="OnUnfocusedTableroID"
                                     Keyboard="Text"/>
 
+                            <!--TITULO: SAP ID-->
+                            <Label  Text="SAP ID - Codigo SAP"
+                                    FontSize="{Binding LabelFontSize}"
+                                    Grid.Row="5"/>
+
+                            <!--SAP ID-->
+                            <Entry  x:Name="entrySAPID"
+                                    Text="{Binding SapID}"
+                                    Placeholder="{Binding SAPIDPH}"
+                                    TextColor="Black"
+                                    FontSize="{Binding EntryFontSize}"
+                                    Grid.Row="6"
+                                    Unfocused="OnUnfocusedTableroID"
+                                    Keyboard="Text"/>
+                            
                             <!--TITULO: FILIAL-->
                             <Label  Text="Filial"
                                     FontSize="{Binding LabelFontSize}"
-                                    Grid.Row="5"/>
+                                    Grid.Row="7"/>
 
                             <!--FILIAL-->
                             <Entry  x:Name="entryFilial"
@@ -120,14 +139,14 @@
                                     Placeholder="{Binding FilialPH}"
                                     TextColor="Black"
                                     FontSize="{Binding EntryFontSize}"
-                                    Grid.Row="6"
+                                    Grid.Row="8"
                                     Unfocused="OnUnfocusedFilial"
                                     Keyboard="Text"/>
 
                             <!--TITULO: AREAFILIAL-->
                             <Label  Text="Area (Filial)"
                                     FontSize="{Binding LabelFontSize}"
-                                    Grid.Row="7"/>
+                                    Grid.Row="9"/>
 
                             <!--AREA DE LA FILIAL-->
                             <Entry  x:Name="entryArea"
@@ -135,7 +154,7 @@
                                     Placeholder="{Binding AreaPH}"
                                     TextColor="Black"
                                     FontSize="{Binding EntryFontSize}"
-                                    Grid.Row="8"
+                                    Grid.Row="10"
                                     Unfocused="OnUnfocusedArea"
                                     Keyboard="Text"/>
 

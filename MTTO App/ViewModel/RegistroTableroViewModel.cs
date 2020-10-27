@@ -244,6 +244,7 @@ namespace MTTO_App.ViewModel
 
         //----------------------------------PH PaginaRegistroTablero----------------------------------------
         public string TableroIDPH { get { return "Ingrese el codigo/ID del tablero"; } }
+        public string SAPIDPH { get { return "Ingrese el codigo SAP asignado al tablero"; } }
         public string FilialPH { get { return "¿A que filial pertenece el tablero?"; } }
         public string AreaPH { get { return "¿A que area pertenece el tablero?"; } }
 
