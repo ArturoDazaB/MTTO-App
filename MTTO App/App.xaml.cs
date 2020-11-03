@@ -1,10 +1,8 @@
-﻿using System;
-using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
-
-using SQLite;
+﻿using SQLite;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using Xamarin.Forms;
 
 namespace MTTO_App
 {
@@ -12,7 +10,7 @@ namespace MTTO_App
     {
         public static string FileName;
 
-        //SI SE REALIZO ALGUN CAMBIO DE ALGUN ATRIBUTO DEL USUARIO QUE SE ENCUENTRE 
+        //SI SE REALIZO ALGUN CAMBIO DE ALGUN ATRIBUTO DEL USUARIO QUE SE ENCUENTRE
         //LOGGEADO EN ESE MOMENTO EN LA APLICACION ESTA BANDERA (FLAG) SE DISPARARA (TRUE)
         public static bool ConfigChangedFlag;
 
@@ -51,6 +49,7 @@ namespace MTTO_App
 
         //COLOR DE LOS BOTONES
         public const string ButtonColor = "#E53935";
+
         //-----------------------------------------------------------------------------------------------
 
         //===============================================================================================

@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using Java.Lang;
-using System.Threading.Tasks;
 
 namespace MTTO_App.ViewModel
 {
@@ -30,6 +26,7 @@ namespace MTTO_App.ViewModel
                 ConsoleWriteline("USERNAME/NOMBRE DE USUARIO", username);
             }
         }
+
         public string Password
         {
             get { return password; }
@@ -62,6 +59,7 @@ namespace MTTO_App.ViewModel
             Console.WriteLine("==================================================");
             Console.WriteLine("==================================================\n\n");
         }
+
         private void ConsoleWriteline(string mensaje)
         {
             Console.WriteLine("\n\n==================================================");
@@ -86,20 +84,24 @@ namespace MTTO_App.ViewModel
         //=========================================================================================================
         //COLORES
         public string BackGroundColor { get { return App.BackGroundColor; } }
+
         public string HeaderBackGroundColor { get { return "#E53835"; } }
         public string EntryBackGroundColor { get { return "#424242"; } }
         public string IngresoDatosBackGroundColor { get { return "#ff6e60"; } }
+
         //--------------------------------------------------------------------------------------------------------
         //TEXTOS
         public string HeaderText { get { return "MTTO App"; } }
+
         public string UsernamePH { get { return "Nombre de usuario"; } }
         public string PasswordPH { get { return "Contraseña"; } }
         public string ButtonPH { get { return "INGRESAR"; } }
+
         //--------------------------------------------------------------------------------------------------------
         //TAMAÑO DE LA FUENTE
         public int LabelFontSize { get { return App.LabelFontSize; } }
+
         public int EntryFontSize { get { return App.EntryFontSize; } }
         public int HeaderFontSize { get { return App.HeaderFontSize; } }
-
     }
 }

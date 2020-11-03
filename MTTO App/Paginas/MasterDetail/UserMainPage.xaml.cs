@@ -1,22 +1,16 @@
-﻿using System;
+﻿using Android.Widget;
+using SQLite;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-using SQLite;
-using Android.Widget;
-using Android.Text.Style;
-
 namespace MTTO_App
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
+    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class UserMainPage : MasterDetailPage
     {
-        UltimaConexion UltimaConexion, UltimaConexionAux;
+        private UltimaConexion UltimaConexion, UltimaConexionAux;
 
         public UserMainPage(Personas Persona, Usuarios Usuario)
         {
@@ -31,7 +25,7 @@ namespace MTTO_App
             //====================================================================
             //====================================================================
             //SE GENERA LA APAERTURA DE LA BASE DE DATOS
-            using(SQLiteConnection connection = new SQLiteConnection(App.FileName))
+            using (SQLiteConnection connection = new SQLiteConnection(App.FileName))
             {
                 //CREACION E INICIALIZACION DE VARIABLES USADAS DENTRO DE LA CONEXION CON LA BASE DE DATOS
                 List<UltimaConexion> UltimaConexionUsuario = new List<UltimaConexion>();
@@ -54,7 +48,7 @@ namespace MTTO_App
                 }
 
                 //EVALUAMOS LA LISTA "UltimaConexionUsuario"
-                if (UltimaConexionUsuario.Any()     &&  //SE EVALUA SI HAY REGISTROS DENTRO DE LA LISTA 
+                if (UltimaConexionUsuario.Any() &&  //SE EVALUA SI HAY REGISTROS DENTRO DE LA LISTA
                     UltimaConexionUsuario.Count > 1)    //SE EVALUA SI HAY MAS DE UN REGISTRO DENTRO DE LA LISTA
                 {
                     //CREAMOS E INICIALIZAMOD UNA VARIABLE CONTADOR
@@ -62,8 +56,8 @@ namespace MTTO_App
                     //RECORREMOS TODOS LOS REGISTROS DENTRO DE LA LISTA "UltimaConexionUsuario"
                     foreach (UltimaConexion registro in UltimaConexionUsuario)
                     {
-                        //SI NOS ENCONTRAMOS EN LA PENULTIMA POSICION O EL PENULTIMO REGISTRO DETENEMOS EL RECORRIDO 
-                        //TOMAMOS LA INFORMACION DE ESE REGISTRO Y CERRAMOS EL CICLO 
+                        //SI NOS ENCONTRAMOS EN LA PENULTIMA POSICION O EL PENULTIMO REGISTRO DETENEMOS EL RECORRIDO
+                        //TOMAMOS LA INFORMACION DE ESE REGISTRO Y CERRAMOS EL CICLO
                         if (cont == (UltimaConexionUsuario.Count() - 2))
                         {
                             //LA VARIABLE "UltimaConexionAux" ALMACENA ESTE REGISTRO Y LO ENVIA COMO PARAMETRO PARA LA PAGINA "DetailPage.xaml.cs"
@@ -77,14 +71,13 @@ namespace MTTO_App
                 }
                 else
                 {
-                    //NO EXISTE NINGUN REGISTRO DEL USUARIO LOGGEADO DENTRO DE LA TABLA "UltimaConexion", SE ENVIA COMO PARAMETRO 
+                    //NO EXISTE NINGUN REGISTRO DEL USUARIO LOGGEADO DENTRO DE LA TABLA "UltimaConexion", SE ENVIA COMO PARAMETRO
                     //LA VARIABLE "UltimaConexionAux".
                     UltimaConexionAux = new UltimaConexion().NewUltimaConexion(UltimaConexion);
                 }
-
             }
 
-            //SE INDICAN E INICIALIZAN QUIENES VAN A SER LAS PAGINAS MasterPage y DetailPage, ADEMAS DE ENVIAR LOS PARAMETROS 
+            //SE INDICAN E INICIALIZAN QUIENES VAN A SER LAS PAGINAS MasterPage y DetailPage, ADEMAS DE ENVIAR LOS PARAMETROS
             //SOLICITADOS AL CONSTRUCTOR DE CADA PAGINA
 
             //SE NOTIFICA A LA APLICACION QUE LA PAGINA ORIGEN DE LAS PAGINAS "MasterPage.xaml.cs" Y "DetailPage.xaml.cs"

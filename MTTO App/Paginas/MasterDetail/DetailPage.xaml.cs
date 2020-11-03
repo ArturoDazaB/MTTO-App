@@ -1,22 +1,17 @@
 ﻿using MTTO_App.ViewModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace MTTO_App
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
+    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class DetailPage : ContentPage
     {
-        Personas Persona;
-        Usuarios Usuario;
-        UltimaConexion UltimaConexion;
-        MasterDetailPageUserInfoViewModel DatosPagina;
+        private Personas Persona;
+        private Usuarios Usuario;
+        private UltimaConexion UltimaConexion;
+        private MasterDetailPageUserInfoViewModel DatosPagina;
 
         public DetailPage(Personas per, Usuarios usu, UltimaConexion ulti)
         {

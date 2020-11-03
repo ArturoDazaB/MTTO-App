@@ -1,10 +1,6 @@
-﻿using System;
+﻿using SQLite;
+using System;
 using System.Collections.Generic;
-using System.Text;
-using Android.Telephony;
-using Java.Lang;
-using Java.Sql;
-using SQLite;
 
 namespace MTTO_App
 {
@@ -14,15 +10,19 @@ namespace MTTO_App
     {
         public string Nombres { get; set; }
         public string Apellidos { get; set; }
+
         //--------------------------------------------------------------------------------------------------
         //ID IDENTIFICATIVO
         [PrimaryKey]
         public int Cedula { get; set; }
+
         [Unique, MaxLength(4)]
         public int NumeroFicha { get; set; }
+
         //--------------------------------------------------------------------------------------------------
         [MaxLength(10)]
         public Int64 Telefono { get; set; }
+
         public string Correo { get; set; }
         public DateTime FechaNacimiento { get; set; }
         public DateTime FechaCreacion { get; set; }
@@ -31,7 +31,7 @@ namespace MTTO_App
         //======================================================================================================
         // PARA PROXIMAS ACTUALIZACIONES SE TRABAJARA CON LA FICHA COMO PRIMARY KEY
 
-        //SE ADICIONA EL DEPARTAMENTO AL CUAL SE ENCUENTRA ASIGNADO   
+        //SE ADICIONA EL DEPARTAMENTO AL CUAL SE ENCUENTRA ASIGNADO
         /*public string Dpto { get; set; }*/
 
         //EL CARGO QUE DESEMPEÑA
@@ -64,11 +64,14 @@ namespace MTTO_App
         {
             return new Personas()
             {
-                Nombres = nombres, Apellidos = apellidos,
-                Cedula = int.Parse(cedula), NumeroFicha = int.Parse(numeroficha),
+                Nombres = nombres,
+                Apellidos = apellidos,
+                Cedula = int.Parse(cedula),
+                NumeroFicha = int.Parse(numeroficha),
                 Telefono = Int64.Parse(telefono),
                 Correo = correo,
-                FechaCreacion = fechacreacion, FechaNacimiento = fechanacimiento,
+                FechaCreacion = fechacreacion,
+                FechaNacimiento = fechanacimiento,
             };
         }
 
@@ -137,7 +140,7 @@ namespace MTTO_App
 
         //======================================================================================================
         //======================================================================================================
-        //FUNCION PARA RETORNAR LOS NIVELES DE USUARIOS 
+        //FUNCION PARA RETORNAR LOS NIVELES DE USUARIOS
     }
 
     //======================================================================================================
@@ -147,13 +150,18 @@ namespace MTTO_App
     {
         [MaxLength(15)]
         public string Username { get; set; }
+
         [MaxLength(15)]
         public string Password { get; set; }
+
         [PrimaryKey]
         public int Cedula { get; set; }
+
         public DateTime FechaCreacion { get; set; }
+
         //------------------------------------------------------------------------------------------------------
         public int NivelUsuario { get; set; }
+
         /*LOS NIVELES DE USUARIO VAN A SER JERARQUIZADOS EN UNA ESCALA DEL 0 - 10, DONDE:
             -0  => Nivel Basico
                 * Consulta de Tableros.
@@ -166,6 +174,7 @@ namespace MTTO_App
                 * Consulta, escritura y Modificacion de Tableros.
                 * Creacion y Modificacion de Usuarios.
                 * Creacion de Tableros.*/
+
         //------------------------------------------------------------------------------------------------------
         //======================================================================================================
         //======================================================================================================
@@ -181,11 +190,16 @@ namespace MTTO_App
                 NivelUsuario = usuario.NivelUsuario,
             };
         }
+
         public Usuarios NewUsuario(string username, string password, string cedula, DateTime fechacreacion, int nivelusuario)
         {
             return new Usuarios()
             {
-                Username = username, Password = password, Cedula = int.Parse(cedula), FechaCreacion = fechacreacion, NivelUsuario = nivelusuario,
+                Username = username,
+                Password = password,
+                Cedula = int.Parse(cedula),
+                FechaCreacion = fechacreacion,
+                NivelUsuario = nivelusuario,
             };
         }
 
@@ -235,7 +249,6 @@ namespace MTTO_App
                     FechaCreacion = default,
                     NivelUsuario = 5,
                 },
-
             };
 
             return DefaultUsuarios;
@@ -262,6 +275,7 @@ namespace MTTO_App
     {
         [AutoIncrement, PrimaryKey]
         public int ID { get; set; }
+
         public DateTime UltimaCon { get; set; }
         public string Username { get; set; }
         public int Cedula { get; set; }
@@ -301,20 +315,27 @@ namespace MTTO_App
     {
         [PrimaryKey, AutoIncrement]
         public int ID { get; set; }
+
         //ID DE LA PERSONA Y USUARIO A LA CUAL SE LE REALIZO MODIFICACIONES
         public int IDModificado { get; set; }
+
         //ID DE LA PERSONA Y USUARIO QUE REALIZO LA MODIFICACION
         public int IDModificador { get; set; }
+
         //FECHA Y HORA EN LA CUAL SE REALIZO LA MODIFICACION
         public DateTime FechaHora { get; set; }
+
         //---------------------------------------------------------------------------
         //QUE TIPO DE MODIFICACION SE REALIZO EN EL MOMENTO
         //ATRIBUTOS MODIFICABLES POR EL ADMINISTRADOR
         public bool ModificacionNombres { get; set; }
+
         public bool ModificacionApellidos { get; set; }
         public bool ModificacionUsername { get; set; }
+
         //ATRIBUTOS MODIFICACBLES POR EL ADMINISTRATOR Y POR USUARIOS DE BAJO NIVEL
         public bool ModificacionFecha { get; set; }
+
         public bool ModificacionTelefono { get; set; }
         public bool ModificacionCorreo { get; set; }
         public bool ModificacionPassword { get; set; }
@@ -357,17 +378,17 @@ namespace MTTO_App
                 Modificaciones.ModificacionPassword = true;
 
             return Modificaciones;
-
         }
     }
 
     //======================================================================================================
     //======================================================================================================
 
-    public class Tableros   : ActivoSAP
+    public class Tableros : ActivoSAP
     {
         [PrimaryKey, Unique, MaxLength(20)]
         public string TableroID { get; set; }
+
         public int IDCreador { get; set; }
         public string Filial { get; set; }
         public string AreaFilial { get; set; }
@@ -376,7 +397,7 @@ namespace MTTO_App
         public string CodigoQRFilename { get; set; }
         //========================================================================================================
         //========================================================================================================
-        //FUNCION PARA LLENAR LOS ATRIBUTOS DE LA TABLA TABLEROS 
+        //FUNCION PARA LLENAR LOS ATRIBUTOS DE LA TABLA TABLEROS
         //CADA QUE SE GENERA UN NUEVO REGISTRO
 
         //METODO QUE RECIBE UN OBJETO TABLERO COMO PARAMETRO
@@ -415,7 +436,7 @@ namespace MTTO_App
                 //------------------------------------------
                 //INFORMACION DEL TABLERO
                 TableroID = tableroid.ToUpper(),
-                SapID = sapid,  
+                SapID = sapid,
                 Descripcion = descripcion.ToLower(),
                 Filial = filial.ToLower(),
                 AreaFilial = area.ToLower(),
@@ -439,17 +460,21 @@ namespace MTTO_App
         [PrimaryKey, AutoIncrement, Unique]
         //ID PARA CADA NUEVA ENTRADA EN LA TABLA "HistorialTableros"
         public int ID { get; set; }
+
         public string TipoDeConsulta { get; set; }
+
         //ID DEL TABLERO
         public string TableroID { get; set; }
+
         //ID DEL EMPLEADO QUE REALIZO LA ULTIMA REVISION DE TABLERO
         public int UsuarioID { get; set; }
+
         //ULTIMA REVISION DEL TABLERO
         public DateTime FechaDeConsulta { get; set; }
 
         //========================================================================================================
         //========================================================================================================
-        //FUNCION PARA LLENAR LOS ATRIBUTOS DE LA TABLA HISTORIAL 
+        //FUNCION PARA LLENAR LOS ATRIBUTOS DE LA TABLA HISTORIAL
         //TABLEROS CADA QUE SE GENERA UN NUEVO REGISTRO
 
         //METODO QUE RECIBE UN OBJETO TABLERO COMO PARAMETRO
@@ -487,6 +512,7 @@ namespace MTTO_App
     {
         [PrimaryKey, MaxLength(20)]
         public string SapID { get; set; }
+
         public string Descripcion { get; set; }
     }
 
@@ -525,7 +551,5 @@ namespace MTTO_App
                 Cantidad = cant,
             };
         }
-
     }
 }
-

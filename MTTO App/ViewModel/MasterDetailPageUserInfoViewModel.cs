@@ -1,11 +1,8 @@
 ﻿using MTTO_App.Model;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MTTO_App.ViewModel
 {
-    class MasterDetailPageUserInfoViewModel
+    internal class MasterDetailPageUserInfoViewModel
     {
         //===============================================================================================
         //===============================================================================================
@@ -38,6 +35,7 @@ namespace MTTO_App.ViewModel
         //===============================================================================================
         //PROPIEDADES DE LA PAGINA
         public int LabelFontSize { get { return App.LabelFontSize; } }
+
         public int EntryFontSize { get { return App.EntryFontSize; } }
         public int HeaderFontSize { get { return App.HeaderFontSize; } }
         public int SmallHeaderFontSize { get { return App.SmallHeaderFontSize; } }

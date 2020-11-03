@@ -1,13 +1,7 @@
-﻿using Android.App;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MTTO_App.Model
+﻿namespace MTTO_App.Model
 {
-    class MasterDetailPageUserInfoModel
+    internal class MasterDetailPageUserInfoModel
     {
-
         //===============================================================================================
         //===============================================================================================
         //VARIABLES LOCALES
@@ -19,8 +13,7 @@ namespace MTTO_App.Model
 
         public MasterDetailPageUserInfoModel(Personas Persona, Usuarios Usuario, UltimaConexion Ultima)
         {
-
-            if(Persona.Cedula == Usuario.Cedula)
+            if (Persona.Cedula == Usuario.Cedula)
             {
                 //SE CARGA LA INFORMACION QUE VA A SER DESPLEGADA
                 username = Metodos.Mayuscula(Usuario.Username);
@@ -43,13 +36,8 @@ namespace MTTO_App.Model
 
         public string FullName { get { return fullname; } }
 
-        public string UltimaConexion { get  {  return ultimaconexion; } }
+        public string UltimaConexion { get { return ultimaconexion; } }
 
         public string UserIconFile { get { return usericonfile; } }
-
-
-
-
-
     }
 }

@@ -1,27 +1,26 @@
 ﻿using Android.Widget;
+using MTTO_App.Paginas.Paginas_de_Informacion;
 using MTTO_App.ViewModel;
+using Rg.Plugins.Popup.Services;
 using System;
-using System.Collections.Generic;
 using System.IO;
-
+using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using ZXing.Mobile;
 using ZXing.Net.Mobile.Forms;
-using Rg.Plugins.Popup.Services;
-using MTTO_App.Paginas.Paginas_de_Informacion;
-using System.Threading.Tasks;
 
 namespace MTTO_App.Paginas
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
+    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PaginaConsultaTablero : ContentPage
     {
         //=================================================================================================
         //=================================================================================================
         //DECLARACION DE OBJETOS
-        RegistroTableroViewModel DatosPagina;
-        Personas Persona; Usuarios Usuario;
+        private RegistroTableroViewModel DatosPagina;
+
+        private Personas Persona; private Usuarios Usuario;
 
         //=================================================================================================
         //=================================================================================================
@@ -37,12 +36,11 @@ namespace MTTO_App.Paginas
             //SE GENERA LA CONEXION CON LA CLASE VIEWMODEL
             BindingContext = DatosPagina = new RegistroTableroViewModel(Persona, Usuario, false);
 
-            //SE DA SET (FALSE) AL FRAME QUE CONTENDRA LA INFORMACION DEL CODIGO QR 
+            //SE DA SET (FALSE) AL FRAME QUE CONTENDRA LA INFORMACION DEL CODIGO QR
             FrameResultado.IsVisible = DatosPagina.ShowResultadoScan;
 
             //SE DA SET (FALSE) AL ActivityIndicator QUE INDICARA AL USUARIO CUANDO SE ESTA CUMPLIENDO ALGUN PROCESO
             ActivityIndicator.IsVisible = ActivityIndicator.IsRunning = false;
-
         }
 
         //=================================================================================================
@@ -57,7 +55,7 @@ namespace MTTO_App.Paginas
 
             //===============================================================
             //===============================================================
-            //SE LLENAN EL OBJETO Opciones CON LAS OPCIONES QUE 
+            //SE LLENAN EL OBJETO Opciones CON LAS OPCIONES QUE
             //SE VERAN DISPONIBLES EN LA PANTALLA DE SCANEO
             MobileBarcodeScanningOptions Opciones = new MobileBarcodeScanningOptions()
             {
@@ -97,7 +95,7 @@ namespace MTTO_App.Paginas
                     //SE EVALUA LA PROPIEDAD "ShowResultadoScan", DE SER TRUE
                     //SE PROCEDE A EXTRAER MANUALMENTE TODA LA INFORMACION DEL CODIGO QR
                     //OBTENIDO MEDIANTE LAS PROPIEDADES DE LA CLASE "RegistroTableroViewModel.cs"
-                    if(DatosPagina.ShowResultadoScan)
+                    if (DatosPagina.ShowResultadoScan)
                     {
                         //------------------------------------------------------------------------------------------------
                         ActivityIndicator.IsVisible = ActivityIndicator.IsRunning = true;
@@ -115,7 +113,7 @@ namespace MTTO_App.Paginas
                         areatablero.Text = DatosPagina.Area;
                         ultimaconsultatablero.Text = DatosPagina.UltimaFechaConsulta.ToString();
                         codigoqrtablero.Source = ImageSource.FromStream(() => new MemoryStream(DatosPagina.CodigoQRbyte));
-                        //------------------------------------------------------------------------------------------------                   
+                        //------------------------------------------------------------------------------------------------
                     }
                     else
                     {
@@ -128,7 +126,6 @@ namespace MTTO_App.Paginas
 
                     //=============================================================================
                     //=============================================================================
-
                 });
             };
         }
@@ -136,7 +133,7 @@ namespace MTTO_App.Paginas
         //=================================================================================================
         //=================================================================================================
         //METODO PARA BUSCAR POR ID DEL TABLERO
-        async private void ConsultaID (object sender, EventArgs e)
+        async private void ConsultaID(object sender, EventArgs e)
         {
             //===============================================================
             //===============================================================
@@ -146,7 +143,7 @@ namespace MTTO_App.Paginas
             //===============================================================
             //===============================================================
             //SE EVALUA SI EL VALOR DEL ENTRY "entryTableroID" TIENE ALGUN VALOR
-            if(!string.IsNullOrEmpty(entryTableroID.Text))
+            if (!string.IsNullOrEmpty(entryTableroID.Text))
             {
                 //ENVIAMOS EL VALOR INGRESADO POR EL USUARIO
                 DatosPagina.ResultadoScan = entryTableroID.Text;
@@ -170,7 +167,7 @@ namespace MTTO_App.Paginas
                     areatablero.Text = DatosPagina.Area;
                     ultimaconsultatablero.Text = DatosPagina.UltimaFechaConsulta.ToString();
                     codigoqrtablero.Source = ImageSource.FromStream(() => new MemoryStream(DatosPagina.CodigoQRbyte));
-                    //------------------------------------------------------------------------------------------------                   
+                    //------------------------------------------------------------------------------------------------
                 }
                 else
                 {
@@ -191,7 +188,7 @@ namespace MTTO_App.Paginas
         //=================================================================================================
         //=================================================================================================
         //METODO PARA GUARDAR EL CODIGO QR DENTRO DE LA GELERIA DEL TELEFONO
-        private void GuardarCodigoQR (object sender, EventArgs e)
+        private void GuardarCodigoQR(object sender, EventArgs e)
         {
             DatosPagina.SaveImage();
         }

@@ -1,22 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using MTTO_App.ViewModel;
+using SQLite;
+using System;
 using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-using SQLite;
-using MTTO_App.ViewModel;
-
 namespace MTTO_App
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
+    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PaginaPrincipal : ContentPage
     {
         //CREACION E INICIALIZACION DE LOS OBJETOS
-        PaginaPrincipalViewModel ConexionDatos;
+        private PaginaPrincipalViewModel ConexionDatos;
 
         //=====================================================================================================================
         //=====================================================================================================================
@@ -31,7 +26,7 @@ namespace MTTO_App
         //=====================================================================================================================
         //=====================================================================================================================
         //VALIDACION PARA EL INGRESO DE USUARIO
-        async public void OnIngresar (Object sender, EventArgs e)
+        async public void OnIngresar(Object sender, EventArgs e)
         {
             //SE DA SET A LA ALARMA DE MATCH DE USUARIO
             bool usernameFlag = false;
@@ -86,13 +81,11 @@ namespace MTTO_App
 
                                         await Navigation.PushModalAsync(new UserMainPage(persona, usuario));
 
-
                                         break;
                                     }
                                 }
 
                                 break;
-
                             }
                             else
                             {
@@ -121,6 +114,5 @@ namespace MTTO_App
                 }
             }
         }
-
     }
 }

@@ -1,32 +1,28 @@
-﻿using System;
+﻿using MTTO_App.Paginas;
+using SQLite;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-using SQLite;
-using MTTO_App.Paginas;
-
 namespace MTTO_App
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
+    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PaginaQueryAdmin : ContentPage
     {
         //LISTA QUE ALMACENARA TODOS LOS OBJETOS PERSONAS
         //QUE SON OBTENIDOS LUEGO DE REALIZAR LA BUSQUEDA
-        List<Personas> Lista;
+        private List<Personas> Lista;
 
         //SE CREAN LAS VARIABLES
-        int Seleccion;
+        private int Seleccion;
 
         //SE CREAN LAS CONSTANTES
-        const int HeightRow = 45;
+        private const int HeightRow = 45;
 
         //SE CREAN LOS OBJETOS
-        QueryAdminViewModel ConexionDatos;
+        private QueryAdminViewModel ConexionDatos;
 
         public PaginaQueryAdmin()
         {
@@ -47,13 +43,13 @@ namespace MTTO_App
             //EN FORMA DE LISTA TODOS LOS RESULTADOS ENCONTRADOS ESTARA OCULTA HASTA QUE
             //SE GENERE UNA NUEVA BUSQUEDA
             FrameListaBusqueda.IsVisible = false;
-            //ADEMAS EL OBJETO ActivityIndicator DEBE SER SETTEADO (FALSE) 
+            //ADEMAS EL OBJETO ActivityIndicator DEBE SER SETTEADO (FALSE)
             ActivityIndicatorBusqueda.IsVisible = ActivityIndicatorBusqueda.IsRunning = false;
         }
 
         //========================================================================================================
         //========================================================================================================
-        //METODO ACTIVADO CUANDO SE SELECCIONA UNA OPCION DE BUSQUEDA, ESTO CON LA FINALIDAD DE LIMITAR AL USUARIO 
+        //METODO ACTIVADO CUANDO SE SELECCIONA UNA OPCION DE BUSQUEDA, ESTO CON LA FINALIDAD DE LIMITAR AL USUARIO
         //A USAR EL TECLADO NUMERICO CUANDO SELECCIONE BUSQUEDA POR ID
         private void OnSelectedOpciones(object sender, EventArgs args)
         {
@@ -101,7 +97,7 @@ namespace MTTO_App
                     //OPCION BUSQUEDA POR ID
                     case 0:
                         //SE VERIFICA QUE NO EXISTAN ESPACIOS EN BLANCO
-                        //AL MOMENTO DE TOMAR EL ID PROPORCIONADO POR 
+                        //AL MOMENTO DE TOMAR EL ID PROPORCIONADO POR
                         //EL USUARIO
                         if (!Metodos.EspacioBlanco(EntryDatos.Text))
                         {
@@ -140,12 +136,12 @@ namespace MTTO_App
                     //OPCION BUSQUEDA POR NUMERO DE FICHA
                     case 1:
                         //SE VERIFICA QUE NO EXISTAN MAS DE DOS ESPACIOS EN BLANCO
-                        if(!Metodos.EspacioBlanco(EntryDatos.Text))
+                        if (!Metodos.EspacioBlanco(EntryDatos.Text))
                         {
                             //SE LLENA LA LISTA CON EL RESULTADO ARROJADO POR EL METODO "ListaPersonas"
                             Lista = ConexionDatos.ListaPersonas(Seleccion, EntryDatos.Text);
 
-                            if(Lista == null)
+                            if (Lista == null)
                             {
                                 //LA LISTA SE ENCUENTRA VACIA: NO SE ENCONTRO NINGUN RESULTADO
                                 ConexionDatos.MensajePantalla("No se obtuvo ningun resultado de busqueda");
@@ -235,9 +231,7 @@ namespace MTTO_App
                             await DisplayAlert("Alerta", "El numero de ID (cedula) no puede contener espacios en blanco", "Entendido");
                         break;
                 }
-
             }
-
         }
 
         //========================================================================================================

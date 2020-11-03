@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Rg.Plugins.Popup.Services;
+using System;
 using System.Threading.Tasks;
-
-using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-
-using Rg.Plugins.Popup.Services;
-
 
 namespace MTTO_App
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
+    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PaginaInformacionRegistro : Rg.Plugins.Popup.Pages.PopupPage
     {
         public PaginaInformacionRegistro()
@@ -122,10 +115,9 @@ namespace MTTO_App
         //CLAURUSA DE LA PAGINA MEDIANTE BOTON
 
         [Obsolete]
-        async void OnClose(object sender, EventArgs e)
+        private async void OnClose(object sender, EventArgs e)
         {
             await PopupNavigation.PopAllAsync();
         }
-
     }
 }

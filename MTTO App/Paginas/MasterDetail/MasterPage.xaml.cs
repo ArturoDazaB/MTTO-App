@@ -1,39 +1,33 @@
-﻿using Android.Text.Format;
-using MTTO_App.Paginas;
+﻿using MTTO_App.Paginas;
 using MTTO_App.ViewModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using ZXing.Mobile;
-using ZXing.Net.Mobile.Forms;
 
 namespace MTTO_App
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
+    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MasterPage : ContentPage
     {
         //=======================================================================
         //=======================================================================
         //OBJETOS DE LA CLASE
-        Personas Persona;
-        Usuarios Usuario;
-        UltimaConexion Ultimaconexion;
+        private Personas Persona;
+
+        private Usuarios Usuario;
+        private UltimaConexion Ultimaconexion;
 
         //=======================================================================
         //=======================================================================
         //OBJETO DE LA CLASE VIEWMODEL
-        MasterDetailPageUserInfoViewModel DatosPagina;
-        OpcionesViewModel OpcionesViewModel;
+        private MasterDetailPageUserInfoViewModel DatosPagina;
+
+        private OpcionesViewModel OpcionesViewModel;
 
         //=======================================================================
         //=======================================================================
         //CREACION DE VARIABLES DE LA CLASE
-        string Codigo = string.Empty;
+        private string Codigo = string.Empty;
 
         //=======================================================================
         //=======================================================================
@@ -46,10 +40,10 @@ namespace MTTO_App
             //LLENARLOS CON LOS DATOS DEL USUARIO QUE SE ENCUENTRA NAVEGANDO
             Persona = new Personas().NewPersona(per);
             Usuario = new Usuarios().NewUsuario(usu);
-            Ultimaconexion = new UltimaConexion().NewUltimaConexion(ultima);    
+            Ultimaconexion = new UltimaConexion().NewUltimaConexion(ultima);
 
             //SE INSTANCIA LOS DATOS DE LA PAGINA MEDIANTE EL LLAMADO
-            //DE LA CLASE "MasterDetailPageUserInfoViewModel.cs" JUNTO CON 
+            //DE LA CLASE "MasterDetailPageUserInfoViewModel.cs" JUNTO CON
             //LOS DATOS DEL USUARIO QUE SE ENCUENTRE LOGGEADO
             BindingContext = DatosPagina = new MasterDetailPageUserInfoViewModel(Persona, Usuario, Ultimaconexion);
 
@@ -63,14 +57,16 @@ namespace MTTO_App
             //OPCIONES PARA EL USUARIO ADMINISTRATOR Y OTRA PARA LOS USUARIOS
             //DE BAJO NIVEL
 
-            switch(Usuario.NivelUsuario)
+            switch (Usuario.NivelUsuario)
             {
                 case 0:
                     ListaNavegacion.ItemsSource = OpcionesViewModel.OpcionesNivelBajo;
                     break;
+
                 case 5:
                     ListaNavegacion.ItemsSource = OpcionesViewModel.OpcionesNivelMedio;
                     break;
+
                 case 10:
                     ListaNavegacion.ItemsSource = OpcionesViewModel.OpcionesNivelAlto;
                     break;
@@ -81,9 +77,9 @@ namespace MTTO_App
         //============================================================================================
         //LLAMADO DE PAGINA EN EL MENU DE OPCIONES
 
-        async void OnItemSelected(object sender, SelectedItemChangedEventArgs e)
+        private async void OnItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            switch(Usuario.NivelUsuario)
+            switch (Usuario.NivelUsuario)
             {
                 case 0:
                     //--------------------------------------------------------------------------------------------------------------
@@ -117,6 +113,7 @@ namespace MTTO_App
                     }
                     //--------------------------------------------------------------------------------------------------------------
                     break;
+
                 case 5:
                     //--------------------------------------------------------------------------------------------------------------
                     //OPCIONES NIVEL MEDIO
@@ -157,6 +154,7 @@ namespace MTTO_App
                     }
                     //--------------------------------------------------------------------------------------------------------------
                     break;
+
                 case 10:
                     //--------------------------------------------------------------------------------------------------------------
                     //OPCIONES NIVEL ALTO
@@ -207,6 +205,5 @@ namespace MTTO_App
                     break;
             }
         }
-
     }
 }

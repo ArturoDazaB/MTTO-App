@@ -1,25 +1,18 @@
-﻿using System;
-
+﻿using Android;
 using Android.App;
 using Android.Content.PM;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
 using Android.OS;
-using System.IO;
-using Android.Support.V4.Content;
-using Android;
-using Android.Content;
 using Android.Support.V4.App;
+using Android.Support.V4.Content;
+using System.IO;
 
 namespace MTTO_App.Droid
 {
-    [Activity (Label = "MTTOApp",
+    [Activity(Label = "MTTOApp",
                Icon = "@mipmap/icon",
                Theme = "@style/MainTheme",
                MainLauncher = true,
                ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
-
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         protected override void OnCreate(Bundle savedInstanceState)
@@ -78,7 +71,6 @@ namespace MTTO_App.Droid
         {
             global::ZXing.Net.Mobile.Android.PermissionsHandler.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
-
 
         /*public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {

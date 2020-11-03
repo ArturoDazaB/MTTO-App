@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace MTTO_App
 {
-    class QueryAdminModel
+    internal class QueryAdminModel
     {
         //TITULO DE LA SECCION DE BUSQUEDA
         public string Titulo { get; set; }
+
         //LISTA CON TODAS LAS OPCIONES DE BUSQUEDA DISPONIBLE
         public List<string> Opciones { get; set; }
 

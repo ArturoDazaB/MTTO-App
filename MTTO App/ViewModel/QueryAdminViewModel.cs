@@ -1,11 +1,9 @@
 ﻿using Android.Widget;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace MTTO_App
 {
-    class QueryAdminViewModel
+    internal class QueryAdminViewModel
     {
         //SE CREA LA LISTA QUE OBTENDRA LA INFORMACION
         //PROPORCIONADA POR LA CLASE "QueryAdminModel"
@@ -19,20 +17,25 @@ namespace MTTO_App
         }
 
         //---------------------------------------------------------------------------------------------------------
-        //TEXTOS 
+        //TEXTOS
         public string TituloPagina { get { return "Busqueda de Usuario"; } }
+
         public string BusquedaPH { get { return "Busqueda:"; } }
         public string EntryDatosPH { get { return "Ingrese el dato a buscar"; } }
         public string ColumnaCedula { get { return "Cedula (ID)"; } }
         public string ColumnaNombres { get { return "Nombre(s)"; } }
         public string ColumnaApellidos { get { return "Apellido(s)"; } }
+
         //---------------------------------------------------------------------------------------------------------
         //COLOR DE FONTO Y DE BOTONES
         public string BackGroundColor { get { return App.BackGroundColor; } }
+
         public string ButtonColor { get { return App.ButtonColor; } }
+
         //---------------------------------------------------------------------------------------------------------
         //TAMAÑO DE LAS LETRAS
         public int LabelFontSize { get { return App.LabelFontSize; } }
+
         public int EntryFontSize { get { return App.EntryFontSize; } }
         public int HeaderFontSize { get { return App.HeaderFontSize; } }
 
@@ -56,7 +59,7 @@ namespace MTTO_App
                 List<Personas> Personas = connection.Table<Personas>().ToList();
                 List<Usuarios> Usuarios = connection.Table<Usuarios>().ToList();
 
-                //DEPENDIENDO DEL VALOR QUE POSEA SeleccionBusqueda: 
+                //DEPENDIENDO DEL VALOR QUE POSEA SeleccionBusqueda:
                 //(EN ESTE CASO SOLO PUEDE TENER 4, QUE SON: 0-ID, 1-NUMERO DE FICHA, 2-NOMBRES, 3-APELLIDOS, 4-USERNAME)
 
                 switch (SeleccionBusqueda)

@@ -1,65 +1,71 @@
-﻿using Java.Sql;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace MTTO_App
 {
-    class ConfiguracionAdminModel
+    internal class ConfiguracionAdminModel
     {
         //====================================================================
         //====================================================================
         //VARIABLES LOCALES
 
-        DateTime fechacreacion, fechanacimiento;
-        string nombres, apellidos, correo, username, password, cedula, telefono;
+        private DateTime fechacreacion, fechanacimiento;
+        private string nombres, apellidos, correo, username, password, cedula, telefono;
 
         //====================================================================
         //====================================================================
         //ATRIBUTOS DE LA CLASE
 
-        public DateTime FechaCreacion 
+        public DateTime FechaCreacion
         {
             get { return fechacreacion; }
             set { fechacreacion = value; }
         }
-        public string Nombres 
+
+        public string Nombres
         {
             get { return nombres; }
             set { nombres = value; }
         }
-        public string Apellidos 
+
+        public string Apellidos
         {
             get { return apellidos; }
             set { nombres = value; }
         }
-        public string Cedula 
-        { 
+
+        public string Cedula
+        {
             get { return cedula; }
             set { cedula = value; }
         }
-        public DateTime FechaNacimiento 
+
+        public DateTime FechaNacimiento
         {
             get { return fechanacimiento; }
             set { fechanacimiento = value; }
         }
-        public string Telefono 
+
+        public string Telefono
         {
             get { return telefono; }
             set { telefono = value; }
         }
-        public string Correo 
+
+        public string Correo
         {
             get { return correo; }
             set { correo = value; }
         }
-        public string Username 
-        { 
+
+        public string Username
+        {
             get { return username; }
             set { username = value; }
         }
-        public string Password 
-        { 
+
+        public string Password
+        {
             get { return password; }
             set { password = value; }
         }

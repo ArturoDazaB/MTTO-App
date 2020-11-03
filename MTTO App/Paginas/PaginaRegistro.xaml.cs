@@ -1,25 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using MTTO_App.ViewModel;
+using System;
 using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-using SQLite;
-using Rg.Plugins.Popup.Services;
-using MTTO_App.ViewModel;
-
 namespace MTTO_App.Paginas
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
+    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PaginaRegistro : ContentPage
     {
         //OBJETOS
         //SE CREAN LAS VARIABLES GLOBALES DE LA CLASE
-        ConfiguracionAdminViewModel ConexionDatos;
-        Personas Persona; Usuarios Usuario;
+        private ConfiguracionAdminViewModel ConexionDatos;
+
+        private Personas Persona; private Usuarios Usuario;
 
         public PaginaRegistro(Personas persona, Usuarios usuario)
         {
@@ -29,14 +23,13 @@ namespace MTTO_App.Paginas
             Persona = new Personas().NewPersona(persona);
             Usuario = new Usuarios().NewUsuario(usuario);
 
-            //SE GENERA LA CONEXION DE LA CLASE "PaginaRegistro2.xaml.cs" CON LA CLASE 
+            //SE GENERA LA CONEXION DE LA CLASE "PaginaRegistro2.xaml.cs" CON LA CLASE
             BindingContext = ConexionDatos = new ConfiguracionAdminViewModel(false, Persona, Usuario);
 
             ActivityIndicatorA.IsRunning = ActivityIndicatorA.IsVisible = false;
             DatosUsuarioGrid.IsVisible = false;
             nombresEntry.IsEnabled = apellidosEntry.IsEnabled = true;
             Boton.Text = "CONTINUAR";
-
         }
 
         //===============================================================================================================================
@@ -51,7 +44,6 @@ namespace MTTO_App.Paginas
                 correoEntry.TextColor = Color.Red;
                 await DisplayAlert("Alerta", "El correo no puede contener espacios en blanco", "Entendido");
             }
-
         }
 
         //===============================================================================================================================
@@ -78,7 +70,7 @@ namespace MTTO_App.Paginas
 
         //===============================================================================================================================
         //===============================================================================================================================
-        //METODO PARA VERIFICAR QUE passwordEntry1 NO TENGA ESPACIOS EN BLANCO QUE NO SEA MENOR A 6 CARACTERES Y QUE NO POSEA LOS 
+        //METODO PARA VERIFICAR QUE passwordEntry1 NO TENGA ESPACIOS EN BLANCO QUE NO SEA MENOR A 6 CARACTERES Y QUE NO POSEA LOS
         //CARACTERES NO PERMITIDOS
         private async void OnCompletedPassword1(object sender, EventArgs e)
         {
@@ -106,12 +98,11 @@ namespace MTTO_App.Paginas
                 passwordEntry1.TextColor = Color.Red;
                 await DisplayAlert("Alerta", "No se aceptan los siguientes caracteres: '!', '@', '#', '$', '%', '&', '(', ')', '+', '=', '/', '|'", "Entendido");
             }
-
         }
 
         //===============================================================================================================================
         //===============================================================================================================================
-        //METODO PARA VERIFICAR QUE passwordEntry2 NO TENGA ESPACIOS EN BLANCO, QUE NO SEA MENOR A 6 CARACTERES Y QUE NO POSEA LOS 
+        //METODO PARA VERIFICAR QUE passwordEntry2 NO TENGA ESPACIOS EN BLANCO, QUE NO SEA MENOR A 6 CARACTERES Y QUE NO POSEA LOS
         //CARACTERES NO PERMITIDOS
         private async void OnCompletedPassword2(object sender, EventArgs e)
         {
@@ -145,7 +136,6 @@ namespace MTTO_App.Paginas
                 passwordEntry2.TextColor = Color.Red;
                 await DisplayAlert("Alerta", "No se aceptan los siguientes caracteres: '!', '@', '#', '$', '%', '&', '(', ')', '+', '=', '/', '|'", "Entendido");
             }
-
         }
 
         //===============================================================================================================================
@@ -157,6 +147,7 @@ namespace MTTO_App.Paginas
             //QUE ARROJA correoEntry TENGRA UN ESPACIO EN BLANCO EN ELLA (' ' o " ")
             correoEntry.TextColor = Color.Black;
         }
+
         private void CorreccionPassword1(object sender, TextChangedEventArgs e)
         {
             //==================================================================================================================================
@@ -172,6 +163,7 @@ namespace MTTO_App.Paginas
             if (ConexionDatos.Password.Length <= ConexionDatos.PasswordYellowColor)
                 passwordEntry1.TextColor = Color.Black;
         }
+
         private async void CorreccionPassword2(object sender, TextChangedEventArgs e)
         {
             //==================================================================================================================================
@@ -257,7 +249,7 @@ namespace MTTO_App.Paginas
                     {
                         //ALGUNO DE LOS CAMPOS NO SE ENCUENTRAN LLENOS
                         //------------------------------------------------------------------------------
-                        //SE NOTIFICA AL USUARIO POR MEDIO DE UN MENSAJE POP UP QUE DEBE LLENAR TODOS LOS CAMPOS 
+                        //SE NOTIFICA AL USUARIO POR MEDIO DE UN MENSAJE POP UP QUE DEBE LLENAR TODOS LOS CAMPOS
                         await DisplayAlert("Mensaje", "Todos los campos referentes a la informacion personal deben llenarse.", "Entendido");
                         //SE VUELVE INVISIBLE LA SECCION QUE CONTIENE LOS CAMPOS DE INFORMACION PERSONAL
                         DatosUsuarioGrid.IsVisible = false;
@@ -265,7 +257,7 @@ namespace MTTO_App.Paginas
                     }
                     break;
                 //TEXTO REGISTRAR: EN ESTA SECCION SE ENCUENTRAN VISIBLES LAS DOS SECCIONES DE LA PAGINA REGISTRAR: "Informacion Personal"
-                //e "Informacion de Usuario". 
+                //e "Informacion de Usuario".
                 case "REGISTRAR":
                     //SE REALIZA UNA PREGUNTA Y SE EVALUA LA RESPUESTA
                     if (await DisplayAlert("Alerta", "Esta a punto de realizar un nuevo registro." +
@@ -293,7 +285,7 @@ namespace MTTO_App.Paginas
         {
             //---------------------------------------NOTA---------------------------------------
             /*PARA CONSULTAR O MODIFICAR LOS NIVELES DE USUARIOS DIRIJASE A LA SUB CLASE "Usuarios"
-             DENTRO DE LA CLASE "Tablas.cs". En ella se encontrara con una funcion llamada 
+             DENTRO DE LA CLASE "Tablas.cs". En ella se encontrara con una funcion llamada
              "NivelUsuarioLista" la cual retornara un lista del tipo string*/
             //----------------------------------------------------------------------------------
             //CREAMOS UN OBJETO DEL TIPO "Picker" Y LO ENLAZAMOS "nivelusuarioPicker" (ubicado
@@ -321,7 +313,7 @@ namespace MTTO_App.Paginas
         //===============================================================================================================================
         //LLAMADO A LA PAGINA DE INFORMACION
         [Obsolete]
-        async void OnInfoClicked(object sender, EventArgs e)
+        private async void OnInfoClicked(object sender, EventArgs e)
         {
             await Rg.Plugins.Popup.Services.PopupNavigation.PushAsync(new PaginaInformacionRegistro());
         }

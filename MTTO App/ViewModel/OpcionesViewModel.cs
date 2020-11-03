@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace MTTO_App
 {
-    class OpcionesViewModel
+    internal class OpcionesViewModel
     {
         //=================================================================
         //=================================================================
@@ -24,7 +22,5 @@ namespace MTTO_App
         {
             get { return new Opciones().OpcionesNivelBajo(); }
         }
-
-
     }
 }

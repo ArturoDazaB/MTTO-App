@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace MTTO_App
 {
@@ -9,7 +7,7 @@ namespace MTTO_App
         //=======================================================================
         //=======================================================================
         //VARIABLE LOCALES
-        string nombreopcion, iconfilename;
+        private string nombreopcion, iconfilename;
 
         //=======================================================================
         //=======================================================================
@@ -22,11 +20,12 @@ namespace MTTO_App
         //=======================================================================
         //=======================================================================
         //ATRIBUTOS DE LA CLASE Opciones: nombreOpcion, imageFilename
-        public string NombreOpcion 
+        public string NombreOpcion
         {
             get { return nombreopcion; }
             set { nombreopcion = value; }
         }
+
         public string IconFileName
         {
             get { return iconfilename; }
@@ -131,4 +130,3 @@ namespace MTTO_App
         }
     }
 }
-

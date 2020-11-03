@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Foundation;
-using UIKit;
-
+﻿using Foundation;
 using MTTO_App.iOS;
+using System;
+using UIKit;
 
 [assembly: Xamarin.Forms.Dependency(typeof(Picture_iOS))]
 

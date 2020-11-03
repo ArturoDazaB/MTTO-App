@@ -1,16 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
+﻿using Android.Content;
 using Android.Widget;
-
 using MTTO_App.Droid;
+using System;
 
 [assembly: Xamarin.Forms.Dependency(typeof(Picture_Droid))]
 
@@ -22,7 +13,7 @@ namespace MTTO_App.Droid
         public void SavePicture(string filename, byte[] imgdata)
         {
             //SE EVALUA SI EL NOMBRE ENVIADO CONTIENE INFORMACION
-            if(!string.IsNullOrEmpty(filename))
+            if (!string.IsNullOrEmpty(filename))
             {
                 //SE BUSCA LA DIRECCION PARA LA MEMORIA EXTERNA
                 var dir = Android.OS.Environment.GetExternalStoragePublicDirectory(Android.OS.Environment.DirectoryDcim).AbsolutePath;
@@ -43,7 +34,6 @@ namespace MTTO_App.Droid
                     }
                     catch (System.Exception e)
                     {
-
                         System.Console.WriteLine("\n==================================================");
                         System.Console.WriteLine("==================================================");
                         System.Console.WriteLine("\nERROR: " + e.ToString() + "\n");
@@ -52,7 +42,6 @@ namespace MTTO_App.Droid
 
                         Toast.MakeText(Android.App.Application.Context, "Se produjo un error al intentar guardar la imagen", ToastLength.Short).Show();
                     }
-
                 }
             }
         }

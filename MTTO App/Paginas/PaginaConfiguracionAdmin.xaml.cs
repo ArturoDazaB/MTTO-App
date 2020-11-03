@@ -1,26 +1,23 @@
 ﻿using MTTO_App.ViewModel;
 using Rg.Plugins.Popup.Services;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace MTTO_App.Paginas
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
+    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PaginaConfiguracionAdmin : ContentPage
     {
         //==============================================================================
         //==============================================================================
 
         //CREACION DE OBJETOS
-        Personas Persona;
-        Usuarios Usuario;
-        ConfiguracionAdminViewModel DatosPagina;
+        private Personas Persona;
+
+        private Usuarios Usuario;
+        private ConfiguracionAdminViewModel DatosPagina;
 
         public PaginaConfiguracionAdmin(Personas per, Usuarios usu)
         {
@@ -58,9 +55,7 @@ namespace MTTO_App.Paginas
                     nivelusuarioPicker.SelectedIndex = 2;
                     break;
             }
-
         }
-
 
         //===================================================================================================================================================
         //===================================================================================================================================================
@@ -77,7 +72,7 @@ namespace MTTO_App.Paginas
 
         //METODO PARA LA VERIFICACION DEL NOMBRE CUANDO ESTE NO
         //SE ENCUENTRE ENFOCADA
-        async void OnUnfocusedNombres(object sender, EventArgs e)
+        private async void OnUnfocusedNombres(object sender, EventArgs e)
         {
             //SE DA SET AL COLOR DE TEXTO
             entryNombres.TextColor = Color.Black;
@@ -109,7 +104,7 @@ namespace MTTO_App.Paginas
 
         //METODO PARA LA VERIFICACION DEL APELLIDO CUANDO ESTE NO
         //SE ENCUENTRE ENFOCADA
-        async void OnUnfocusedApellidos(object sender, EventArgs e)
+        private async void OnUnfocusedApellidos(object sender, EventArgs e)
         {
             //SE VERIFICA SI EL NOMBRE PROPORCIONADO ESTA REGISTRADO
             if (DatosPagina.flagsameApellido)
@@ -141,7 +136,7 @@ namespace MTTO_App.Paginas
             if (DatosPagina.flagsameFecha)
             {
                 //DE SER LA MISMA SE GENERA UN AVISO AL USUARIO PARA NOTIFICARLE
-                //QUE NO SE HA REALIZADO NINGUN CAMBIO EN ESTE CAMPO A PESAR DE 
+                //QUE NO SE HA REALIZADO NINGUN CAMBIO EN ESTE CAMPO A PESAR DE
                 //HABER SIDO INSPECCIONADO
                 await DisplayAlert("Alerta", "La fecha es igual a la que se encontraba previamente registrada.", "Entendido");
             }
@@ -161,7 +156,7 @@ namespace MTTO_App.Paginas
         async protected void OnUnfocusedTelefono(object sender, EventArgs e)
         {
             //DE SER EL MISMO SE GENERA UN AVISO AL USUARIO PARA NOTIFICARLE
-            //QUE NO SE HA REALIZADO NINGUN CAMBIO EN ESTE CAMPO A PESAR DE 
+            //QUE NO SE HA REALIZADO NINGUN CAMBIO EN ESTE CAMPO A PESAR DE
             //HABER SIDO INSPECCIONADO
             if (DatosPagina.flagsameTelefono)
                 await DisplayAlert("Alerta", "El numero de telefono es igual al que se encontraba previamente registrado.", "Entendido");
@@ -175,7 +170,7 @@ namespace MTTO_App.Paginas
         async protected void OnUnfocusedCorreo(object sender, EventArgs e)
         {
             //DE SER LA MISMA SE GENERA UN AVISO AL USUARIO PARA NOTIFICARLE
-            //QUE NO SE HA REALIZADO NINGUN CAMBIO EN ESTE CAMPO A PESAR DE 
+            //QUE NO SE HA REALIZADO NINGUN CAMBIO EN ESTE CAMPO A PESAR DE
             //HABER SIDO INSPECCIONADO
             if (DatosPagina.flagsameCorreo)
                 await DisplayAlert("Alerta", "El correo es igual al que se encontraba previamente registrado.", "Entendido");
@@ -186,7 +181,7 @@ namespace MTTO_App.Paginas
 
         //METODO PARA LA VERIFICACION DEL NOMBRE DE USUARIO CUANDO ESTE NO
         //SE ENCUENTRE ENFOCADA
-        async void OnUnfocusedUsername(object sender, EventArgs e)
+        private async void OnUnfocusedUsername(object sender, EventArgs e)
         {
             //SE DA SET AL COLOR DE TEXTO
             entryUsername.TextColor = Color.Black;
@@ -220,7 +215,7 @@ namespace MTTO_App.Paginas
 
         //CUANDO SE TOQUE EL entryPassword LA CONTRASEÑA
         //SERA VISIBLE
-        void FocusedPassword(object sender, EventArgs e)
+        private void FocusedPassword(object sender, EventArgs e)
         {
             //SE DESACTIVA LA VISTA COMO PASSWORD
             entryPassword.IsPassword = false;
@@ -228,7 +223,7 @@ namespace MTTO_App.Paginas
 
         //METODO PARA LA VERIFICACION DE LA CONTRASEÑA CUANDO ESTA NO
         //SE ENCUENTRE ENFOCADA
-        async void UnFocusedPassword(object sender, EventArgs e)
+        private async void UnFocusedPassword(object sender, EventArgs e)
         {
             //SE VUELVE A ACTIVAR LA VISTA COMO PASSWORD
             entryPassword.IsPassword = true;
@@ -302,7 +297,7 @@ namespace MTTO_App.Paginas
         //===================================================================================================================================================
 
         [Obsolete]
-        async void OnInfoClicked(object sender, EventArgs e)
+        private async void OnInfoClicked(object sender, EventArgs e)
         {
             await PopupNavigation.PushAsync(new PaginaInformacionConfiguracion("CONFIGURACIONADMIN"));
         }

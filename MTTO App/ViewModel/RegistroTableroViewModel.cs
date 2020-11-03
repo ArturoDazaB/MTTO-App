@@ -1,16 +1,15 @@
-﻿using System;
+﻿using Android.Widget;
+using QRCoder;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using Xamarin.Forms;
 
-using QRCoder;
-using Android.Widget;
-using System.Collections.Generic;
-using System.Linq;
-
 namespace MTTO_App.ViewModel
 {
-    class RegistroTableroViewModel : INotifyPropertyChanging
+    internal class RegistroTableroViewModel : INotifyPropertyChanging
     {
         //==================================================================================================
         //==================================================================================================
@@ -41,7 +40,7 @@ namespace MTTO_App.ViewModel
 
         //--------------------------------------------------------------------------------------------------
         //                                               NOTA
-        //ESTE OBJETO ALMACENA EL CODIGO QR GENERADO CON LA LIBRERIA 
+        //ESTE OBJETO ALMACENA EL CODIGO QR GENERADO CON LA LIBRERIA
         //QRCoder EN FORMATO DE byte[]
         protected byte[] codigoqrbyte;
 
@@ -88,7 +87,7 @@ namespace MTTO_App.ViewModel
         //==================================================================================================
         //SE DECLARAN LAS PROPIEDADES/ATRIBUTOS DE LA CLASE
 
-        public string SapID 
+        public string SapID
         {
             get { return sapid; }
             set
@@ -102,9 +101,9 @@ namespace MTTO_App.ViewModel
 
         public string TableroID
         {
-            get  { return tableroID; }
-            set 
-            {   
+            get { return tableroID; }
+            set
+            {
                 //TODOS LOS ID DEBEN IR EN MINUSCULA
                 tableroID = value;
                 OnPropertyChanged();
@@ -150,9 +149,9 @@ namespace MTTO_App.ViewModel
 
         public DateTime FechaRegistro { get { return DateTime.Now; } }
 
-        public string ResultadoScan 
-        { 
-            get 
+        public string ResultadoScan
+        {
+            get
             {
                 return resultadoscan;
             }
@@ -179,20 +178,20 @@ namespace MTTO_App.ViewModel
         {
             get
             {
-                if(SourceOfCalling)
+                if (SourceOfCalling)
                 {
                     //SE EVALUA SI LA VARIABLE tableroID CONTIENE ALGUN DATO
                     if (!string.IsNullOrEmpty(tableroID))
-                    { 
+                    {
                         //DE CONTENERLO SE RETORNA EL NOMBRE QUE LLEVARA LA IMAGEN CON EL CODIGO QR
                         codigoqrfilename = tableroID + "_" + System.DateTime.Now.ToString("yyyyMMddHHmmss") + "_" + ".png";
                         return codigoqrfilename;
-                    } 
+                    }
                     else
                     {
                         //DE ESTAR VACIO NO SE DARA VALOR A LA PROPIEDAD CodigoQRFileName
                         return string.Empty;
-                    }                        
+                    }
                 }
                 else
                 {
@@ -205,6 +204,7 @@ namespace MTTO_App.ViewModel
         public string TipoDeConsulta { set { tipodeconsulta = value; } }
 
         public DateTime UltimaFechaConsulta { get { return ultimafechaconsulta; } }
+
         //--------------------------------------------------------------------------------------------------
         //==================================================================================================
         //==================================================================================================
@@ -236,6 +236,7 @@ namespace MTTO_App.ViewModel
 
         //IMAGEN QUE SE MOSTRARA EN PANTALLA Y LA QUE SE GUARDARA EN EL TELEFONO
         public byte[] CodigoQRbyte { get { return codigoqrbyte; } }
+
         //==================================================================================================
         //==================================================================================================
         //PROPIEDADES INTERNAS DE LA PAGINA
@@ -244,6 +245,7 @@ namespace MTTO_App.ViewModel
 
         //----------------------------------PH PaginaRegistroTablero----------------------------------------
         public string TableroIDPH { get { return "Ingrese el codigo/ID del tablero"; } }
+
         public string SAPIDPH { get { return "Ingrese el codigo SAP asignado al tablero"; } }
         public string FilialPH { get { return "¿A que filial pertenece el tablero?"; } }
         public string AreaPH { get { return "¿A que area pertenece el tablero?"; } }
@@ -253,20 +255,23 @@ namespace MTTO_App.ViewModel
 
         //----------------------------------PH BotonesPaginaRegistroTablero---------------------------------
         public string GenerarTableroPH { get { return "Generar"; } }
+
         public string GuardarTableroPH { get { return "Guardar Imagen"; } }
         public string RegistrarTableroPH { get { return "Registrar"; } }
 
         //----------------------------------PH BotonesPaginaConsultaTablero---------------------------------
         public string BotonScanPH { get { return "Escanear Codigo"; } }
+
         public string BotonConsultaIDPH { get { return "Busqueda por ID"; } }
 
         //----------------------------------PH Titulo de las Paginas----------------------------------------
         public string TituloRegistro { get { return "Pagina de Registro"; } }
+
         public string TituloConsulta { get { return "Pagina de Consulta"; } }
 
         //-----------------------------------------COLORES--------------------------------------------------
         //COLOR DEL FONDO
-        public string BackGroundColor { get { return App.BackGroundColor;} }
+        public string BackGroundColor { get { return App.BackGroundColor; } }
 
         //COLOR DE LOS BOTONES
         public string ButtonColor { get { return App.ButtonColor; } }
@@ -274,6 +279,7 @@ namespace MTTO_App.ViewModel
         //-------------------------------------------NOTA---------------------------------------------------
         //EN ESTA SECCION ASIGNAREMOS EL TAMAÑO DE LA FUENTE PARA LAS ETIQUETAS, TITULOS, ENTRYS, ETC.
         public int LabelFontSize { get { return App.LabelFontSize; } }
+
         public int EntryFontSize { get { return App.EntryFontSize; } }
         public int HeaderFontSize { get { return App.HeaderFontSize; } }
 
@@ -288,6 +294,7 @@ namespace MTTO_App.ViewModel
         //ACTUALIZA LA INFORMACION DE LA PROPIEDAD CADA QUE SE DECTECTA UN CAMBIO
 
         public event System.ComponentModel.PropertyChangingEventHandler PropertyChanging;
+
         protected void OnPropertyChanged([CallerMemberName] string nombre = "")
         {
             PropertyChanging?.Invoke(this, new System.ComponentModel.PropertyChangingEventArgs(nombre));
@@ -324,13 +331,14 @@ namespace MTTO_App.ViewModel
         //METODOS LLAMADOS PARA EVALUAR LOS CAMPOS/ATRIBUTOS PARA UN NUEVO REGISTRO DE TABLERO
         protected bool Evaluacion1()
         {
-            if (!string.IsNullOrEmpty(tableroID)    &&  //EL ID DEL TABLERO NO SE PUEDE ENCONTRAR VACIO
-                !string.IsNullOrEmpty(filial)       &&  //LA FILIAL NO SE PUEDE ENCONTRAR VACIA
+            if (!string.IsNullOrEmpty(tableroID) &&  //EL ID DEL TABLERO NO SE PUEDE ENCONTRAR VACIO
+                !string.IsNullOrEmpty(filial) &&  //LA FILIAL NO SE PUEDE ENCONTRAR VACIA
                 !string.IsNullOrEmpty(area))            //EL AREA NO SE PUEDE ENCONTRAR VACIA
                 return true;
             else
                 return false;
         }
+
         protected bool Evaluacion2()
         {
             if (!Metodos.EspacioBlanco(tableroID) &&    //EL IF DEL TABLERO NO PUEDE CONTENER ESPACIOS EN BLANCO
@@ -340,11 +348,11 @@ namespace MTTO_App.ViewModel
                 return true;
             else
                 return false;
-                
         }
+
         protected bool Evaluacion3(List<Tableros> registros)
         {
-            if (!Metodos.MatchTableroID(registros, TableroID) &&      //SE EVALUA SI EL TableroID YA SE ENCONTRABA REGISTRADO PREVIAMENTE  
+            if (!Metodos.MatchTableroID(registros, TableroID) &&      //SE EVALUA SI EL TableroID YA SE ENCONTRABA REGISTRADO PREVIAMENTE
                (!Metodos.MatchCodigoQRData(registros, CodigoQRData))) //SE EVALUA SI EL CODIGOQRDATA YA SE ENCONTRABA REGISTRADO PREVIAMENTE
                 //SI NO EXISTE ALGUN REGISTRO CON EL MISMO ID O CON LA MISMA DATA DEL CODIGO QR SE PROCEDE CON EL REGISTRO (TRUE)
                 return true;
@@ -355,12 +363,12 @@ namespace MTTO_App.ViewModel
 
         //==================================================================================================
         //==================================================================================================
-        //METODOS QUE RETORNAN UNA RESPUESTA CUANDO LAS FUNCIONES Evaluacion1, Evaluacion2 y Evaluacion3 
+        //METODOS QUE RETORNAN UNA RESPUESTA CUANDO LAS FUNCIONES Evaluacion1, Evaluacion2 y Evaluacion3
         //RETORNAN UN VALOR NEGATIVO O FALSO
         protected string RespuestaEvaluacion1()
         {
-            //DE NO CUMPLIRSE ALGUNA DE LAS CONDICIONES MINIMAS SE ARROJA 
-            //UN MENSAJE DE NOTIFICACION AL USUARIO CUALES SON LOS ELEMENTOS 
+            //DE NO CUMPLIRSE ALGUNA DE LAS CONDICIONES MINIMAS SE ARROJA
+            //UN MENSAJE DE NOTIFICACION AL USUARIO CUALES SON LOS ELEMENTOS
             //QUE NO CUMPLEN CON LAS CONDICIONES MINIMAS.
 
             string respuesta = string.Empty;
@@ -385,6 +393,7 @@ namespace MTTO_App.ViewModel
 
             return respuesta;
         }
+
         protected string RespuestaEvaluacion2()
         {
             string respuesta = string.Empty;
@@ -406,9 +415,10 @@ namespace MTTO_App.ViewModel
 
             return respuesta;
         }
+
         protected string RespuestaEvaluacion3(List<Tableros> registros)
         {
-            //SE CREA E INICIALIZA LA VARIABLE QUE CONTENDRA 
+            //SE CREA E INICIALIZA LA VARIABLE QUE CONTENDRA
             string respuesta = string.Empty;
 
             //SE EVALUA SI YA EXISTE UN TABLERO QUE CONTENGA EL ID DEL TABLERO QUE SE INTENTA REGISTRAR
@@ -421,7 +431,6 @@ namespace MTTO_App.ViewModel
 
             //SE RETORNA EL VALOR DE LA VARIABLE RESPUESTA
             return respuesta;
-
         }
 
         //==================================================================================================
@@ -454,7 +463,7 @@ namespace MTTO_App.ViewModel
             //VARIABLE QUE RECIBE LA RESPUESTA DEL PROCESO SOLICITADO
             var respuesta = string.Empty;
 
-            if(Evaluacion1())
+            if (Evaluacion1())
             {
                 //SE MANDA A GENERAR UN CODIGO QR
                 codigoqr = GenerarCodigoQR(tableroID);      //METODO CON EL PLUGIN QRCoder
@@ -463,7 +472,7 @@ namespace MTTO_App.ViewModel
                 //==============================================================================
                 //-------------------------------------NOTA-------------------------------------
                 //SE OBTIENE UNA IMAGEN (DEL TIPO BITMAP)
-                //DEL CODIGO QR UTILIZANDO LA FUNCION 
+                //DEL CODIGO QR UTILIZANDO LA FUNCION
                 //GetGraphic del plugin QRCoder: GetGraphic(Parametro)
                 //==============================================================================
                 //Nombre del Parametro  |   Tipo    |   Descripcion
@@ -489,7 +498,7 @@ namespace MTTO_App.ViewModel
         //METODO PARA ALMACENAR IMAGENES (CodigoQR) EN LA GALERIA DEL TELEFONO
         public void SaveImage()
         {
-            //SE LLAMA LA FUNCION SavePicture 
+            //SE LLAMA LA FUNCION SavePicture
             //(CADA PLATAFORMA EJECUTARA METODOS DISTINTOS PARA GUARDAR LA IMAGEN)
             DependencyService.Get<IPicture>().SavePicture(CodigoQRFileName, CodigoQRbyte);
         }
@@ -507,7 +516,7 @@ namespace MTTO_App.ViewModel
             if (Evaluacion1())
             {
                 //SE GENERA LA SEGUNDA EVALUACION: NO SE PERMITEN ESPACIOS EN BLANCO O CARACTERES ESPECIFICOS
-                if(Evaluacion2())
+                if (Evaluacion2())
                 {
                     //SE GENERA LA APERTURA CON LA BASE DE DATOS
                     using (SQLite.SQLiteConnection connection = new SQLite.SQLiteConnection(App.FileName))
@@ -516,19 +525,19 @@ namespace MTTO_App.ViewModel
                         connection.CreateTable<Tableros>();
 
                         //SE VERIFICA SI EXISTE AL MENOS ALGUN REGISTRO DENTRO DE LA TABLA
-                        if(connection.Table<Tableros>().Any())
+                        if (connection.Table<Tableros>().Any())
                         {
                             //SE VERIFICA QUE NO EXISTA UN REGISTRO PREVIO DE DICHO TABLERO
-                            if (Evaluacion3(connection.Table<Tableros>().ToList())) 
+                            if (Evaluacion3(connection.Table<Tableros>().ToList()))
                             {
-                                //SE INSERTA EL NUEVO REGISTRO 
+                                //SE INSERTA EL NUEVO REGISTRO
                                 connection.Insert(Tableros.NuevoTablero(TableroID, SapID, Descripcion, Filial, Area, FechaRegistro,
                                     CodigoQRData, CodigoQRFileName, Usuario.Cedula));
 
                                 //SE CIERRA LA CONEXION CON LA BASE DE DATOS
                                 connection.Close();
 
-                                //SE GENERA UN MENSAJE INFORMATIVO 
+                                //SE GENERA UN MENSAJE INFORMATIVO
                                 Toast.MakeText(Android.App.Application.Context, "Tablero registrado satisfactoriamente", ToastLength.Long).Show();
                             }
                             else
@@ -547,7 +556,7 @@ namespace MTTO_App.ViewModel
                             //SE CIERRA LA CONEXION CON LA BASE DE DATOS
                             connection.Close();
 
-                            //SE GENERA UN MENSAJE INFORMATIVO 
+                            //SE GENERA UN MENSAJE INFORMATIVO
                             Toast.MakeText(Android.App.Application.Context, "Tablero registrado satisfactoriamente", ToastLength.Long).Show();
                         }
                     }
@@ -557,7 +566,6 @@ namespace MTTO_App.ViewModel
                     //SE RECIBE LA RESPUESTA DE CUAL ATRIBUTO HAY QUE MODIFICAR
                     respuesta = RespuestaEvaluacion2();
                 }
-                
             }
             else
             {
@@ -589,13 +597,13 @@ namespace MTTO_App.ViewModel
                     //SE CREA LA TABLA "Tableros" (SI YA EXISTE NO SE CREA)
                     connection.CreateTable<Tableros>();
 
-                    //SE EVALUA SI EXISTE ALGUN REGISTRO 
-                    if(connection.Table<Tableros>().Any())
+                    //SE EVALUA SI EXISTE ALGUN REGISTRO
+                    if (connection.Table<Tableros>().Any())
                     {
                         //SE REALIZA UNA CONSULTA DE CADA UNO DE LOS TABLEROS REGISTRADOS
                         foreach (Tableros tablero in connection.Table<Tableros>().ToList())
                         {
-                            //SE COMPARA SI EL PAYLOAD OBTENIDO DEL ESCANEO 
+                            //SE COMPARA SI EL PAYLOAD OBTENIDO DEL ESCANEO
                             //ES IGUAL AL ID DEL TABLERO (tablero)
                             if (tablero.TableroID.ToLower() == resultadoscan.ToLower())
                             {
@@ -607,7 +615,7 @@ namespace MTTO_App.ViewModel
                                 filial = tablero.Filial;
                                 area = tablero.AreaFilial;
                                 //-------------------------------------------------------------------------------
-                                //SE OBTIENE LA INFORMACION DE LA IMAGEN (codigoqrdata) PARA LUEGO REALIZAR LA 
+                                //SE OBTIENE LA INFORMACION DE LA IMAGEN (codigoqrdata) PARA LUEGO REALIZAR LA
                                 //CONVERSION DE STRING A BITMAP
                                 codigoqrdata = tablero.CodigoQRData;
                                 codigoqrbyte = System.Convert.FromBase64String(codigoqrdata);
@@ -626,7 +634,7 @@ namespace MTTO_App.ViewModel
                                     //SE INSERTA EN LA TABLA EL NUEVO REGISTRO.
                                     connection.Insert(Historial);
 
-                                    //CREAMOS UNA LISTA AUXILIAR 
+                                    //CREAMOS UNA LISTA AUXILIAR
                                     List<HistorialTableros> HistorialTableroAux = new List<HistorialTableros>();
 
                                     //SE BUSCA EL ULTIMO REGISTRO EN LA TABLA "HistorialTableros"

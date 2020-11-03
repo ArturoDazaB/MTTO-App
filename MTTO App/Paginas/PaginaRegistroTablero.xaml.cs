@@ -1,35 +1,27 @@
-﻿using MTTO_App.ViewModel;
+﻿using MTTO_App.Paginas.Paginas_de_Informacion;
+using MTTO_App.ViewModel;
+using Rg.Plugins.Popup.Services;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.IO;
 using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using ZXing.Net.Mobile.Forms;
-using ZXing.QrCode.Internal;
-
-using Rg.Plugins.Popup.Services;
-using MTTO_App.Paginas.Paginas_de_Informacion;
-
-
-using System.IO;
 
 namespace MTTO_App.Paginas
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
+    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PaginaRegistroTablero : ContentPage
     {
         //==========================================================================
         //==========================================================================
         //OBJETOS DE LA PAGINA:
-        Personas Persona; Usuarios Usuario;
+        private Personas Persona; private Usuarios Usuario;
 
         //--------------------------------------------------------------------------
-        //  DatosPagina: Sera el objeto que mantendra la comunicacion con las 
+        //  DatosPagina: Sera el objeto que mantendra la comunicacion con las
         //               entradas de datos y los metodos para organizar dichos datos
-        RegistroTableroViewModel DatosPagina;
+        private RegistroTableroViewModel DatosPagina;
+
         //--------------------------------------------------------------------------
 
         //==========================================================================
@@ -53,7 +45,7 @@ namespace MTTO_App.Paginas
         //==========================================================================
         //==========================================================================
         //FUNCION PARA GENERAR EL CODIGO QR
-        async protected void GenerarCodigo (object sender, EventArgs e)
+        async protected void GenerarCodigo(object sender, EventArgs e)
         {
             //SE MANDA A GENERAR EL CODIGO QR MEDIANTE
             //LA FUNCION "GenerarCodigo"
@@ -96,7 +88,7 @@ namespace MTTO_App.Paginas
 
                 //SE INDICA LA FUENTE DE LA IMAGEN
                 imagen.Source = ImageSource.FromStream(() => new MemoryStream(DatosPagina.CodigoQRbyte));
-                
+
                 //SE AÑADE LA IMAGEN AL "StackQR"
                 StackQR.Children.Add(imagen);
                 //==============================================================================================
@@ -128,7 +120,7 @@ namespace MTTO_App.Paginas
 
             //SE REALIZA LA PREGUNTA AL USUARIO SOBRE SI DERESEA REGISTRAR EL TABLERO EN LA BASE DE DATOS
             //SE EVALUA LA RESPUESTA OBTENIDA DIRECTAMENTE EN EL CONDICIONAL
-            if(await DisplayAlert("Alerta", "Esta apunto de realizar un nuevo registro de tablero." +
+            if (await DisplayAlert("Alerta", "Esta apunto de realizar un nuevo registro de tablero." +
                 "\n¿Desea continuat?", "Si", "No, volver"))
             {
                 //------------------------------------------------------------------------------------------------
@@ -143,7 +135,7 @@ namespace MTTO_App.Paginas
                 //SE EVALUA SI LA VARIABLE RETORNADA SE ENCUENTRA VACIA O NULA
                 //VACIA O NULA => SE REGISTRO SATISFACTORIAMENTE
                 //NO VACIA O NULA => NO SE PUDO REALIZAR EL REGISTRO
-                if(!string.IsNullOrEmpty(respuesta))
+                if (!string.IsNullOrEmpty(respuesta))
                 {
                     //SE MUESTRA POR MENSAJE DE CONSOLA Y DE ALERTA LA RESPUESTA OBTENIDA POR EL METODO REGISTRO TABLERO
                     Mensaje(respuesta);
@@ -165,7 +157,6 @@ namespace MTTO_App.Paginas
                     StackQR.Children.Clear();
                 }
             }
-
         }
 
         //===========================================================================
@@ -174,7 +165,7 @@ namespace MTTO_App.Paginas
         private void OnUnfocusedTableroID(object sender, FocusEventArgs e)
         {
             //SE EVALUA QUE LA PROPIEDAD "TableroID" NO SE ENCUENTRE VACIA
-            if(!string.IsNullOrEmpty(DatosPagina.TableroID))
+            if (!string.IsNullOrEmpty(DatosPagina.TableroID))
             {
                 //SE EVALUA SI SE CUMPLEN LAS CONDICIONES MINIMAS
                 if (Metodos.EspacioBlanco(DatosPagina.TableroID))
@@ -199,11 +190,11 @@ namespace MTTO_App.Paginas
         //FUNCION QUE SE ACTIVA CUANDO SE DEJE DE ENFOCAR LA ENTRADA "entryFilial"
         private void OnUnfocusedFilial(object sender, FocusEventArgs e)
         {
-            if(!string.IsNullOrEmpty(DatosPagina.Filial))
+            if (!string.IsNullOrEmpty(DatosPagina.Filial))
             {
                 //SE EVALUA SI EL TEXTO INGRESADO CUMPLE CON LAS CONDICIONES MINIMAS
                 if (Metodos.Caracteres(DatosPagina.Filial))
-                { 
+                {
                     Mensaje("El nombre de la filial no puede contener los siguientes caracteres:\n " +
                             "'!', '@', '#', '$', '%', '&', '(', ')', '+', '=', '/', '|'");
                 }
@@ -225,7 +216,7 @@ namespace MTTO_App.Paginas
         private void OnUnfocusedArea(object sender, FocusEventArgs e)
         {
             //SE EVALUA QUE LA PROPIEDAD "Area" NO SE ENCUENTRE NULA O VACIA
-            if(!string.IsNullOrEmpty(DatosPagina.Area))
+            if (!string.IsNullOrEmpty(DatosPagina.Area))
             {
                 //SE EVALUA SI EL TEXTO INGRESADO CUMPLE CON LAS CONDICIONES MINIMAS
                 if (Metodos.Caracteres(DatosPagina.Area))

@@ -19,12 +19,11 @@
                                     PositionOut="Center"
                                     ScaleIn="1.4"
                                     ScaleOut="1.0"
-                                    DurationIn="500"        
+                                    DurationIn="500"
                                     DurationOut="500"
                                     EasingIn="SinOut"
                                     EasingOut="SinIn"
-                                    HasBackgroundAnimation="True"/>
-
+                                    HasBackgroundAnimation="True" />
     </pages:PopupPage.Animation>
 
     <!--===============================================================================-->
@@ -49,10 +48,10 @@
                                 HorizontalOptions="End"
                                 VerticalOptions="Start"
                                 Clicked="OnClose"
-                                Aspect="AspectFit"/>
+                                Aspect="AspectFit" />
 
                 <!--https://iconos8.es/icons/set/close-window"
-                    Cerrar ventana  icon by a target="_blank" 
+                    Cerrar ventana  icon by a target="_blank"
                     href "https://iconos8.es"-->
 
                 <!--===========================================================================================-->
@@ -62,45 +61,44 @@
 
                     <Grid.RowDefinitions>
 
-                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto" />
                         <!--0) TITULO-->
-                        <RowDefinition Height="10"/>
+                        <RowDefinition Height="10" />
                         <!--1) ESPACIO-->
-                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto" />
                         <!--2) TEXTO INFORMATIVO-->
-                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto" />
                         <!--3) NUMERO UNO -->
-                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto" />
                         <!--4) NUMERO DOS-->
-                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto" />
                         <!--5) NUMERO TRES-->
-                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto" />
                         <!--6) NUMERO CUATRO-->
-                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto" />
                         <!--7) NUMERO CINCO-->
-
                     </Grid.RowDefinitions>
 
                     <!--=====================================================================================================-->
                     <!--0) TITULO: INFORMACION-->
                     <Label  Text="INFORMACIÓN"
-                            
+
                             FontSize="{Binding HeaderFontSize}"
                             FontAttributes="Bold"
                             TextColor="Black"
-                            
+
                             Grid.Row="0"
-                            
+
                             HorizontalOptions="Center"
-                            HorizontalTextAlignment="Center"/>
+                            HorizontalTextAlignment="Center" />
 
                     <!--=====================================================================================================-->
                     <!--2) TEXTO EXPLICATIVO-->
                     <Label  TextColor="Black"
                             FontSize="{Binding EntryFontSize}"
-                            
+
                             Grid.Row="2"
-                            
+
                             HorizontalTextAlignment="Center"
                             VerticalTextAlignment="Center">
 
@@ -110,15 +108,12 @@
 
                                 <Span   Text="Bienvenido"
                                         FontAttributes="Bold"
-                                        FontSize="{Binding EntryFontSize}"/>
-                                <Span   Text=", en la siguiente pagina obtendra toda la informacion necesaria en lo que "/>
-                                <Span   Text="respecta a las condiciones para poder realizar modificaciones"/>
-                                <Span   Text=" sobre los atributos de su usuario"/>
-
+                                        FontSize="{Binding EntryFontSize}" />
+                                <Span   Text=", en la siguiente pagina obtendra toda la informacion necesaria en lo que " />
+                                <Span   Text="respecta a las condiciones para poder realizar modificaciones" />
+                                <Span   Text=" sobre los atributos de su usuario" />
                             </FormattedString>
-
                         </Label.FormattedText>
-
                     </Label>
 
                     <!--=====================================================================================================-->
@@ -135,13 +130,10 @@
 
                                     <Span   Text="1)"
                                             FontAttributes="Bold"
-                                            FontSize="{Binding EntryFontSize}"/>
-                                    <Span   Text=" Son modificables los siguientes datos: "/>
-
+                                            FontSize="{Binding EntryFontSize}" />
+                                    <Span   Text=" Son modificables los siguientes datos: " />
                                 </FormattedString>
-
                             </Label.FormattedText>
-
                         </Label>
 
                         <!--==========================================================-->
@@ -150,11 +142,10 @@
 
                             <Grid.ColumnDefinitions>
 
-                                <ColumnDefinition Width="10"/>
+                                <ColumnDefinition Width="10" />
                                 <!--0) ESPACIO-->
-                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto" />
                                 <!--1) LISTA DE OPCIONES-->
-
                             </Grid.ColumnDefinitions>
 
                             <!--1) LISTA DE OPCIONES-->
@@ -162,8 +153,7 @@
                                     FontSize="{Binding LabelFontSize}"
                                     FontAttributes="Bold"
                                     Text="{Binding ListaDatosModificables}"
-                                    Grid.Column="1"/>
-
+                                    Grid.Column="1" />
                         </Grid>
                         <!--==========================================================-->
 
@@ -175,22 +165,18 @@
 
                                 <FormattedString>
 
-                                    <Span Text="   Los cuales estan identificados mediante un "/>
+                                    <Span Text="   Los cuales estan identificados mediante un " />
                                     <Span Text="*"
                                           TextColor="Red"
                                           FontSize="{Binding EntryFontSize}"
-                                          FontAttributes="Bold"/>
-                                    <Span Text=" en la pagina de "/>
+                                          FontAttributes="Bold" />
+                                    <Span Text=" en la pagina de " />
                                     <Span Text="configuración"
                                           FontSize="{Binding EntryFontSize}"
-                                          FontAttributes="Bold"/>
-
+                                          FontAttributes="Bold" />
                                 </FormattedString>
-
                             </Label.FormattedText>
-
                         </Label>
-
                     </StackLayout>
 
                     <!--=====================================================================================================-->
@@ -207,14 +193,11 @@
 
                                     <Span   Text="2)"
                                             FontAttributes="Bold"
-                                            FontSize="{Binding EntryFontSize}"/>
-                                    <Span   Text=" Cada que se modifique y actualice uno o varios atributos de algun usuario"/>
-                                    <Span   Text=" se generara un registro que notifica:"/>
-
+                                            FontSize="{Binding EntryFontSize}" />
+                                    <Span   Text=" Cada que se modifique y actualice uno o varios atributos de algun usuario" />
+                                    <Span   Text=" se generara un registro que notifica:" />
                                 </FormattedString>
-
                             </Label.FormattedText>
-
                         </Label>
 
                         <!--==========================================================-->
@@ -223,11 +206,10 @@
 
                             <Grid.ColumnDefinitions>
 
-                                <ColumnDefinition Width="10"/>
+                                <ColumnDefinition Width="10" />
                                 <!--0) ESPACIO-->
-                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto" />
                                 <!--1) LISTA DE OPCIONES-->
-
                             </Grid.ColumnDefinitions>
 
                             <!--1) LISTA DE OPCIONES-->
@@ -235,18 +217,16 @@
                                     FontSize="{Binding LabelFontSize}"
                                     FontAttributes="Bold"
                                     Text="{Binding ListaUltimasModificaciones}"
-                                    Grid.Column="1"/>
-
+                                    Grid.Column="1" />
                         </Grid>
                         <!--==========================================================-->
-
                     </StackLayout>
 
                     <!--=====================================================================================================-->
                     <!--5) NUMERO TRES-->
                     <Label  TextColor="Black"
                         FontSize="{Binding EntryFontSize}"
-                        
+
                         Grid.Row="5">
 
                         <Label.FormattedText>
@@ -255,16 +235,13 @@
 
                                 <Span   Text="3)"
                                         FontAttributes="Bold"
-                                        FontSize="{Binding EntryFontSize}"/>
-                                <Span   Text=" En los renglones Correo y Contraseña no se permiten "/>
+                                        FontSize="{Binding EntryFontSize}" />
+                                <Span   Text=" En los renglones Correo y Contraseña no se permiten " />
                                 <Span   Text="espacios en blanco."
                                         FontAttributes="Bold"
-                                        FontSize="{Binding EntryFontSize}"/>
-
+                                        FontSize="{Binding EntryFontSize}" />
                             </FormattedString>
-
                         </Label.FormattedText>
-
                     </Label>
 
                     <!--=====================================================================================================-->
@@ -280,17 +257,14 @@
 
                                     <Span   Text="4)"
                                             FontAttributes="Bold"
-                                            FontSize="{Binding EntryFontSize}"/>
-                                    <Span   Text=" La contraseña o clave debe poseer un minimo de "/>
+                                            FontSize="{Binding EntryFontSize}" />
+                                    <Span   Text=" La contraseña o clave debe poseer un minimo de " />
                                     <Span   Text="seis (6) caracteres."
                                             FontAttributes="Bold"
-                                            FontSize="{Binding EntryFontSize}"/>
-                                    <Span   Text=" Ademas, no se permiten ninguno de los siguientes caracteres: "/>
-
+                                            FontSize="{Binding EntryFontSize}" />
+                                    <Span   Text=" Ademas, no se permiten ninguno de los siguientes caracteres: " />
                                 </FormattedString>
-
                             </Label.FormattedText>
-
                         </Label>
 
                         <!--==========================================================-->
@@ -299,11 +273,10 @@
 
                             <Grid.ColumnDefinitions>
 
-                                <ColumnDefinition Width="5"/>
+                                <ColumnDefinition Width="5" />
                                 <!--0) ESPACIO-->
-                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto" />
                                 <!--1) LISTA DE OPCIONES-->
-
                             </Grid.ColumnDefinitions>
 
                             <!--1) LISTA DE OPCIONES-->
@@ -311,18 +284,16 @@
                                     FontSize="{Binding LabelFontSize}"
                                     FontAttributes="Bold"
                                     Text="{Binding Caracteres}"
-                                    Grid.Column="1"/>
-
+                                    Grid.Column="1" />
                         </Grid>
                         <!--==========================================================-->
-
                     </StackLayout>
 
                     <!--=====================================================================================================-->
                     <!--7) NUMERO CINCO-->
                     <Label  TextColor="Black"
                             FontSize="{Binding EntryFontSize}"
-                        
+
                             Grid.Row="7">
 
                         <Label.FormattedText>
@@ -331,23 +302,15 @@
 
                                 <Span   Text="5)"
                                         FontAttributes="Bold"
-                                        FontSize="{Binding EntryFontSize}"/>
-                                <Span   Text=" Para que los datos sean actualizados/modificados satisfactoriamente"/>
-                                <Span   Text=" el usuario debera confirmar su almacenamiento mediante el boton"/>
-                                <Span   Text=" 'Guardar'."/>
-
+                                        FontSize="{Binding EntryFontSize}" />
+                                <Span   Text=" Para que los datos sean actualizados/modificados satisfactoriamente" />
+                                <Span   Text=" el usuario debera confirmar su almacenamiento mediante el boton" />
+                                <Span   Text=" 'Guardar'." />
                             </FormattedString>
-
                         </Label.FormattedText>
-
                     </Label>
-
                 </Grid>
-
             </StackLayout>
-
         </ScrollView>
-
     </Frame>
-
 </pages:PopupPage>
