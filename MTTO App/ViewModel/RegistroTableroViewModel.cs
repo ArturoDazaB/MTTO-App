@@ -359,7 +359,7 @@ namespace MTTO_App.ViewModel
             else
                 //SI EXISTE ALGUN REGISTRO CON EL MISMO ID O CON LA MISMA DATA DEL CODIGO QR SE DETIENE EL REGISTRO (FALSE)
                 return false;
-        }
+        }   
 
         //==================================================================================================
         //==================================================================================================

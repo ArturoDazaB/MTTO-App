@@ -601,6 +601,10 @@ namespace MTTO_App.ViewModel
                             //flagLecturaEscritura = false => Acceso desde "PaginaRegistro.xaml.cs"
                             if (flagLecturaEscritura)
                             {
+                                //----------------------------------------------------------------------------------------------------
+                                //----------SECCION QUE LUEGO SERA MODIFICADA PARA INGRESAR LOS COMANDOS DE HTTPCLIENT----------------
+                                //---------------------------API CONTROLLER CLASS: "ConfiguracionController"--------------------------
+                                //----------------------------------------------------------------------------------------------------
                                 //DE NO EXISTIR SE CREA LA TABLA "ModificacionesUsuarios"
                                 connection.CreateTable<ModificacionesUsuarios>();
 
@@ -631,9 +635,15 @@ namespace MTTO_App.ViewModel
                                 //SE ACTIVA LA BANDERA DE CAMBIO DE DATOS PARA EXPULSAR AL USUARIO LOGGEADO
                                 //ASI CUANDO EL USUARIO VUELVA LOGGEARSE LOS NUEVOS DATOS SE VERAN DESPLEGADOS
                                 App.ConfigChangedFlag = true;
+                                //----------------------------------------------------------------------------------------------------
+                                //----------------------------------------------------------------------------------------------------
                             }
                             else
                             {
+                                //----------------------------------------------------------------------------------------------------
+                                //----------SECCION QUE LUEGO SERA MODIFICADA PARA INGRESAR LOS COMANDOS DE HTTPCLIENT----------------
+                                //------------------------API CONTROLLER CLASS: "RegistroUsuariosController"--------------------------
+                                //----------------------------------------------------------------------------------------------------
                                 //SE CREAN LAS TABLAS. LA LIBRERIA SQLite EVITA ESTA FUNCION DE
                                 //YA EXISTIR UNA TABLA DEL TIPO <objeto> YA CREADA PREVIAMENTE
                                 connection.CreateTable<Personas>();
@@ -686,6 +696,8 @@ namespace MTTO_App.ViewModel
                                         respuesta = "El Numero de Ficha que intenta registrar ya ha sido previamente registrado. " +
                                             "\nIntente con un numero de ficha distinto";
                                 }
+                                //----------------------------------------------------------------------------------------------------
+                                //----------------------------------------------------------------------------------------------------
                             }
                         }
                     }
