@@ -7,7 +7,6 @@
              x:Class="MTTO_App.DetailPage"
              BackgroundColor="#fcf3e3">
 
-
     <Frame BorderColor="Black"
            Margin="5,5,5,5"
            CornerRadius="0">
@@ -16,9 +15,8 @@
 
             <Grid.RowDefinitions>
 
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
             </Grid.RowDefinitions>
 
             <Frame BorderColor="Black"
@@ -31,8 +29,7 @@
                         FontSize="30"
                         TextColor="Black"
                         FontAttributes="Bold"
-                        HorizontalOptions="Center"/>
-
+                        HorizontalOptions="Center" />
             </Frame>
 
             <StackLayout Grid.Row="1">
@@ -50,32 +47,30 @@
 
                                 <Grid.RowDefinitions>
 
-                                    <RowDefinition Height="2"/>
+                                    <RowDefinition Height="2" />
                                     <0)>
-                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto" />
                                     <1) NOMBRE DE USUARIO>
-                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto" />
                                     <2)>
-                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto" />
                                     <3) NOMBRE DE PERSONA>
-                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto" />
                                     <4)>
-                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto" />
                                     <5) ULTIMA CONEXION>
-                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto" />
                                     <6)>
-                                    <RowDefinition Height="2"/>
+                                    <RowDefinition Height="2" />
                                     <7)>
-
                                 </Grid.RowDefinitions>
 
                                 <Grid.ColumnDefinitions>
 
-                                    <ColumnDefinition Width="1"/>
-                                    <ColumnDefinition Width="20"/>
-                                    <ColumnDefinition Width="auto"/>
-                                    <ColumnDefinition Width="1"/>
-
+                                    <ColumnDefinition Width="1" />
+                                    <ColumnDefinition Width="20" />
+                                    <ColumnDefinition Width="auto" />
+                                    <ColumnDefinition Width="1" />
                                 </Grid.ColumnDefinitions>
 
                                 <Label  Text="Username:"
@@ -84,13 +79,13 @@
                                 FontSize="20"
                                 Grid.Row="1"
                                 Grid.Column="1"
-                                Grid.ColumnSpan="2"/>
+                                Grid.ColumnSpan="2" />
 
                                 <Label  Text="{Binding Username}"
                                 TextColor="Black"
                                 FontSize="20"
                                 Grid.Row="2"
-                                Grid.Column="2"/>
+                                Grid.Column="2" />
 
                                 <Label  Text="Nombre Completo:"
                                 TextColor="Black"
@@ -98,13 +93,13 @@
                                 FontSize="20"
                                 Grid.Row="3"
                                 Grid.Column="1"
-                                Grid.ColumnSpan="2"/>
+                                Grid.ColumnSpan="2" />
 
                                 <Label  Text="{Binding Nombre}"
                                 TextColor="Black"
                                 FontSize="20"
                                 Grid.Row="4"
-                                Grid.Column="2"/>
+                                Grid.Column="2" />
 
                                 <Label  Text="Ultima Conexion"
                                 TextColor="Black"
@@ -112,20 +107,16 @@
                                 FontSize="20"
                                 Grid.Row="5"
                                 Grid.Column="1"
-                                Grid.ColumnSpan="2"/>
+                                Grid.ColumnSpan="2" />
 
                                 <Label  Text="{Binding UltimaConexion}"
                                 TextColor="Black"
                                 FontSize="20"
                                 Grid.Row="6"
-                                Grid.Column="2"/>
-
+                                Grid.Column="2" />
                             </Grid>
-
                         </Frame>
-
                     </DataTemplate>
-
                 </-->
 
                 <Frame  CornerRadius="10"
@@ -137,32 +128,30 @@
 
                         <Grid.RowDefinitions>
 
-                            <RowDefinition Height="2"/>
+                            <RowDefinition Height="2" />
                             <!--0)-->
-                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto" />
                             <!--1) NOMBRE DE USUARIO-->
-                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto" />
                             <!--2)-->
-                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto" />
                             <!--3) NOMBRE DE PERSONA-->
-                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto" />
                             <!--4)-->
-                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto" />
                             <!--5) ULTIMA CONEXION-->
-                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto" />
                             <!--6)-->
-                            <RowDefinition Height="2"/>
+                            <RowDefinition Height="2" />
                             <!--7)-->
-
                         </Grid.RowDefinitions>
 
                         <Grid.ColumnDefinitions>
 
-                            <ColumnDefinition Width="1"/>
-                            <ColumnDefinition Width="20"/>
-                            <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition Width="1"/>
-
+                            <ColumnDefinition Width="1" />
+                            <ColumnDefinition Width="20" />
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="1" />
                         </Grid.ColumnDefinitions>
 
                         <Label  Text="Username:"
@@ -171,13 +160,13 @@
                                 FontSize="{Binding EntryFontSize}"
                                 Grid.Row="1"
                                 Grid.Column="1"
-                                Grid.ColumnSpan="2"/>
+                                Grid.ColumnSpan="2" />
 
                         <Label  Text="{Binding UserName}"
                                 TextColor="Black"
                                 FontSize="{Binding SmallHeaderFontSize}"
                                 Grid.Row="2"
-                                Grid.Column="2"/>
+                                Grid.Column="2" />
 
                         <Label  Text="Nombre Completo:"
                                 TextColor="Black"
@@ -185,13 +174,13 @@
                                 FontSize="{Binding EntryFontSize}"
                                 Grid.Row="3"
                                 Grid.Column="1"
-                                Grid.ColumnSpan="2"/>
+                                Grid.ColumnSpan="2" />
 
                         <Label  Text="{Binding FullName}"
                                 TextColor="Black"
                                 FontSize="{Binding SmallHeaderFontSize}"
                                 Grid.Row="4"
-                                Grid.Column="2"/>
+                                Grid.Column="2" />
 
                         <Label  Text="Ultima Conexion:"
                                 TextColor="Black"
@@ -199,22 +188,16 @@
                                 FontSize="{Binding EntryFontSize}"
                                 Grid.Row="5"
                                 Grid.Column="1"
-                                Grid.ColumnSpan="2"/>
+                                Grid.ColumnSpan="2" />
 
                         <Label  Text="{Binding UltimaConexion}"
                                 TextColor="Black"
                                 FontSize="{Binding SmallHeaderFontSize}"
                                 Grid.Row="6"
-                                Grid.Column="2"/>
-
+                                Grid.Column="2" />
                     </Grid>
-
                 </Frame>
-
             </StackLayout>
-
         </Grid>
-
     </Frame>
-
 </ContentPage>

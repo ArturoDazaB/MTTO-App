@@ -19,8 +19,7 @@
     <ContentPage.ToolbarItems>
 
         <ToolbarItem Text="INFO"
-                     Clicked="OnInfoClicked"/>
-
+                     Clicked="OnInfoClicked" />
     </ContentPage.ToolbarItems>
 
     <!--===============================================================================>
@@ -44,22 +43,20 @@
 
                     <Grid.RowDefinitions>
 
-                        <RowDefinition Height="10"/>
-                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="10" />
+                        <RowDefinition Height="auto" />
                         <!--TITULO DE LA PAGINA-->
-                        <RowDefinition Height="10"/>
-
+                        <RowDefinition Height="10" />
                     </Grid.RowDefinitions>
 
                     <!--TITULO DE LA PAGINA-->
-                    <Label  Text="Pagina de Registro"       
+                    <Label  Text="Pagina de Registro"
                             FontSize="{Binding HeaderFontSize}"
                             FontAttributes="Bold"
                             TextColor="Black"
                             Grid.Row="1"
                             HorizontalOptions="Center"
-                            HorizontalTextAlignment="Center"/>
-
+                            HorizontalTextAlignment="Center" />
                 </Grid>
 
                 <!--================================================================================>
@@ -79,71 +76,70 @@
                                TextColor="Black"
                                FontSize="{Binding HeaderFontSize}"
                                FontAttributes="Bold"
-                               HorizontalTextAlignment="Center"/>
+                               HorizontalTextAlignment="Center" />
 
                         <Grid x:Name="DatosPersonaGrid">
 
                             <Grid.RowDefinitions>
 
-                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto" />
                                 <!--0) TITULO: NOMBRE(S)-->
-                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto" />
                                 <!--1) NOMBRE(S)-->
-                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto" />
                                 <!--2) TITULO: APELLIDO(S)-->
-                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto" />
                                 <!--3) APELLIDO(S)-->
-                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto" />
                                 <!--4) TITULO: CEDULA-->
-                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto" />
                                 <!--5) CEDULA-->
-                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto" />
                                 <!--6) TITULO: NUMERO FICHA -->
-                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto" />
                                 <!--7) NUMERO FICHA-->
-                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto" />
                                 <!--8) TITULO FECHA DE NACIMIENTO-->
-                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto" />
                                 <!--9) FECHA DE NACIMIENTO-->
-                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto" />
                                 <!--10) TITULO: TELEFONO-->
-                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto" />
                                 <!--11) TELEFONO-->
-                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto" />
                                 <!--12) TITULO: CORREO-->
-                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto" />
                                 <!--13) CORREO-->
-
                             </Grid.RowDefinitions>
 
                             <!--TITULO: NOMBRE(s)-->
                             <Label  Text="{Binding NombresPH}"
                                     FontSize="{Binding LabelFontSize}"
-                                    Grid.Row="0"/>
+                                    Grid.Row="0" />
 
                             <!--1) NOMBRE-->
                             <Entry  Grid.Row="1"
                                     Placeholder="Ingresa tu(s) Nombre(s)"
                                     x:Name="nombresEntry"
                                     Text="{Binding Nombres}"
-                                    FontSize="{Binding EntryFontSize}"/>
+                                    FontSize="{Binding EntryFontSize}" />
 
                             <!--TITULO : APELLIDO(s)-->
                             <Label  Text="{Binding ApellidosPH}"
                                     FontSize="{Binding LabelFontSize}"
-                                    Grid.Row="2"/>
+                                    Grid.Row="2" />
 
                             <!--2) APELLIDOS-->
                             <Entry  Grid.Row="3"
                                     Placeholder="Ingresa tu(s) Apellido(s)"
                                     x:Name="apellidosEntry"
                                     Text="{Binding Apellidos}"
-                                    FontSize="{Binding EntryFontSize}"/>
+                                    FontSize="{Binding EntryFontSize}" />
 
                             <!--TITULO: CEDULA(ID)-->
                             <Label  Text="{Binding CedulaPH}"
                                     FontSize="{Binding LabelFontSize}"
-                                    Grid.Row="4"/>
+                                    Grid.Row="4" />
 
                             <!--3) CEDULA-->
                             <Entry  Grid.Row="5"
@@ -151,12 +147,12 @@
                                     Keyboard="Numeric"
                                     x:Name="cedulaEntry"
                                     Text="{Binding Cedula}"
-                                    FontSize="{Binding EntryFontSize}"/>
+                                    FontSize="{Binding EntryFontSize}" />
 
                             <!--TITULO: NUMERO DE FICHA-->
                             <Label  Text="{Binding NumeroFichaPH}"
                                     FontSize="{Binding LabelFontSize}"
-                                    Grid.Row="6"/>
+                                    Grid.Row="6" />
 
                             <!--4) NUMERO DE FICHA-->
                             <Entry  Grid.Row="7"
@@ -164,25 +160,24 @@
                                     Keyboard="Numeric"
                                     x:Name="numerofichaEntry"
                                     Text="{Binding NumeroFicha}"
-                                    FontSize="{Binding EntryFontSize}"/>
-
+                                    FontSize="{Binding EntryFontSize}" />
 
                             <!--TITULO: FECHA DE NACIMIENTO-->
                             <Label  Text="{Binding FechaNacimientoPH}"
                                     FontSize="{Binding LabelFontSize}"
-                                    Grid.Row="8"/>
+                                    Grid.Row="8" />
 
                             <!--4) FECHA DE NACIMIENTO-->
                             <DatePicker Grid.Row="9"
                                         x:Name="fechaNacimientoPicker"
                                         Date="{Binding FechaNacimiento}"
                                         Unfocused="OnDateSelected"
-                                        FontSize="{Binding EntryFontSize}"/>
+                                        FontSize="{Binding EntryFontSize}" />
 
                             <!--TITULO: TELEFONO-->
                             <Label  Text="{Binding TelefonoPH}"
                                     FontSize="{Binding LabelFontSize}"
-                                    Grid.Row="10"/>
+                                    Grid.Row="10" />
 
                             <!--5) TELEFONO-->
                             <Entry  Grid.Row="11"
@@ -191,12 +186,12 @@
                                     MaxLength="{Binding TelefonoMaxLegnt}"
                                     x:Name="telefonoEntry"
                                     Text="{Binding Telefono}"
-                                    FontSize="{Binding EntryFontSize}"/>
+                                    FontSize="{Binding EntryFontSize}" />
 
                             <!--TITULO: CORREO-->
                             <Label  Text="{Binding CorreoPH}"
                                     FontSize="{Binding LabelFontSize}"
-                                    Grid.Row="12"/>
+                                    Grid.Row="12" />
 
                             <!--6) CORREO-->
                             <Entry  Grid.Row="13"
@@ -206,12 +201,9 @@
                                     TextChanged="CorreccionCorreo"
                                     Keyboard="Email"
                                     Text="{Binding Correo}"
-                                    FontSize="{Binding EntryFontSize}"/>
-
+                                    FontSize="{Binding EntryFontSize}" />
                         </Grid>
-
                     </StackLayout>
-
                 </Frame>
 
                 <!--================================================================================>
@@ -229,43 +221,42 @@
                                 TextColor="Black"
                                 FontSize="{Binding HeaderFontSize}"
                                 FontAttributes="Bold"
-                                HorizontalTextAlignment="Center"/>
+                                HorizontalTextAlignment="Center" />
 
                         <Grid   x:Name="DatosUsuarioGrid">
 
                             <Grid.RowDefinitions>
 
-                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto" />
                                 <!--0) TITULO: USERNAME-->
-                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto" />
                                 <!--1) USUARIO-->
-                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto" />
                                 <!--2) TITULO: NIVEL DE USUARIO-->
-                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto" />
                                 <!--3) NIVEL DE USUARIO-->
-                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto" />
                                 <!--4) TITULO: PASSWORD-->
-                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto" />
                                 <!--5) PASSWORD-->
-                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto" />
                                 <!--6) REPEAT PASSWORD-->
-
                             </Grid.RowDefinitions>
 
                             <!--TITULO NOMBRE(s)-->
                             <Label  Text="{Binding UsernamePH}"
                                     FontSize="{Binding LabelFontSize}"
-                                    Grid.Row="0"/>
+                                    Grid.Row="0" />
 
                             <!--USERNAME-->
                             <Label  x:Name="usernameEntry"
                                     Grid.Row="1"
-                                    FontSize="{Binding EntryFontSize}"/>
+                                    FontSize="{Binding EntryFontSize}" />
 
                             <!--TITULO: NIVEL DE USUARIO-->
                             <Label Text="{Binding NivelUsuarioPH}"
                                    FontSize="{Binding LabelFontSize}"
-                                   Grid.Row="2"/>
+                                   Grid.Row="2" />
 
                             <!--NIVEL DE USUARIO-->
                             <Picker x:Name="nivelusuarioPicker"
@@ -274,40 +265,37 @@
                                     FontSize="{Binding EntryFontSize}"
                                     TextColor="Black"
                                     Grid.Row="3"
-                                    SelectedIndexChanged="OnSelectedNivelUsuarios"/>
+                                    SelectedIndexChanged="OnSelectedNivelUsuarios" />
 
                             <!--TITULO PASSWORD-->
                             <Label  Text="{Binding PasswordPH}"
                                     FontSize="{Binding LabelFontSize}"
-                                    Grid.Row="4"/>
+                                    Grid.Row="4" />
 
                             <!--CONTRASEÑA-->
                             <Entry  x:Name="passwordEntry1"
                                     Grid.Row="5"
                                     Placeholder="Ingresa Tu Contraseña"
                                     Unfocused="OnCompletedPassword1"
-                                    TextChanged="CorreccionPassword1"   
+                                    TextChanged="CorreccionPassword1"
                                     IsPassword="True"
                                     MaxLength="{Binding PasswordMaxLegnt}"
                                     Text="{Binding Password}"
-                                    FontSize="{Binding EntryFontSize}"/>
+                                    FontSize="{Binding EntryFontSize}" />
 
                             <!--CONFIRMACION DE LA CONTRASEÑA-->
                             <Entry  x:Name="passwordEntry2"
                                     Grid.Row="6"
                                     Placeholder="Confirma Tu Contraseña"
                                     Unfocused="OnCompletedPassword2"
-                               
+
                                     TextChanged="CorreccionPassword2"
                                     IsPassword="True"
                                     MaxLength="{Binding PasswordMaxLegnt}"
                                     Text="{Binding ConfirmacionPassword}"
-                                    FontSize="{Binding EntryFontSize}"/>
-
+                                    FontSize="{Binding EntryFontSize}" />
                         </Grid>
-
                     </StackLayout>
-
                 </Frame>
 
                 <!--================================================================================>
@@ -323,25 +311,21 @@
                         FontAttributes="Bold"
                         HeightRequest="35"
                         CornerRadius="10"
-                        
-                        x:Name="Boton"/>
+
+                        x:Name="Boton" />
 
                 <!--================================================================================>
                 <=================================================================================-->
                 <!--ACTIVITY INDICATOR-->
                 <ActivityIndicator  x:Name = "ActivityIndicatorA"
-                                    HeightRequest = "30"/>
+                                    HeightRequest = "30" />
 
                 <!--================================================================================>
                 <=================================================================================-->
-
             </StackLayout>
-
         </Frame>
-
     </ScrollView>
 
     <!--==============================================================================================================================-->
     <!--==============================================================================================================================-->
-
 </ContentPage>

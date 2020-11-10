@@ -384,10 +384,11 @@ namespace MTTO_App
     //======================================================================================================
     //======================================================================================================
 
-    public class Tableros 
+    public class Tableros
     {
         [PrimaryKey, Unique, MaxLength(20)]
         public string TableroID { get; set; }
+
         public string SapID { get; set; }
         public int IDCreador { get; set; }
         public string Filial { get; set; }
@@ -449,7 +450,6 @@ namespace MTTO_App
             };
         }
     }
-
 
     //======================================================================================================
     //======================================================================================================
@@ -518,10 +518,11 @@ namespace MTTO_App
     //======================================================================================================
     //======================================================================================================
 
-    public class ItemTablero 
+    public class ItemTablero
     {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
+
         public string TableroID { get; set; }
         public string Descripcion { get; set; }
         public int Cantidad { get; set; }

@@ -14,7 +14,7 @@
 
             <!--======================================================================================================-->
             <!--======================================================================================================-->
-            
+
             <Frame BorderColor="Black"
                    CornerRadius="0">
 
@@ -34,15 +34,14 @@
 
                                 <Grid.RowDefinitions>
 
-                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto" />
                                     <!--0) LISTA DE OPCIONES-->
-                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto" />
                                     <!--1) espacio-->
-                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto" />
                                     <!--2) DATOS DE BUSQUEDA-->
-                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto" />
                                     <!--3) BOTON DE BUSQUEDA-->
-
                                 </Grid.RowDefinitions>
 
                                 <!--===========================================================================================-->
@@ -59,11 +58,10 @@
 
                                                 <Grid.RowDefinitions>
 
-                                                    <RowDefinition Height="auto"/>
+                                                    <RowDefinition Height="auto" />
                                                     <!--0) TITULO DE LA SECCION DE BUSQUEDA-->
-                                                    <RowDefinition Height="auto"/>
+                                                    <RowDefinition Height="auto" />
                                                     <!--1) LISTA DE OPCIONES DE METODOS DE BUSQUEDA-->
-
                                                 </Grid.RowDefinitions>
 
                                                 <!--==========================================================-->
@@ -74,7 +72,7 @@
                                                     FontAttributes="Bold"
                                                     HorizontalOptions="Start"
                                                     VerticalOptions="Start"
-                                                    Grid.Row="0"/>
+                                                    Grid.Row="0" />
 
                                                 <!--==========================================================-->
                                                 <!--1) LISTA DE OPCIONES DE METODOS DE BUSQUEDA-->
@@ -82,14 +80,10 @@
                                                     Title="Opciones"
                                                     FontSize="15"
                                                     Grid.Row="1"
-                                                    SelectedIndexChanged="OnSelectedOpciones"/>
-
+                                                    SelectedIndexChanged="OnSelectedOpciones" />
                                             </Grid>
-
                                         </DataTemplate>
-
                                     </BindableLayout.ItemTemplate>
-
                                 </StackLayout>
 
                                 <!--===========================================================================================-->
@@ -97,7 +91,7 @@
                                 <Entry  Placeholder="{Binding EntryDatosPH}"
                                     FontSize="15"
                                     Grid.Row="2"
-                                    x:Name="EntryDatos"/>
+                                    x:Name="EntryDatos" />
 
                                 <!--===========================================================================================-->
                                 <!--3) BOTON DE BUSQUEDA-->
@@ -111,18 +105,15 @@
                                     HeightRequest="35"
                                     CornerRadius="10"
                                     Grid.Row="3"
-                                    Clicked="OnBuscar"/>
-
+                                    Clicked="OnBuscar" />
                             </Grid>
-
                         </StackLayout>
-
                     </Frame>
 
                     <!--=========================================================================-->
                     <!--=========================================================================-->
                     <!--SECCION DE RESULTADO DE BUSQUEDA (INVISIBLE ANTES DE BUSQUEDA)-->
-                    
+
                     <Frame  BorderColor="Black"
                             CornerRadius="10"
                             x:Name="FrameListaBusqueda"
@@ -136,20 +127,19 @@
                                    FontAttributes="Bold"
                                    HorizontalOptions="Start"
                                    VerticalOptions="Start"
-                                   Grid.Row="0"/>
+                                   Grid.Row="0" />
 
                             <Grid ColumnSpacing="10"
                                   HorizontalOptions="StartAndExpand">
 
                                 <Grid.ColumnDefinitions>
 
-                                    <ColumnDefinition Width="90"/>
+                                    <ColumnDefinition Width="90" />
                                     <!--0) COLUMNA CEDULA-->
-                                    <ColumnDefinition Width="90"/>
+                                    <ColumnDefinition Width="90" />
                                     <!--1) COLUMNA NOMBRES-->
-                                    <ColumnDefinition Width="90"/>
+                                    <ColumnDefinition Width="90" />
                                     <!--2) COLUMNA APELLIDOS-->
-
                                 </Grid.ColumnDefinitions>
 
                                 <!--===========================================================================================-->
@@ -159,7 +149,7 @@
                                         FontAttributes="Bold"
                                         HorizontalOptions="Start"
                                         TextColor="Black"
-                                        Grid.Column="0"/>
+                                        Grid.Column="0" />
 
                                 <!--===========================================================================================-->
                                 <!--0) COLUMNA NOMBRES-->
@@ -168,7 +158,7 @@
                                         FontAttributes="Bold"
                                         HorizontalOptions="Start"
                                         TextColor="Black"
-                                        Grid.Column="1"/>
+                                        Grid.Column="1" />
 
                                 <!--===========================================================================================-->
                                 <!--0) COLUMNA APELLIDOS-->
@@ -177,8 +167,7 @@
                                         FontAttributes="Bold"
                                         HorizontalOptions="Start"
                                         TextColor="Black"
-                                        Grid.Column="2"/>
-
+                                        Grid.Column="2" />
                             </Grid>
 
                             <ListView   x:Name="ListViewPersonas"
@@ -196,59 +185,46 @@
 
                                                 <Grid.ColumnDefinitions>
 
-                                                    <ColumnDefinition Width="90"/>
-                                                    <ColumnDefinition Width="90"/>
-                                                    <ColumnDefinition Width="90"/>
-
+                                                    <ColumnDefinition Width="90" />
+                                                    <ColumnDefinition Width="90" />
+                                                    <ColumnDefinition Width="90" />
                                                 </Grid.ColumnDefinitions>
 
                                                 <Label  Text="{Binding Cedula}"
                                                         FontSize="15"
                                                         HorizontalOptions="Start"
                                                         TextColor="Black"
-                                                        Grid.Column="0"/>
+                                                        Grid.Column="0" />
 
                                                 <Label  Text="{Binding Nombres}"
                                                         FontSize="15"
                                                         HorizontalOptions="Start"
                                                         TextColor="Black"
-                                                        Grid.Column="1"/>
+                                                        Grid.Column="1" />
 
                                                 <Label  Text="{Binding Apellidos}"
                                                         FontSize="15"
                                                         HorizontalOptions="Start"
                                                         TextColor="Black"
-                                                        Grid.Column="2"/>
-
+                                                        Grid.Column="2" />
                                             </Grid>
-
                                         </ViewCell>
-
                                     </DataTemplate>
-
                                 </ListView.ItemTemplate>
-
                             </ListView>
-
                         </StackLayout>
-
                     </Frame>
 
                     <!--=========================================================================-->
                     <!--=========================================================================-->
                     <!--ACTIVITY INDICATOR-->
                     <ActivityIndicator x:Name="ActivityIndicatorBusqueda"
-                                               HeightRequest="30"/>
-
+                                               HeightRequest="30" />
                 </StackLayout>
-
             </Frame>
 
             <!--======================================================================================================-->
             <!--======================================================================================================-->
-
         </StackLayout>
-
     </ScrollView>
-
 </ContentPage>

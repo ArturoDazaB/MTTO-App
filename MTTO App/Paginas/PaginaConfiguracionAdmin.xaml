@@ -11,8 +11,7 @@
     <ContentPage.ToolbarItems>
 
         <ToolbarItem Text="INFO"
-                     Clicked="OnInfoClicked"/>
-
+                     Clicked="OnInfoClicked" />
     </ContentPage.ToolbarItems>
 
     <ScrollView Margin="0,0,0,5">
@@ -51,58 +50,57 @@
                                 TextColor="Black"
                                 FontAttributes="Bold"
                                 FontSize="{Binding HeaderFontSize}"
-                                HorizontalOptions="Center"/>
+                                HorizontalOptions="Center" />
 
                         <Grid>
 
                             <Grid.RowDefinitions>
-                                
-                                <RowDefinition Height="auto"/>
-                                <!--0) TITULO: FECHA DE REGISTRO-->
-                                <RowDefinition Height="auto"/>
-                                <!--1) FECHA DE REGISTRO-->
-                                <RowDefinition Height="auto"/>
-                                <!--2) TITULO: NOMBRE(S)-->
-                                <RowDefinition Height="auto"/>
-                                <!--3) NOMBRE(S)-->
-                                <RowDefinition Height="auto"/>
-                                <!--4) TITULO: APELLIDO(S)-->
-                                <RowDefinition Height="auto"/>
-                                <!--5) APELLIDO(S)-->
-                                <RowDefinition Height="auto"/>
-                                <!--6) TITULO: CEDULA DE IDENTIDAD (ID)-->
-                                <RowDefinition Height="auto"/>
-                                <!--7) CEDULA (ID)-->
-                                <RowDefinition Height="auto"/>
-                                <!--8) TITULO: NUMERO DE FICHA-->
-                                <RowDefinition Height="auto"/>
-                                <!--9) NUMERO DE FICHA-->
-                                <RowDefinition Height="auto"/>
-                                <!--10) TITULO: FECHA DE NACIMIENTO-->
-                                <RowDefinition Height="auto"/>
-                                <!--11) FECHA DE NACIMIENTO-->
-                                <RowDefinition Height="auto"/>
-                                <!--12) TITULO: TELEFONO CELULAR-->
-                                <RowDefinition Height="auto"/>
-                                <!--13) TELEFONO CELULAR-->
-                                <RowDefinition Height="auto"/>
-                                <!--14) TITULO: CORREO -->
-                                <RowDefinition Height="auto"/>
-                                <!--15) CORREO-->
 
+                                <RowDefinition Height="auto" />
+                                <!--0) TITULO: FECHA DE REGISTRO-->
+                                <RowDefinition Height="auto" />
+                                <!--1) FECHA DE REGISTRO-->
+                                <RowDefinition Height="auto" />
+                                <!--2) TITULO: NOMBRE(S)-->
+                                <RowDefinition Height="auto" />
+                                <!--3) NOMBRE(S)-->
+                                <RowDefinition Height="auto" />
+                                <!--4) TITULO: APELLIDO(S)-->
+                                <RowDefinition Height="auto" />
+                                <!--5) APELLIDO(S)-->
+                                <RowDefinition Height="auto" />
+                                <!--6) TITULO: CEDULA DE IDENTIDAD (ID)-->
+                                <RowDefinition Height="auto" />
+                                <!--7) CEDULA (ID)-->
+                                <RowDefinition Height="auto" />
+                                <!--8) TITULO: NUMERO DE FICHA-->
+                                <RowDefinition Height="auto" />
+                                <!--9) NUMERO DE FICHA-->
+                                <RowDefinition Height="auto" />
+                                <!--10) TITULO: FECHA DE NACIMIENTO-->
+                                <RowDefinition Height="auto" />
+                                <!--11) FECHA DE NACIMIENTO-->
+                                <RowDefinition Height="auto" />
+                                <!--12) TITULO: TELEFONO CELULAR-->
+                                <RowDefinition Height="auto" />
+                                <!--13) TELEFONO CELULAR-->
+                                <RowDefinition Height="auto" />
+                                <!--14) TITULO: CORREO -->
+                                <RowDefinition Height="auto" />
+                                <!--15) CORREO-->
                             </Grid.RowDefinitions>
 
                             <!--0) TITULO FECHA DE REGISTRO-->
                             <Label  Text="{Binding FechaRegistroPH}"
                                     FontSize="{Binding LabelFontSize}"
-                                    Grid.Row="0"/>
+                                    Grid.Row="0" />
 
                             <!--1) FECHA DE REGISTRO-->
                             <DatePicker Date="{Binding FechaCreacion}"
                                         FontSize="{Binding EntryFontSize}"
                                         TextColor="Black"
                                         IsEnabled="false"
-                                        Grid.Row="1"/>
+                                        Grid.Row="1" />
 
                             <!--2) TITULO NOMBRE(s)-->
                             <Label  FontSize="{Binding LabelFontSize}"
@@ -112,16 +110,13 @@
 
                                     <FormattedString>
 
-                                        <Span   Text="{Binding NombresPH}"/>
+                                        <Span   Text="{Binding NombresPH}" />
                                         <Span   Text="*"
                                                 FontSize="{Binding LabelFontSize}"
                                                 FontAttributes="Bold"
-                                                TextColor="Red"/>
-
+                                                TextColor="Red" />
                                     </FormattedString>
-
                                 </Label.FormattedText>
-
                             </Label>
 
                             <!--3) NOMBRE(S)-->
@@ -130,8 +125,7 @@
                                     TextColor="Black"
                                     FontSize="{Binding EntryFontSize}"
                                     Grid.Row="3"
-                                    Unfocused="OnUnfocusedNombres"/>
-
+                                    Unfocused="OnUnfocusedNombres" />
 
                             <!--4) TITULO APELLIDO(S)-->
                             <Label  FontSize="{Binding LabelFontSize}"
@@ -141,16 +135,13 @@
 
                                     <FormattedString>
 
-                                        <Span   Text="{Binding ApellidosPH}"/>
+                                        <Span   Text="{Binding ApellidosPH}" />
                                         <Span   Text="*"
                                                 FontSize="{Binding LabelFontSize}"
                                                 FontAttributes="Bold"
-                                                TextColor="Red"/>
-
+                                                TextColor="Red" />
                                     </FormattedString>
-
                                 </Label.FormattedText>
-
                             </Label>
 
                             <!--5) APELLIDO(S)-->
@@ -159,30 +150,29 @@
                                     TextColor="Black"
                                     FontSize="{Binding EntryFontSize}"
                                     Grid.Row="5"
-                                    Unfocused="OnUnfocusedApellidos"/>
-
+                                    Unfocused="OnUnfocusedApellidos" />
 
                             <!--6) TITULO CEDULA(ID)-->
                             <Label  Text="{Binding CedulaPH}"
                                     FontSize="{Binding LabelFontSize}"
-                                    Grid.Row="6"/>
+                                    Grid.Row="6" />
 
                             <!--7) CEDULA(ID)-->
                             <Label  Text="{Binding Cedula}"
                                     TextColor="Black"
                                     FontSize="{Binding EntryFontSize}"
-                                    Grid.Row="7"/>
-                            
+                                    Grid.Row="7" />
+
                             <!--8) TITULO: NUMERO DE FICHA-->
                             <Label  Text="{Binding NumeroFichaPH}"
                                     FontSize="{Binding LabelFontSize}"
-                                    Grid.Row="8"/>
-                            
+                                    Grid.Row="8" />
+
                             <!--9) NUMERO DE FICHA-->
                             <Label Text="{Binding NumeroFicha}"
                                    TextColor="Black"
                                    FontSize="{Binding EntryFontSize}"
-                                   Grid.Row="9"/>
+                                   Grid.Row="9" />
 
                             <!--10) TITULO FECHA DE NACIMIENTO-->
                             <Label  FontSize="{Binding LabelFontSize}"
@@ -192,16 +182,13 @@
 
                                     <FormattedString>
 
-                                        <Span   Text="{Binding FechaNacimientoPH}"/>
+                                        <Span   Text="{Binding FechaNacimientoPH}" />
                                         <Span   Text="*"
                                                 FontSize="{Binding LabelFontSize}"
                                                 FontAttributes="Bold"
-                                                TextColor="Red"/>
-
+                                                TextColor="Red" />
                                     </FormattedString>
-
                                 </Label.FormattedText>
-
                             </Label>
 
                             <!--11) FECHA DE NACIMIENTO-->
@@ -210,7 +197,7 @@
                                         TextColor="Black"
                                         FontSize="{Binding EntryFontSize}"
                                         Grid.Row="11"
-                                        Unfocused="OnUnfocusedDate"/>
+                                        Unfocused="OnUnfocusedDate" />
 
                             <!--12) TITULO TELEFONO-->
                             <Label  FontSize="{Binding LabelFontSize}"
@@ -220,16 +207,13 @@
 
                                     <FormattedString>
 
-                                        <Span   Text="{Binding TelefonoPH}"/>
+                                        <Span   Text="{Binding TelefonoPH}" />
                                         <Span   Text="*"
                                                 FontSize="{Binding LabelFontSize}"
                                                 FontAttributes="Bold"
-                                                TextColor="Red"/>
-
+                                                TextColor="Red" />
                                     </FormattedString>
-
                                 </Label.FormattedText>
-
                             </Label>
 
                             <!--13) TELEFONO-->
@@ -239,7 +223,7 @@
                                     FontSize="{Binding EntryFontSize}"
                                     MaxLength="{Binding TelefonoMaxLegnt}"
                                     Grid.Row="13"
-                                    Unfocused="OnUnfocusedTelefono"/>
+                                    Unfocused="OnUnfocusedTelefono" />
 
                             <!--14) TITULO CORREO/EMAIL-->
                             <Label  FontSize="{Binding LabelFontSize}"
@@ -249,16 +233,13 @@
 
                                     <FormattedString>
 
-                                        <Span   Text="{Binding CorreoPH}"/>
+                                        <Span   Text="{Binding CorreoPH}" />
                                         <Span   Text="*"
                                                 FontSize="{Binding LabelFontSize}"
                                                 FontAttributes="Bold"
-                                                TextColor="Red"/>
-
+                                                TextColor="Red" />
                                     </FormattedString>
-
                                 </Label.FormattedText>
-
                             </Label>
 
                             <!--15) CORREO-->
@@ -267,12 +248,9 @@
                                     TextColor="Black"
                                     FontSize="{Binding EntryFontSize}"
                                     Grid.Row="15"
-                                    Unfocused="OnUnfocusedCorreo"/>
-
+                                    Unfocused="OnUnfocusedCorreo" />
                         </Grid>
-
                     </StackLayout>
-
                 </Frame>
 
                 <!--====================================================================================-->
@@ -294,24 +272,23 @@
 
                             <Grid.RowDefinitions>
 
-                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto" />
                                 <!--0) TITULO DE LA SECCION: INFORMACION DE USUARIO-->
-                                <RowDefinition Height="5"/>
+                                <RowDefinition Height="5" />
                                 <!--1) ESPACIO-->
-                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto" />
                                 <!--2) TITULO: NOMBRE DE USUARIO-->
-                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto" />
                                 <!--3) USERNAME-->
-                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto" />
                                 <!--4) TITULO NIVEL DE USUARIO-->
-                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto" />
                                 <!--5) NIVEL DE USUARIO-->
-                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto" />
                                 <!--6) TITULO: CONTRASEÑA-->
-                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto" />
                                 <!--7) CONTRASEÑA-->
-                                <RowDefinition Height="5"/>
-
+                                <RowDefinition Height="5" />
                             </Grid.RowDefinitions>
 
                             <!--0) TITULO INFORMACION DE USUARIO-->
@@ -320,7 +297,7 @@
                                     FontAttributes="Bold"
                                     FontSize="{Binding HeaderFontSize}"
                                     HorizontalOptions="Center"
-                                    Grid.Row="0"/>
+                                    Grid.Row="0" />
 
                             <!--2) TITULO USERNAME-->
                             <Label  FontSize="{Binding LabelFontSize}"
@@ -330,16 +307,13 @@
 
                                     <FormattedString>
 
-                                        <Span   Text="{Binding UsernamePH}"/>
+                                        <Span   Text="{Binding UsernamePH}" />
                                         <Span   Text="*"
                                                 FontSize="{Binding LabelFontSize}"
                                                 FontAttributes="Bold"
-                                                TextColor="Red"/>
-
+                                                TextColor="Red" />
                                     </FormattedString>
-
                                 </Label.FormattedText>
-
                             </Label>
 
                             <!--3) USERNAME-->
@@ -348,8 +322,8 @@
                                     TextColor="Black"
                                     FontSize="{Binding EntryFontSize}"
                                     Grid.Row="3"
-                                    Unfocused="OnUnfocusedUsername"/>
-                            
+                                    Unfocused="OnUnfocusedUsername" />
+
                             <!--4) TITULO: NIVEL DE USUARIO-->
                             <Label  FontSize="{Binding LabelFontSize}"
                                     Grid.Row="4">
@@ -358,25 +332,22 @@
 
                                     <FormattedString>
 
-                                        <Span   Text="{Binding NivelUsuarioPH}"/>
+                                        <Span   Text="{Binding NivelUsuarioPH}" />
                                         <Span   Text="*"
                                                 FontSize="{Binding LabelFontSize}"
                                                 FontAttributes="Bold"
-                                                TextColor="Red"/>
-
+                                                TextColor="Red" />
                                     </FormattedString>
-
                                 </Label.FormattedText>
-
                             </Label>
-                            
+
                             <!--5) NIVEL DE USUARIO-->
                             <Picker x:Name="nivelusuarioPicker"
                                     Title="{Binding PickerTitulo}"
                                     ItemsSource="{Binding NivelUsuarioList}"
                                     FontSize="{Binding EntryFontSize}"
                                     TextColor="Black"
-                                    Grid.Row="5"/>
+                                    Grid.Row="5" />
 
                             <!--TITULO PASSWORD-->
                             <Label  FontSize="{Binding LabelFontSize}"
@@ -386,16 +357,13 @@
 
                                     <FormattedString>
 
-                                        <Span   Text="{Binding PasswordPH}"/>
+                                        <Span   Text="{Binding PasswordPH}" />
                                         <Span   Text="*"
                                                 FontSize="{Binding LabelFontSize}"
                                                 FontAttributes="Bold"
-                                                TextColor="Red"/>
-
+                                                TextColor="Red" />
                                     </FormattedString>
-
                                 </Label.FormattedText>
-
                             </Label>
 
                             <!--PASSWORD-->
@@ -406,19 +374,16 @@
                                     Grid.Row="7"
                                     IsPassword="True"
                                     Focused="FocusedPassword"
-                                    Unfocused="UnFocusedPassword"/>
-
+                                    Unfocused="UnFocusedPassword" />
                         </Grid>
-
                     </StackLayout>
-
                 </Frame>
 
                 <!--====================================================================================-->
                 <!--====================================================================================-->
 
                 <ActivityIndicator IsRunning="{Binding OnSave}"
-                                   IsVisible="{Binding OnSave}"/>
+                                   IsVisible="{Binding OnSave}" />
 
                 <!--BOTON DE GUARDADO-->
                 <Button VerticalOptions="Center"
@@ -430,12 +395,8 @@
                         TextColor="White"
                         HeightRequest="35"
                         CornerRadius="10"
-                        IsEnabled="{Binding IsBusy}"/>
-
+                        IsEnabled="{Binding IsBusy}" />
             </StackLayout>
-
         </Frame>
-
     </ScrollView>
-
 </ContentPage>

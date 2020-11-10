@@ -35,6 +35,7 @@ namespace MTTO_App.ViewModel
 
         //--------------------------------------------------------------------------------------------------
         protected string resultadoscan;
+
         protected int opcionconsultaid;
 
         //--------------------------------------------------------------------------------------------------
@@ -198,6 +199,7 @@ namespace MTTO_App.ViewModel
                 }
             }
         }
+
         //--------------------------------------------------------------------------------------------------
         public string Descripcion
         {
@@ -210,6 +212,7 @@ namespace MTTO_App.ViewModel
                 NotificacionCambio("Descripcion", Descripcion);
             }
         }
+
         public string Cantidad
         {
             get { return cantidad; }
@@ -219,13 +222,14 @@ namespace MTTO_App.ViewModel
                 OnPropertyChanged();
 
                 NotificacionCambio("Cantidad", Cantidad);
-                
             }
         }
+
         public List<ItemTablero> Items
         {
             get { return items; }
         }
+
         //--------------------------------------------------------------------------------------------------
         public List<string> Opciones
         {
@@ -238,6 +242,7 @@ namespace MTTO_App.ViewModel
                 };
             }
         }
+
         public string TipoDeConsulta { set { tipodeconsulta = value; } }
 
         public DateTime UltimaFechaConsulta { get { return ultimafechaconsulta; } }
@@ -290,6 +295,7 @@ namespace MTTO_App.ViewModel
 
         //----------------------------------PH BotonesPaginaRegistroTablero---------------------------------
         public string GenerarTableroPH { get { return "Generar"; } }
+
         public string AddItemPHP { get { return "Añadir Item"; } }
         public string GuardarTableroPH { get { return "Guardar Imagen"; } }
         public string RegistrarTableroPH { get { return "Registrar"; } }
@@ -330,7 +336,6 @@ namespace MTTO_App.ViewModel
         public List<ItemTablero> AddItem(string tableroID, string descripcion,
             int cantidad, List<ItemTablero> lista)
         {
-
             var item = ItemTablero.NewItem(tableroID, descripcion, cantidad);
             lista.Add(item);
 
@@ -407,7 +412,7 @@ namespace MTTO_App.ViewModel
             else
                 //SI EXISTE ALGUN REGISTRO CON EL MISMO ID O CON LA MISMA DATA DEL CODIGO QR SE DETIENE EL REGISTRO (FALSE)
                 return false;
-        }   
+        }
 
         //==================================================================================================
         //==================================================================================================
@@ -584,7 +589,7 @@ namespace MTTO_App.ViewModel
                                     CodigoQRData, CodigoQRFileName, Usuario.Cedula));
 
                                 //SE RECORREN TODOS LOS ELEMENTOS DE LA LISTA "items"
-                                foreach(ItemTablero x in items)
+                                foreach (ItemTablero x in items)
                                 {
                                     //SE INSERTAN TODOS LOS ELEMENTOS DENTRO DE LA TABLA
                                     connection.Insert(x);
@@ -618,7 +623,7 @@ namespace MTTO_App.ViewModel
                                 connection.Insert(x);
                             }
 
-                            int cont = connection.Table<ItemTablero>().Count(); 
+                            int cont = connection.Table<ItemTablero>().Count();
 
                             //SE CIERRA LA CONEXION CON LA BASE DE DATOS
                             connection.Close();
@@ -779,13 +784,13 @@ namespace MTTO_App.ViewModel
                         }
                     }
 
-                    if(tipodeconsulta == "CONSULTA_POR_ID")
+                    if (tipodeconsulta == "CONSULTA_POR_ID")
                     {
-                        switch(opcionconsultaid)
+                        switch (opcionconsultaid)
                         {
                             //CONSULTA POR TABLERO ID
                             case 0:
-                            //----------------------------------------------------------------------------------------------
+                                //----------------------------------------------------------------------------------------------
                                 //SE CREA LAS TABLAS "Tableros", "ItemTablero", "HistorialTableros"(SI YA EXISTE NO SE CREA)
                                 connection.CreateTable<Tableros>();
                                 connection.CreateTable<ItemTablero>();
@@ -819,7 +824,7 @@ namespace MTTO_App.ViewModel
 
                                             foreach (ItemTablero x in connection.Table<ItemTablero>().ToList())
                                             {
-                                                if(tableroID.ToLower() == x.TableroID.ToLower())
+                                                if (tableroID.ToLower() == x.TableroID.ToLower())
                                                 {
                                                     items.Add(x);
                                                 }
@@ -891,8 +896,6 @@ namespace MTTO_App.ViewModel
                                                 //SE DETIENE LA COMPARACION DE TABLEROS
                                                 break;
                                             }
-
-                                            
                                         }
                                     }
                                 }
@@ -906,7 +909,7 @@ namespace MTTO_App.ViewModel
                             //----------------------------------------------------------------------------------------------
                             //CONSULTA POR SAP ID
                             case 1:
-                            //----------------------------------------------------------------------------------------------
+                                //----------------------------------------------------------------------------------------------
                                 //SE CREA LA TABLA "Tableros" (SI YA EXISTE NO SE CREA)
                                 connection.CreateTable<Tableros>();
                                 connection.CreateTable<ItemTablero>();
@@ -1021,7 +1024,7 @@ namespace MTTO_App.ViewModel
                                 }
 
                                 break;
-                            //----------------------------------------------------------------------------------------------
+                                //----------------------------------------------------------------------------------------------
                         }
                     }
                 }

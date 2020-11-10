@@ -153,7 +153,7 @@ namespace MTTO_App.Paginas
             //===============================================================
             //SE EVALUA SI EL VALOR DEL ENTRY "entryTableroID" TIENE ALGUN VALOR
             //SE EVALUA QUE SE HAYA SELECCIONADO UNA OPCION DE BUSQUEDA
-            if (!string.IsNullOrEmpty(entryTableroID.Text)  &&
+            if (!string.IsNullOrEmpty(entryTableroID.Text) &&
                 PickerOpciones.SelectedIndex > -1)
             {
                 //ENVIAMOS EL VALOR INGRESADO POR EL USUARIO
@@ -199,7 +199,7 @@ namespace MTTO_App.Paginas
             else
             {
                 //-----------------------------------------------------------------------------------------
-                //DE RETORNAR FALSA O FALLAR ALGUNA DE LAS EVALUACIONES QUE SE REALIZARON EN EL 
+                //DE RETORNAR FALSA O FALLAR ALGUNA DE LAS EVALUACIONES QUE SE REALIZARON EN EL
                 //CONDICIONAL ANTERIOR SE RETORNA UN MENSAJE INFORMANDOLE AL USUARIO CUAL DE LAS
                 //CONDICIONES PLANTEADAS NO SE CUMPLE
                 if (PickerOpciones.SelectedIndex == -1)

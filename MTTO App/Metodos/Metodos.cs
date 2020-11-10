@@ -221,7 +221,7 @@ namespace MTTO_App
                     //POSEE O ES ALGUNO DE LOS SIGUIENTES CARACTERES
                     if (word[i] == ('!') || word[i] == ('@') || word[i] == ('#') ||
                         word[i] == ('$') || word[i] == ('%') || word[i] == ('&') ||
-                        word[i] == ('(') || word[i] == (')') || 
+                        word[i] == ('(') || word[i] == (')') ||
                         word[i] == ('=') || word[i] == ('/') || word[i] == ('|'))
                     {
                         //DE SER UN CARACTER NO PERMITIDO SE CAMBIA EL VALOR DE LA BANDERA

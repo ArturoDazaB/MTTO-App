@@ -2,12 +2,11 @@
 using MTTO_App.ViewModel;
 using Rg.Plugins.Popup.Services;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-
-using System.Collections.Generic;
 
 namespace MTTO_App.Paginas
 {
@@ -52,7 +51,7 @@ namespace MTTO_App.Paginas
 
             listViewItems.ItemsSource = null;
             Items = new List<ItemTablero>();
-            FrameItemsTablero.IsVisible = listViewItems.IsVisible = false ;
+            FrameItemsTablero.IsVisible = listViewItems.IsVisible = false;
         }
 
         //==========================================================================
@@ -178,10 +177,9 @@ namespace MTTO_App.Paginas
         //FUNCION PARA AÑADIR ITEMS A LA LISTA DE ITEMS DEL TABLERO
         private async void AddItem(object sender, EventArgs e)
         {
-            
-            //SE VERIFICAN QUE LOS CAMPOS DEL NUEVO ITEM A REGISTRAR NO SE 
+            //SE VERIFICAN QUE LOS CAMPOS DEL NUEVO ITEM A REGISTRAR NO SE
             //ENCUENTREN VACIOS
-            if( !string.IsNullOrEmpty(entryDescripcion.Text) &&
+            if (!string.IsNullOrEmpty(entryDescripcion.Text) &&
                 !string.IsNullOrEmpty(entryCantidad.Text))
             {
                 //SE VUELVE NULO LA FUENTE DE LA LISTA Y SE VUELVE INVISIBLE
@@ -191,14 +189,13 @@ namespace MTTO_App.Paginas
                 //SE AÑADE EL NUEVO ITEM A LA LISTA
                 Items = DatosPagina.AddItem(DatosPagina.TableroID, DatosPagina.Descripcion, Int16.Parse(DatosPagina.Cantidad), Items);
 
-                //SE VUELVE A ASIGNAR LA FUENTE DE LA LISTA Y SE REDIMENSIONA EL TAMAÑO 
+                //SE VUELVE A ASIGNAR LA FUENTE DE LA LISTA Y SE REDIMENSIONA EL TAMAÑO
                 listViewItems.ItemsSource = Items;
                 listViewItems.HeightRequest = (Items.Count * HeightRow);
 
                 //SE VUELVE VISIBLE LA LISTA Y SE BORRAN LOS DATOS QUE POSEEAN LOS ENTRY "entryDescripcion" Y "entryCantidad"
                 listViewItems.IsVisible = true;
                 entryDescripcion.Text = entryCantidad.Text = string.Empty;
-
             }
             else
             {

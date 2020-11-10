@@ -19,12 +19,11 @@
                                     PositionOut="Center"
                                     ScaleIn="1.4"
                                     ScaleOut="1.0"
-                                    DurationIn="500"        
+                                    DurationIn="500"
                                     DurationOut="500"
                                     EasingIn="SinOut"
                                     EasingOut="SinIn"
-                                    HasBackgroundAnimation="True"/>
-
+                                    HasBackgroundAnimation="True" />
     </pages:PopupPage.Animation>
 
     <!--===============================================================================-->
@@ -49,10 +48,10 @@
                                 HorizontalOptions="End"
                                 VerticalOptions="Start"
                                 Clicked="OnClose"
-                                Aspect="AspectFit"/>
+                                Aspect="AspectFit" />
 
                 <!--https://iconos8.es/icons/set/close-window"
-                    Cerrar ventana  icon by a target="_blank" 
+                    Cerrar ventana  icon by a target="_blank"
                     href "https://iconos8.es"-->
 
                 <!--=========================================CONTENIDO=========================================-->
@@ -64,21 +63,20 @@
 
                     <Grid.RowDefinitions>
 
-                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto" />
                         <!--0) TITULO: INFORMACION-->
-                        <RowDefinition Height="5"/>
+                        <RowDefinition Height="5" />
                         <!--1) ESPACIO-->
-                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto" />
                         <!--2) TEXTO EXPLICATIVO-->
-                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto" />
                         <!--3) NUMERO UNO-->
-                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto" />
                         <!--4) NUMERO DOS-->
-                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto" />
                         <!--5) NUMERO TRES-->
-                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto" />
                         <!--6) NUMERO CUATRO-->
-
                     </Grid.RowDefinitions>
 
                     <!--=====================================================================================================-->
@@ -89,7 +87,7 @@
                             TextColor="Black"
                             Grid.Row="0"
                             HorizontalOptions="Center"
-                            HorizontalTextAlignment="Center"/>
+                            HorizontalTextAlignment="Center" />
 
                     <!--=====================================================================================================-->
                     <!--2) TEXTO EXPLICATIVO-->
@@ -97,7 +95,7 @@
                             FontSize="{Binding EntryFontSize}"
                             HorizontalTextAlignment="Center"
                             VerticalTextAlignment="Center"
-                            
+
                             Grid.Row="2">
 
                         <Label.FormattedText>
@@ -106,14 +104,11 @@
 
                                 <Span   Text="Bienvenido"
                                         FontAttributes="Bold"
-                                        FontSize="{Binding EntryFontSize}"/>
-                                <Span   Text=", en la siguiente pagina obtendra toda la informacion necesaria en lo que "/>
-                                <Span   Text="respecta a condiciones minimas para poder realizar consulta de tableros."/>
-
+                                        FontSize="{Binding EntryFontSize}" />
+                                <Span   Text=", en la siguiente pagina obtendra toda la informacion necesaria en lo que " />
+                                <Span   Text="respecta a condiciones minimas para poder realizar consulta de tableros." />
                             </FormattedString>
-
                         </Label.FormattedText>
-
                     </Label>
 
                     <!--=====================================================================================================-->
@@ -129,13 +124,10 @@
 
                                     <Span   Text="1)"
                                             FontAttributes="Bold"
-                                            FontSize="{Binding EntryFontSize}"/>
-                                    <Span   Text=" Existen dos metodos para la busqueda o consulta de un tablero:"/>
-
+                                            FontSize="{Binding EntryFontSize}" />
+                                    <Span   Text=" Existen dos metodos para la busqueda o consulta de un tablero:" />
                                 </FormattedString>
-
                             </Label.FormattedText>
-
                         </Label>
 
                         <!--==========================================================-->
@@ -144,11 +136,10 @@
 
                             <Grid.ColumnDefinitions>
 
-                                <ColumnDefinition Width="5"/>
+                                <ColumnDefinition Width="5" />
                                 <!--0) ESPACIO-->
-                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto" />
                                 <!--1) LISTA DE OPCIONES-->
-
                             </Grid.ColumnDefinitions>
 
                             <!--1) LISTA DE OPCIONES-->
@@ -156,18 +147,16 @@
                                     FontSize="{Binding LabelFontSize}"
                                     FontAttributes="Bold"
                                     Text="{Binding ListaOpcionesEscaneo}"
-                                    Grid.Column="1"/>
-
+                                    Grid.Column="1" />
                         </Grid>
                         <!--==========================================================-->
-
                     </StackLayout>
 
                     <!--=====================================================================================================-->
                     <!--4) NUMERO DOS-->
                     <Label  TextColor="Black"
                             FontSize="{Binding EntryFontSize}"
-                            
+
                             Grid.Row="4">
 
                         <Label.FormattedText>
@@ -176,29 +165,26 @@
 
                                 <Span   Text="2)"
                                         FontAttributes="Bold"
-                                        FontSize="{Binding EntryFontSize}"/>
-                                <Span   Text=" Para realizar una "/>
+                                        FontSize="{Binding EntryFontSize}" />
+                                <Span   Text=" Para realizar una " />
                                 <Span   Text=" consulta por escaneo"
                                         FontSize="{Binding EntryFontSize}"
-                                        FontAttributes="Bold"/>
-                                <Span   Text=" solo es necesario presionar"/>
+                                        FontAttributes="Bold" />
+                                <Span   Text=" solo es necesario presionar" />
                                 <Span   Text=" ESCANEAR CODIGO"
                                         FontSize="{Binding EntryFontSize}"
-                                        FontAttributes="Bold"/>
-                                <Span   Text=". Esto generará un salto a la pagina de escaneo y aperturará la camara del dispositivo."/>
-                                <Span   Text=" Posicione el telefono frente al codigo QR que desea escanear."/>
-
+                                        FontAttributes="Bold" />
+                                <Span   Text=". Esto generará un salto a la pagina de escaneo y aperturará la camara del dispositivo." />
+                                <Span   Text=" Posicione el telefono frente al codigo QR que desea escanear." />
                             </FormattedString>
-
                         </Label.FormattedText>
-
                     </Label>
 
                     <!--=====================================================================================================-->
                     <!--5) NUMERO TRES-->
                     <Label  TextColor="Black"
                             FontSize="{Binding EntryFontSize}"
-                            
+
                             Grid.Row="5">
 
                         <Label.FormattedText>
@@ -207,21 +193,18 @@
 
                                 <Span   Text="3)"
                                         FontAttributes="Bold"
-                                        FontSize="{Binding EntryFontSize}"/>
-                                <Span   Text=" Para realizar una"/>
+                                        FontSize="{Binding EntryFontSize}" />
+                                <Span   Text=" Para realizar una" />
                                 <Span   Text=" consulta por ID"
                                         FontSize="{Binding EntryFontSize}"
-                                        FontAttributes="Bold"/>
-                                <Span   Text=" solo es necesario ingresar el ID del tablero que se desea consultar y presionar el boton"/>
+                                        FontAttributes="Bold" />
+                                <Span   Text=" solo es necesario ingresar el ID del tablero que se desea consultar y presionar el boton" />
                                 <Span   Text=" BUSQUEDA POR ID"
                                         FontAttributes="Bold"
-                                        FontSize="{Binding EntryFontSize}"/>
-                                <Span   Text="."/>
-
+                                        FontSize="{Binding EntryFontSize}" />
+                                <Span   Text="." />
                             </FormattedString>
-
                         </Label.FormattedText>
-
                     </Label>
 
                     <!--=====================================================================================================-->
@@ -237,15 +220,12 @@
 
                                     <Span   Text="4)"
                                     FontAttributes="Bold"
-                                    FontSize="{Binding EntryFontSize}"/>
-                                    <Span   Text=" Luego de realizar la consulta (por cualquiera de los dos metodos previamente descritos),"/>
-                                    <Span   Text=" si el codigo QR o el ID ingresado pertenecen a un tablero registrado en la plataforma"/>
-                                    <Span   Text=" se mostrará la información general de dicho tablero: "/>
-
+                                    FontSize="{Binding EntryFontSize}" />
+                                    <Span   Text=" Luego de realizar la consulta (por cualquiera de los dos metodos previamente descritos)," />
+                                    <Span   Text=" si el codigo QR o el ID ingresado pertenecen a un tablero registrado en la plataforma" />
+                                    <Span   Text=" se mostrará la información general de dicho tablero: " />
                                 </FormattedString>
-
                             </Label.FormattedText>
-
                         </Label>
 
                         <!--==========================================================-->
@@ -254,11 +234,10 @@
 
                             <Grid.ColumnDefinitions>
 
-                                <ColumnDefinition Width="5"/>
+                                <ColumnDefinition Width="5" />
                                 <!--0) ESPACIO-->
-                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto" />
                                 <!--1) LISTA DE OPCIONES-->
-
                             </Grid.ColumnDefinitions>
 
                             <!--1) LISTA DE OPCIONES-->
@@ -266,19 +245,12 @@
                                     FontSize="{Binding LabelFontSize}"
                                     FontAttributes="Bold"
                                     Text="{Binding ListaInformacionTablero}"
-                                    Grid.Column="1"/>
-
+                                    Grid.Column="1" />
                         </Grid>
                         <!--==========================================================-->
-
                     </StackLayout>
-
                 </Grid>
-
             </StackLayout>
-
         </ScrollView>
-
     </Frame>
-
 </pages:PopupPage>

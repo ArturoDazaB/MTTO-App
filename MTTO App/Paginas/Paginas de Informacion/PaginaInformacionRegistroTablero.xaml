@@ -19,12 +19,11 @@
                                     PositionOut="Center"
                                     ScaleIn="1.4"
                                     ScaleOut="1.0"
-                                    DurationIn="500"        
+                                    DurationIn="500"
                                     DurationOut="500"
                                     EasingIn="SinOut"
                                     EasingOut="SinIn"
-                                    HasBackgroundAnimation="True"/>
-
+                                    HasBackgroundAnimation="True" />
     </pages:PopupPage.Animation>
 
     <!--===============================================================================-->
@@ -49,10 +48,10 @@
                                 HorizontalOptions="End"
                                 VerticalOptions="Start"
                                 Clicked="OnClose"
-                                Aspect="AspectFit"/>
+                                Aspect="AspectFit" />
 
                 <!--https://iconos8.es/icons/set/close-window"
-                    Cerrar ventana  icon by a target="_blank" 
+                    Cerrar ventana  icon by a target="_blank"
                     href "https://iconos8.es"-->
 
                 <!--===========================================================================================-->
@@ -64,11 +63,10 @@
 
                     <Grid.RowDefinitions>
 
-                        <RowDefinition Height="3"/>
-                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="3" />
+                        <RowDefinition Height="auto" />
                         <!--TITULO-->
-                        <RowDefinition Height="3"/>
-
+                        <RowDefinition Height="3" />
                     </Grid.RowDefinitions>
 
                     <Label  Text="Informacion"
@@ -77,8 +75,7 @@
                             TextColor="Black"
                             Grid.Row="1"
                             HorizontalOptions="Center"
-                            HorizontalTextAlignment="Center"/>
-
+                            HorizontalTextAlignment="Center" />
                 </Grid>
 
                 <Label  TextColor="Black"
@@ -91,14 +88,11 @@
 
                             <Span   Text="Bienvenido, "
                                         FontAttributes="Bold"
-                                        FontSize="{Binding EntryFontSize}"/>
-                            <Span   Text=" en la siguiente pagina obtendra toda la informacion necesaria en lo que "/>
-                            <Span   Text="respecta a condiciones minimas para poder registrar un tablero."/>
-
+                                        FontSize="{Binding EntryFontSize}" />
+                            <Span   Text=" en la siguiente pagina obtendra toda la informacion necesaria en lo que " />
+                            <Span   Text="respecta a condiciones minimas para poder registrar un tablero." />
                         </FormattedString>
-
                     </Label.FormattedText>
-
                 </Label>
 
                 <Label  TextColor="Black"
@@ -110,13 +104,10 @@
 
                             <Span   Text="1)"
                                         FontAttributes="Bold"
-                                        FontSize="{Binding EntryFontSize}"/>
-                            <Span   Text=" Ningun campo debe quedar vacio o nulo"/>
-
+                                        FontSize="{Binding EntryFontSize}" />
+                            <Span   Text=" Ningun campo debe quedar vacio o nulo" />
                         </FormattedString>
-
                     </Label.FormattedText>
-
                 </Label>
 
                 <Label  TextColor="Black"
@@ -128,17 +119,14 @@
 
                             <Span   Text="2)"
                                         FontAttributes="Bold"
-                                        FontSize="{Binding EntryFontSize}"/>
-                            <Span   Text=" No se permite"/>
+                                        FontSize="{Binding EntryFontSize}" />
+                            <Span   Text=" No se permite" />
                             <Span   Text=" espacios en blanco"
                                         FontAttributes="Bold"
-                                        FontSize="{Binding EntryFontSize}"/>
-                            <Span   Text=" al momento de ingresar el ID del tablero"/>
-
+                                        FontSize="{Binding EntryFontSize}" />
+                            <Span   Text=" al momento de ingresar el ID del tablero" />
                         </FormattedString>
-
                     </Label.FormattedText>
-
                 </Label>
 
                 <Label  TextColor="Black"
@@ -150,22 +138,15 @@
 
                             <Span   Text="3)"
                                         FontAttributes="Bold"
-                                        FontSize="{Binding EntryFontSize}"/>
-                            <Span   Text=" Ademas, no se permiten ninguno de los siguientes caracteres: "/>
+                                        FontSize="{Binding EntryFontSize}" />
+                            <Span   Text=" Ademas, no se permiten ninguno de los siguientes caracteres: " />
                             <Span   Text="!, @, #, $, %, (, ), +, =, /, | ."
                                     FontSize="{Binding EntryFontSize}"
-                                    FontAttributes="Bold"/>
-
+                                    FontAttributes="Bold" />
                         </FormattedString>
-
                     </Label.FormattedText>
-
                 </Label>
-
             </StackLayout>
-
         </ScrollView>
-
     </Frame>
-
 </pages:PopupPage>
