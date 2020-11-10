@@ -25,7 +25,7 @@ namespace MTTO_App.iOS
             //==============================================================================================================================
             //INICIALIZACION DE LA BASE DE DATOS
 
-            string fileName = "DB4_2_4_2.db3";
+            string fileName = "DB4_2_5_1.db3";
             string folderPath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "..", "Labrary");
             string CompletePath = Path.Combine(folderPath, fileName);
 

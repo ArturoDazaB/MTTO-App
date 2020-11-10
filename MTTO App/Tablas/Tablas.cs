@@ -384,11 +384,11 @@ namespace MTTO_App
     //======================================================================================================
     //======================================================================================================
 
-    public class Tableros : ActivoSAP
+    public class Tableros 
     {
         [PrimaryKey, Unique, MaxLength(20)]
         public string TableroID { get; set; }
-
+        public string SapID { get; set; }
         public int IDCreador { get; set; }
         public string Filial { get; set; }
         public string AreaFilial { get; set; }
@@ -409,7 +409,6 @@ namespace MTTO_App
                 //INFORMACION DEL TABLERO
                 TableroID = Tablero.TableroID.ToUpper(),
                 SapID = Tablero.SapID,
-                Descripcion = Tablero.Descripcion.ToLower(),
                 Filial = Tablero.Filial.ToLower(),
                 AreaFilial = Tablero.AreaFilial.ToLower(),
                 FechaRegistro = Tablero.FechaRegistro,
@@ -427,7 +426,7 @@ namespace MTTO_App
         //========================================================================================================
         //METODO QUE RECIBE LOS ATRIBUTOS POR SEPARADOS COMO PARAMETROS
 
-        public static Tableros NuevoTablero(string tableroid, string sapid, string descripcion, string filial, string area, DateTime fecharegistro,
+        public static Tableros NuevoTablero(string tableroid, string sapid, string filial, string area, DateTime fecharegistro,
             string codigoqrdata, string codigoqrfilename, int id)
 
         {
@@ -437,7 +436,6 @@ namespace MTTO_App
                 //INFORMACION DEL TABLERO
                 TableroID = tableroid.ToUpper(),
                 SapID = sapid,
-                Descripcion = descripcion.ToLower(),
                 Filial = filial.ToLower(),
                 AreaFilial = area.ToLower(),
                 FechaRegistro = fecharegistro,
@@ -451,6 +449,7 @@ namespace MTTO_App
             };
         }
     }
+
 
     //======================================================================================================
     //======================================================================================================
@@ -519,9 +518,12 @@ namespace MTTO_App
     //======================================================================================================
     //======================================================================================================
 
-    public class Item : ActivoSAP
+    public class ItemTablero 
     {
-        public string Presentacion { get; set; }
+        [PrimaryKey, AutoIncrement]
+        public int Id { get; set; }
+        public string TableroID { get; set; }
+        public string Descripcion { get; set; }
         public int Cantidad { get; set; }
 
         //======================================================================================================
@@ -529,25 +531,23 @@ namespace MTTO_App
         //FUNCIONES PARA LA CREACION DE UN NUEVO OBJETO DEL TIPO Item
 
         //FUNCION PARA LA CREACION DE UN NUEVO OBJETO EN BASE A UN OBJETO EXISTENTE
-        public Item NewItem(Item item)
+        public static ItemTablero NewItem(ItemTablero item)
         {
-            return new Item
+            return new ItemTablero
             {
-                SapID = item.SapID,
+                TableroID = item.TableroID.ToLower(),
                 Descripcion = item.Descripcion.ToLower(),
-                Presentacion = item.Presentacion.ToLower(),
                 Cantidad = item.Cantidad,
             };
         }
 
         //FUNCION PARA LA CREACION DE UN NUEVO OBJETO EN BASE A CADA UNO DE LOS PARAMETROS
-        public Item NewItem(string sapid, string descripcion, string presentacion, int cant)
+        public static ItemTablero NewItem(string tableroId, string descripcion, int cant)
         {
-            return new Item
+            return new ItemTablero
             {
-                SapID = sapid,
+                TableroID = tableroId.ToLower(),
                 Descripcion = descripcion.ToLower(),
-                Presentacion = presentacion.ToLower(),
                 Cantidad = cant,
             };
         }

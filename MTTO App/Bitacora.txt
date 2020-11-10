@@ -339,7 +339,69 @@ VERSION DE BASE DE DATOS LOCAL		=		MODIFICACIONES
 									=		
 									=		Por ultimo, se modifico el objeto "Tableros" para que
 									=		fueran un objeto derivado del objeto "ActivoSAP", esto
-									=		para poder heredar los atributos "SapID" y "Descripcion"
+									=		para poder heredar los atributos "SapID" y "Descripcion".
+									=
+									=		*Se adiciono a la pagina "PaginaConsultaTablero" una tercera
+									=		opcion de busqueda que funcionara igual que el metodo de 
+									=		busqueda por ID (Tablero ID). En la seccion de "Busqueda Por
+									=		ID" (x:Name = "FrameConsultaID") se agrego un picker que per-
+									=		mirita seleccionar al usuario si desea realiar la consulta
+									=		usando como referencia el ID del tablero o el ID de SAP.
+									=
+									=		*Se adicono en la clase "RegistroTableroViewModel" una nueva
+									=		propiedad que lleva por nombre "Opciones" (List<string>). Es
+									=		esta propiedad se llenara con las opciones de busqueda por ID
+									=       en la pagina "PaginaConsultTablero", donde solo exitiran las 
+									=		opciones: 
+									=			
+									=			a) Tablero ID (Consulta realizada con el ID del tablero).
+									=			b) SAP ID (Consulta realizada con el ID de SAP asignado
+									=			   a dicho tablero).
+									=
+									=		*Se modifico la clase Tableros, donde antes existia como 
+									=		una clase derivada de la clase "ActivosSAP". Ahora esta clase
+									=		no es derivada de ninguna otra, ademas de agregar los 
+									=		campos que obtenia cuando era una clase derivada de 
+									=		"ActivosSAP".
+									=
+									=		*Se modifico la clase "Items". Se cambio su nombre por 
+									=		"ItemsTableros", ademas de que ya no es una clase derivada 
+									=		de la clase "ActivoSAP". Sin embargo, es debido a esto ultimo
+									=		que se tuvieron que agregar nuevos atributos:
+									=
+									=			-Id(int)[PrimaryKey, AutoIncremental]
+									=			-TableroID(string)
+									=			-Descripcion(string)
+									=		
+									=		Y tambien se elimino el atributo "Presentacion" (string).
+									=
+									=		*Se realizaron adiciones y modificaciones sobre los archivos
+									=		"PaginaRegistroTablero.xaml" y "PaginaRegistroTablero.xaml.cs"
+									=		para poder añadir la nueva seccion de ingreso de los items 
+									=		pertenecintes al tablero.
+									=
+									=		*Se realizaron adiciones y modificaciones sobre en la clase
+									=		"RegistroTableroViewModel", esto para poder agregar los 
+									=		atributos utilizados en el registro de los items del tablero.
+==========================================================================================================
+==========================================================================================================
+		DB4_2_4_3					=		*Se creo el metodo "AddItem" dentro de la clase "PaginaRegis-
+									=		troTablero". Esta clase se encarga de tomar los valores 
+									=		"Descripcion" y "Cantidad" de la seccion "Items Del Tablero"
+									=		Esta crea una lista del tipo "ItemsTablero" y va adicionando
+									=		nuevos items cada que se oprima el boton "Añadir Item".
+==========================================================================================================
+==========================================================================================================
+		DB4_2_4_5					=		*Se adicionaron elementos a la clase "PaginaConsultaTablero"
+									=		donde se puede visualizar los elementos internos del tablero.
+==========================================================================================================
+==========================================================================================================
+		DB4_2_5						=		*Se modifico el metodo "Caracteres" dentro de la clase 
+									=		"Metodos". Esta clase evalua si alguna cadena de caracteres
+									=		posee caracteres especificos. Se removio el caracter '+' de 
+									=		la lista de caracteres no permitidos.
+									=
+									=		*
 ==========================================================================================================
 ==========================================================================================================
 NOTAS:

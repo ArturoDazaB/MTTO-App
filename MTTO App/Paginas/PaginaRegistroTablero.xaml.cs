@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
+using System.Collections.Generic;
+
 namespace MTTO_App.Paginas
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
@@ -16,6 +18,13 @@ namespace MTTO_App.Paginas
         //==========================================================================
         //OBJETOS DE LA PAGINA:
         private Personas Persona; private Usuarios Usuario;
+
+        //LISTA QUE ALMACENARA TODOS LOS OBJETOS PERSONAS
+        //QUE SON OBTENIDOS LUEGO DE REALIZAR LA BUSQUEDA
+        private List<ItemTablero> Items;
+
+        //SE CREAN LAS CONSTANTES
+        private const int HeightRow = 45;
 
         //--------------------------------------------------------------------------
         //  DatosPagina: Sera el objeto que mantendra la comunicacion con las
@@ -40,6 +49,10 @@ namespace MTTO_App.Paginas
             //SE GENERA EL ENLACE CON LA CLASE VIEWMODEL DE LA PAGINA
             BindingContext = DatosPagina = new RegistroTableroViewModel(Persona, Usuario, true);
             CODIGO.IsVisible = ActivityIndicator.IsVisible = ActivityIndicator.IsRunning = false;
+
+            listViewItems.ItemsSource = null;
+            Items = new List<ItemTablero>();
+            FrameItemsTablero.IsVisible = listViewItems.IsVisible = false ;
         }
 
         //==========================================================================
@@ -69,6 +82,7 @@ namespace MTTO_App.Paginas
                 //SE VUELVE VISIBLE LA SECCION (FRAME) QUE
                 //CONTENDRA EL CODIGO QR
                 CODIGO.IsVisible = true;
+                FrameItemsTablero.IsVisible = true;
 
                 //SE DEHABILITA EL BOTON DE GENERAR CODIGO
                 BotonGenerar.IsVisible = BotonGenerar.IsEnabled = false;
@@ -130,7 +144,7 @@ namespace MTTO_App.Paginas
                 //------------------------------------------------------------------------------------------------
 
                 //SE EJECUTA EL METODO REGISTRAR TABLERO, ESTA FUNCION RETORNARA UNA VARIABLE TEXTO DEL TIPO STRING
-                respuesta = DatosPagina.RegistrarTablero();
+                respuesta = DatosPagina.RegistrarTablero(Items);
 
                 //SE EVALUA SI LA VARIABLE RETORNADA SE ENCUENTRA VACIA O NULA
                 //VACIA O NULA => SE REGISTRO SATISFACTORIAMENTE
@@ -159,6 +173,43 @@ namespace MTTO_App.Paginas
             }
         }
 
+        //==========================================================================
+        //==========================================================================
+        //FUNCION PARA AÑADIR ITEMS A LA LISTA DE ITEMS DEL TABLERO
+        private async void AddItem(object sender, EventArgs e)
+        {
+            
+            //SE VERIFICAN QUE LOS CAMPOS DEL NUEVO ITEM A REGISTRAR NO SE 
+            //ENCUENTREN VACIOS
+            if( !string.IsNullOrEmpty(entryDescripcion.Text) &&
+                !string.IsNullOrEmpty(entryCantidad.Text))
+            {
+                //SE VUELVE NULO LA FUENTE DE LA LISTA Y SE VUELVE INVISIBLE
+                listViewItems.ItemsSource = null;
+                listViewItems.IsVisible = false;
+
+                //SE AÑADE EL NUEVO ITEM A LA LISTA
+                Items = DatosPagina.AddItem(DatosPagina.TableroID, DatosPagina.Descripcion, Int16.Parse(DatosPagina.Cantidad), Items);
+
+                //SE VUELVE A ASIGNAR LA FUENTE DE LA LISTA Y SE REDIMENSIONA EL TAMAÑO 
+                listViewItems.ItemsSource = Items;
+                listViewItems.HeightRequest = (Items.Count * HeightRow);
+
+                //SE VUELVE VISIBLE LA LISTA Y SE BORRAN LOS DATOS QUE POSEEAN LOS ENTRY "entryDescripcion" Y "entryCantidad"
+                listViewItems.IsVisible = true;
+                entryDescripcion.Text = entryCantidad.Text = string.Empty;
+
+            }
+            else
+            {
+                if (string.IsNullOrEmpty(entryDescripcion.Text))
+                    await DisplayAlert("Mensaje", "El campo Descripcion no puede estar vacio", "Entendido");
+
+                if (string.IsNullOrEmpty(entryCantidad.Text))
+                    await DisplayAlert("Mensaje", "El campo Cantidad no puede estar vacio", "Entendido");
+            }
+        }
+
         //===========================================================================
         //===========================================================================
         //FUNCION QUE SE ACTIVA CUANDO SE DEJE DE ENFOCAR LA ENTRADA "entryTableroID"
@@ -179,7 +230,7 @@ namespace MTTO_App.Paginas
                     if (Metodos.Caracteres(DatosPagina.TableroID))
                     {
                         Mensaje("El ID del tablero no puede contener los siguientes caracteres:\n " +
-                            "'!', '@', '#', '$', '%', '&', '(', ')', '+', '=', '/', '|'");
+                            "'!', '@', '#', '$', '%', '&', '(', ')', '=', '/', '|'");
                     }
                 }
             }

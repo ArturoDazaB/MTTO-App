@@ -22,6 +22,9 @@ namespace MTTO_App.Paginas
 
         private Personas Persona; private Usuarios Usuario;
 
+        //SE CREAN LAS CONSTANTES
+        private const int HeightRow = 45;
+
         //=================================================================================================
         //=================================================================================================
         //CONSTRUCTOR DE LA CLASE
@@ -41,6 +44,7 @@ namespace MTTO_App.Paginas
 
             //SE DA SET (FALSE) AL ActivityIndicator QUE INDICARA AL USUARIO CUANDO SE ESTA CUMPLIENDO ALGUN PROCESO
             ActivityIndicator.IsVisible = ActivityIndicator.IsRunning = false;
+            listViewItems.ItemsSource = null;
         }
 
         //=================================================================================================
@@ -104,21 +108,26 @@ namespace MTTO_App.Paginas
                         //------------------------------------------------------------------------------------------------
 
                         //SE CAMBIA LA VISIBILIDAD DEL "FrameResultado" CON LOS RESULTADOS
-                        FrameResultado.IsVisible = DatosPagina.ShowResultadoScan;
+                        FrameResultado.IsVisible =
+                        DatosPagina.ShowResultadoScan;
 
                         //------------------------------------------------------------------------------------------------
                         //SE LLENAN (MANUALMENTE) CADA UNO DE LOS CAMPOS DE INFORMACION
                         idtablero.Text = DatosPagina.TableroID;
+                        sapid.Text = DatosPagina.SapID;
                         filialtablero.Text = DatosPagina.Filial;
                         areatablero.Text = DatosPagina.Area;
                         ultimaconsultatablero.Text = DatosPagina.UltimaFechaConsulta.ToString();
+                        listViewItems.ItemsSource = DatosPagina.Items;
+                        listViewItems.HeightRequest = (DatosPagina.Items.Count * HeightRow);
                         codigoqrtablero.Source = ImageSource.FromStream(() => new MemoryStream(DatosPagina.CodigoQRbyte));
                         //------------------------------------------------------------------------------------------------
                     }
                     else
                     {
                         //SE CAMBIA SI ES O NO VISIBLE EL FRAME CON LOS RESULTADOS
-                        FrameResultado.IsVisible = DatosPagina.ShowResultadoScan;
+                        FrameResultado.IsVisible =
+                        DatosPagina.ShowResultadoScan;
 
                         //SE INFORMA AL USUARIO QUE EL TABLERO QUE ACABA DE SER ESCANEADO NO FUE LOCALIZADO
                         Toast.MakeText(Android.App.Application.Context, "No se encontro la informacion del tablero introducido...", ToastLength.Long).Show();
@@ -143,10 +152,13 @@ namespace MTTO_App.Paginas
             //===============================================================
             //===============================================================
             //SE EVALUA SI EL VALOR DEL ENTRY "entryTableroID" TIENE ALGUN VALOR
-            if (!string.IsNullOrEmpty(entryTableroID.Text))
+            //SE EVALUA QUE SE HAYA SELECCIONADO UNA OPCION DE BUSQUEDA
+            if (!string.IsNullOrEmpty(entryTableroID.Text)  &&
+                PickerOpciones.SelectedIndex > -1)
             {
                 //ENVIAMOS EL VALOR INGRESADO POR EL USUARIO
                 DatosPagina.ResultadoScan = entryTableroID.Text;
+                DatosPagina.OpcionConsultaID = PickerOpciones.SelectedIndex;
 
                 //EVALUAMOS SI EL TABLERO SE ENCUENTRA EN LA BASE DE DATOS
                 if (DatosPagina.ShowResultadoScan)
@@ -158,21 +170,26 @@ namespace MTTO_App.Paginas
                     //------------------------------------------------------------------------------------------------
 
                     //SE CAMBIA LA VISIBILIDAD DEL "FrameResultado" CON LOS RESULTADOS
-                    FrameResultado.IsVisible = DatosPagina.ShowResultadoScan;
+                    FrameResultado.IsVisible =
+                        DatosPagina.ShowResultadoScan;
 
                     //------------------------------------------------------------------------------------------------
                     //SE LLENAN (MANUALMENTE) CADA UNO DE LOS CAMPOS DE INFORMACION
                     idtablero.Text = DatosPagina.TableroID;
+                    sapid.Text = DatosPagina.SapID;
                     filialtablero.Text = DatosPagina.Filial;
                     areatablero.Text = DatosPagina.Area;
                     ultimaconsultatablero.Text = DatosPagina.UltimaFechaConsulta.ToString();
+                    listViewItems.ItemsSource = DatosPagina.Items;
+                    listViewItems.HeightRequest = (DatosPagina.Items.Count * HeightRow);
                     codigoqrtablero.Source = ImageSource.FromStream(() => new MemoryStream(DatosPagina.CodigoQRbyte));
                     //------------------------------------------------------------------------------------------------
                 }
                 else
                 {
                     //SE CAMBIA SI ES O NO VISIBLE EL FRAME CON LOS RESULTADOS
-                    FrameResultado.IsVisible = DatosPagina.ShowResultadoScan;
+                    FrameResultado.IsVisible =
+                        DatosPagina.ShowResultadoScan;
 
                     //SE INFORMA AL USUARIO QUE EL TABLERO QUE ACABA DE SER ESCANEADO NO FUE LOCALIZADO
                     Toast.MakeText(Android.App.Application.Context, "No se encontro la informacion del tablero...", ToastLength.Long).Show();
@@ -181,7 +198,16 @@ namespace MTTO_App.Paginas
             //SI EL VALOR DEL ENTRY "entryTableroID" ESTA VACIO O NULO SE NOTIFICA AL USUARIO
             else
             {
-                await DisplayAlert("Error", "Para realizar una consulta por ID ingrese el ID del tablero que desea buscar.", "Entendido");
+                //-----------------------------------------------------------------------------------------
+                //DE RETORNAR FALSA O FALLAR ALGUNA DE LAS EVALUACIONES QUE SE REALIZARON EN EL 
+                //CONDICIONAL ANTERIOR SE RETORNA UN MENSAJE INFORMANDOLE AL USUARIO CUAL DE LAS
+                //CONDICIONES PLANTEADAS NO SE CUMPLE
+                if (PickerOpciones.SelectedIndex == -1)
+                    await DisplayAlert("Mensaje", "Debe seleccionar la opcion de consulta", "Entendido");
+
+                if (string.IsNullOrEmpty(entryTableroID.Text))
+                    await DisplayAlert("Mensaje", "Debe ingresar el parametro de consulta", "Entendido");
+                //-----------------------------------------------------------------------------------------
             }
         }
 
