@@ -702,7 +702,7 @@ namespace MTTO_App.ViewModel
 
                                     foreach (ItemTablero x in connection.Table<ItemTablero>().ToList())
                                     {
-                                        if (tableroID.ToLower() == x.TableroID.ToLower())
+                                        if (tableroID.ToLower() == x.TableroId.ToLower())
                                         {
                                             items.Add(x);
                                         }
@@ -824,7 +824,7 @@ namespace MTTO_App.ViewModel
 
                                             foreach (ItemTablero x in connection.Table<ItemTablero>().ToList())
                                             {
-                                                if (tableroID.ToLower() == x.TableroID.ToLower())
+                                                if (tableroID.ToLower() == x.TableroId.ToLower())
                                                 {
                                                     items.Add(x);
                                                 }
@@ -943,7 +943,7 @@ namespace MTTO_App.ViewModel
 
                                             foreach (ItemTablero x in connection.Table<ItemTablero>().ToList())
                                             {
-                                                if (tableroID.ToLower() == x.TableroID.ToLower())
+                                                if (tableroID.ToLower() == x.TableroId.ToLower())
                                                 {
                                                     items.Add(x);
                                                 }

@@ -523,7 +523,7 @@ namespace MTTO_App
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
 
-        public string TableroID { get; set; }
+        public string TableroId { get; set; }
         public string Descripcion { get; set; }
         public int Cantidad { get; set; }
 
@@ -536,7 +536,7 @@ namespace MTTO_App
         {
             return new ItemTablero
             {
-                TableroID = item.TableroID.ToLower(),
+                TableroId = item.TableroId.ToLower(),
                 Descripcion = item.Descripcion.ToLower(),
                 Cantidad = item.Cantidad,
             };
@@ -547,7 +547,7 @@ namespace MTTO_App
         {
             return new ItemTablero
             {
-                TableroID = tableroId.ToLower(),
+                TableroId = tableroId.ToLower(),
                 Descripcion = descripcion.ToLower(),
                 Cantidad = cant,
             };
