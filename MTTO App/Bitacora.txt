@@ -461,6 +461,12 @@ VERSION DE BASE DE DATOS LOCAL		=		MODIFICACIONES
 									=       SAP del tablero consultado). Esta clase fue creada para ser
 									=		enviada como parametro en la solicitud HTTP para la busqueda
 									=       de tableros dentro de la plataforma.
+									=
+									=		*Se creo una nueva version de la aplicacion (nueva branch) la
+									=       cual llevara por nombre "MTTOAPP(PruebasWebApi)" reflejando 
+									=       asi que las pruebas de comunicacion con los servicios web
+									=       creados ("WebApi") se llevaran a cabo en esta version de la 
+									=       aplicacion.
 ==========================================================================================================
 ==========================================================================================================
 NOTAS:
