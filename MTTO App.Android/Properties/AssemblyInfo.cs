@@ -29,3 +29,4 @@ using System.Runtime.InteropServices;
 [assembly: UsesPermission(Android.Manifest.Permission.WriteExternalStorage)]
 [assembly: UsesPermission(Android.Manifest.Permission.Flashlight)]
 [assembly: UsesPermission(Android.Manifest.Permission.Camera)]
+[assembly: Application(UsesCleartextTraffic = true)]

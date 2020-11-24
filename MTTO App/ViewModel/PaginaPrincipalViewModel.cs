@@ -3,6 +3,11 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
+using System.Threading.Tasks;
+using MTTO_App.Tablas;
+using Newtonsoft.Json;
+using System.Net.Http;
+
 namespace MTTO_App.ViewModel
 {
     public class PaginaPrincipalViewModel : INotifyPropertyChanging
@@ -12,6 +17,9 @@ namespace MTTO_App.ViewModel
         //VARIABLES DE LA CLASE
         protected string username = string.Empty,
                          password = string.Empty;
+
+        protected string result;
+        protected LogInResponse login;
 
         //=========================================================================================================
         //=========================================================================================================
@@ -36,6 +44,22 @@ namespace MTTO_App.ViewModel
                 password = value;
                 ConsoleWriteline("PASSWORD/CONTRASEÑA", password);
             }
+        }
+
+        public LogInResponse LogIn
+        {
+            get 
+            {
+                if (login != null)
+                    return LogIn;
+                else
+                    return null;
+            }
+        }
+
+        public string Result
+        {
+            get { return result; }
         }
 
         //=========================================================================================================
@@ -68,6 +92,41 @@ namespace MTTO_App.ViewModel
             Console.WriteLine("==================================================");
             Console.WriteLine("==================================================\n\n");
         }
+
+        /*
+        public async Task LogInResponse(string username, string userpassword)
+        {
+            string base_url = "https://192.168.1.99:5000/mttoapp/login";
+            string parameter = $"?username={username}&password={userpassword}";
+            string url = base_url + parameter;
+
+            HttpClient client = new HttpClient();
+
+            HttpResponseMessage response = await client.GetAsync(url);
+
+
+            if (response.IsSuccessStatusCode)
+            {
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    result = await response.Content.ReadAsStringAsync();
+
+                    login = JsonConvert.DeserializeObject<LogInResponse>(result);
+                }
+                else
+                {
+                    result = await response.Content.ReadAsStringAsync();
+
+                    login = null;
+                }
+            }
+            else
+            {
+                result = "Ocurrio un error";
+                login = null;
+            }
+        }
+        */
 
         //=========================================================================================================
         //=========================================================================================================

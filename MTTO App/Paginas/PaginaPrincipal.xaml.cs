@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
+using MTTO_App.Tablas;
+
 namespace MTTO_App
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
@@ -43,7 +45,7 @@ namespace MTTO_App
                 await Task.Delay(1250);
                 ActivityIndicator.IsRunning = ActivityIndicator.IsVisible = false;
                 //------------------------------------------------------------------------------
-
+                //CONEXION CON LA BASE DE DATOS LOCAL (DB DEL MOVIL)
                 using (SQLiteConnection connection = new SQLiteConnection(App.FileName))
                 {
                     //SE CREA LA CONEXION
@@ -112,6 +114,32 @@ namespace MTTO_App
                         passwordEntry.Text = String.Empty;
                     }
                 }
+                //------------------------------------------------------------------------------
+                //CONEXION CON LA BASE DE DATOS (CLIENTE - SERVIDOR)
+                /*
+                //SE LLAMA AL METODO QUE REALIZA LA SOLICITUD HTTP
+                await ConexionDatos.LogInResponse(ConexionDatos.Username, ConexionDatos.Password);
+
+                //SE EVALUA EL ESTADO DE LA RESPUESTA
+                if(ConexionDatos.LogIn != null)
+                {
+                    //SI LA RESPUESTA ES DIFERENTE DE NULL => SE OBTUVO UN RESULTADO
+                    //SE LIMPIAN LAS ENTRADAS DE TEXTO PARA EL USERNAME Y PARA EL PASSWORD
+                    usernameEntry.Text = string.Empty;
+                    passwordEntry.Text = string.Empty;
+
+                    //SE REALIZA EL LLAMADO A LA PAGINA "UserMainPage"
+                    await Navigation.PushModalAsync(new UserMainPage(ConexionDatos.LogIn.UserInfo.Persona, ConexionDatos.LogIn.UserInfo.Usuario));
+                }
+                else
+                {
+                    //SI LA RESPUESTA ES NULA => NO SE OBTUVO RESULTADOS
+                    //SE NOTIFICA AL USUARIO SOBRE EL INGRESO A LA PLATAFORMA
+                    await DisplayAlert("Mensaje", ConexionDatos.Result, "Ok");
+                    passwordEntry.Text = String.Empty;
+                }
+                */
+                //------------------------------------------------------------------------------
             }
         }
     }
