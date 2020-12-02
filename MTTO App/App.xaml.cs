@@ -2,12 +2,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace MTTO_App
 {
     public partial class App : Application
     {
+        //VARIABLE QUE ALMACENARA EL NOMBRE DEL ARCHIVO QUE TENDRA LA BASE DE DATOS 
+        //LOCAL QUE MANEJARA LA APLICACION CUANDO SE ENCUENTRE FUNCIONANDO STAND ALONE
         public static string FileName;
 
         //SI SE REALIZO ALGUN CAMBIO DE ALGUN ATRIBUTO DEL USUARIO QUE SE ENCUENTRE
@@ -57,19 +61,38 @@ namespace MTTO_App
         //PROPIEDADES DE LA APLICACION
         public static MasterDetailPage MasterDetail { get; set; }
 
+        //===============================================================================================
+        //===============================================================================================
+        //CONSTRUCTOR DE LA CLASE
         public App()
         {
             InitializeComponent();
+            //SE CONFIGURA A LA PAGINA "PaginaPrincipal" COMO LA PAGINA INICIAL QUE
+            //APARECERA AL MOMENTO DE INICIAR LA APLICACION
             MainPage = new NavigationPage(new PaginaPrincipal());
+            //SE INICIALIZAN LAS BANDERAS (FALSE)
+            ConfigChangedFlag = false;
+            ConfigChangedAdminFlag = false;
+            RegistroFlag = false;
         }
-
+        
+        //===============================================================================================
+        //===============================================================================================
+        //CONSTRUCTOR DE LA CLASE (EXISTEN DOS METODOS CONTRUCTORES, CON LA DIFERENCIA DE QUE UNO DE ELLOS 
+        //REQUIERE QUE SEA ENVIADO UN PARAMETRO QUE LLEVA POR NOMBRE "filename" (PARAMETRO QUE LLEVARA EL 
+        //NOMBRE DE ARCHIVO CON EL  CUAL SE IDENTIFICARA LA BASE DE DATOS LOCAL Sqlite QUE UTILIZA LA 
+        //APLICACION CUANDO SE ENCUENTRA FUNCIONANDO STAND ALONE)
+        //-----------------------------------------------------------------------------------------------
+        //NOTA: ESTE METODO CONSTRUCTOR ES LLAMADO EN LAS CLASES "MainActivity" Y "AppDelegate" DE LOS 
+        //PROYECTOS MTTO_App.Android Y MTTO_App.iOS RESPECTIVAMENTE
+        //-----------------------------------------------------------------------------------------------
         public App(string fileName)
         {
-            //ESTABLECER CONEXION CON LA BASE DE DATOS
             InitializeComponent();
+            //SE CONFIGURA A LA PAGINA "PaginaPrincipal" COMO LA PAGINA INICIAL QUE
+            //APARECERA AL MOMENTO DE INICIAR LA APLICACION
             MainPage = new NavigationPage(new PaginaPrincipal());
             FileName = fileName;
-
             //SE INICIALIZAN LAS BANDERAS (FALSE)
             ConfigChangedFlag = false;
             ConfigChangedAdminFlag = false;
@@ -84,6 +107,44 @@ namespace MTTO_App
             Console.WriteLine("=================================================");
             Console.WriteLine("=================================================\n");
 
+            //=================================================================================
+            //=================================================================================
+            //NOTA: ESTE METODO ES LLAMADO LA APLICACION SE ENCUENTRA TRABAJANDO STAND ALONE
+            //GetDefaultUsers();
+            //=================================================================================
+            //=================================================================================
+        }
+
+        protected override void OnSleep()
+        {
+        }
+
+        protected override void OnResume()
+        {
+        }
+
+        //===============================================================================================
+        //===============================================================================================
+        //FUNCION LLAMADA PARA ACEPTAR EL CERTIFICADO DE SEGURIDAD GENERADO POR EL LOCALHOST
+        public static HttpClientHandler GetInsecureHandler()
+        {
+            HttpClientHandler handler = new HttpClientHandler();
+            handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) =>
+            {
+                if (cert.Issuer.Equals("CN=localhost"))
+                    return true;
+                return errors == System.Net.Security.SslPolicyErrors.None;
+            };
+
+            return handler;
+        }
+
+        //===============================================================================================
+        //===============================================================================================
+        //FUNCION PARA OBTENER LOS USUARIOS EXISTENTES POR DEFAULT
+        //NOTA: ESTE METODO ES LLAMADO CUANDO LA APLICACION ES USADA STAND ALONE (AISLADA)
+        public void GetDefaultUsers()
+        {
             //SE APERTURA LA CONEXION CON LA BASE DE DATOS
             using (SQLiteConnection connection = new SQLiteConnection(App.FileName))
             {
@@ -118,14 +179,6 @@ namespace MTTO_App
                     connection.Close();
                 }
             }
-        }
-
-        protected override void OnSleep()
-        {
-        }
-
-        protected override void OnResume()
-        {
         }
     }
 }

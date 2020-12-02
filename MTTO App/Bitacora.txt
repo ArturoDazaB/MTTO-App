@@ -469,6 +469,78 @@ VERSION DE BASE DE DATOS LOCAL		=		MODIFICACIONES
 									=       aplicacion.
 ==========================================================================================================
 ==========================================================================================================
+		MTTOAPP_V6(WebApi)			=		*Se modificaron los archivos: PaginaPrincipal.xaml.cs, 
+									=		PaginaPrincipalViewModel.xaml.cs y App.xaml.cs.
+									=
+									=		-PaginaPrincipal.xaml.cs => Se modifico el codigo del metodo
+									=		"OnIngresar" (Metodo llamado cuando es pulsado el boton
+									=		ingresar en la pantalla principal de la aplicacion). En dicho 
+									=		metodo se encontraban los comandos para realizar consulta de
+									=		la base de datos local con la que trabaja la aplicacion cuando
+									=		se encuentra trabajando stand alone. Dichos comandos fueron
+									=		movidos a un nuevo metodo dentro de la misma clase, el cual 
+									=		llevara por nombre "GetDefaultUsers".
+									=
+									=		Se codificaron nuevos comandos para realiza el llamado a un 
+									=		nuevo metodo creado dentro de la clase "PaginaPrincipalViewModel"
+									=		
+									=		-PaginaPrincipalViewModel.cs => Se creo el metodo "LogInResponse"
+									=		el cual sera el encargado de realizar el consumo del API.
+									=
+									=		-App.cs => Se crearon dos metodos nuevos: "GetInsecureHandler" Y
+									=		"GetDefaultUsers" (ya mencionado previamente). El primer metodo
+									=		se encarga de verificar si el certificado de seguridad es emitido
+									=		por el localhost, de ser asi permite la conexion entre el cliente
+									=		y el servidor.
+									=
+									=		*Se modificaron los archivos: ConfiguracionAdminViewModel.cs, 
+									=		PaginaConfiguracion.xaml.cs, PaginaRegistro.cs, 
+									=		UserMainPage.xaml.cs, MasterPage.xaml.cs y DetailPage.xaml.cs
+									=
+									=		- ConfiguracionAdminViewModel.cs => Se modifico el metodo 
+									=		"Save", modificando: El tipo de variable de retorno, pasando 
+									=		de "string" a "Task<string>", ademas de cambiar esta varible a 
+									=		asincrona (async). Es importante agregar que este metodo es 
+									=		usado en tres paginas distintas: PaginaRegistro (pagina de 
+									=		escritura debido a que se introducen datos nuevos), Pagina-
+									=		Configuracion y PaginaConfiguracionAdmin (paginas de lectura
+									=		y escritura debido a que toma valores existentes y los sobre 
+									=		escribe). Este metodo internamente identifica desde que pagina
+									=		se encuentra el usuario invocando a la clase "Configuracion-
+									=		AdminViewModel.cs".
+									=
+									=		Continuando, se migro la seccion de codigo dentro del metodo
+									=		"Save" encargada de realizar la consulta y registro de un nuevo
+									=		usuario dentro de la plataforma de manera local (stand alone) a
+									=		un nuevo metodo privado miembro de la clase, y de manera homologa
+									=		se creo un nuevo metodo privado que se encargara de realizar 
+									=		la solicitud HTTP (request) y recibir la respuesta (response)
+									=		emitida por el servidor, dichos metodos llevan por nombre
+									=		"SaveUserStandAlone" y "SaveUserHttpClient".
+									=
+									=		Por otro lado, tambien se modifico el contructor de la clase, 
+									=		adicionando esta vez un nuevo parametro a solicitar al momento
+									=		de invicar la clase => <double> UserId -> Parametro que almacena
+									=		el Id/Cedula del usuario que se encuentra loggeado en ese 
+									=		momento.
+									=
+									=		- PaginaRegistro.xaml.cs: En esta clase solo hubieron ligeras
+									=		modificaciones, siendo este el caso solo se agregaron las li-
+									=		neas de codigo para realiza el llamado del metodo Save de la
+									=		clase ConfiguracionAdminViewModel y activar el ActivityIndicator
+									=		hasta obtener una respuesta del servidor.
+									=
+									=		- UserMainPage.xaml.cs, MasterPage.xaml.cs y DetailPage.xaml.cs
+									=		En estas tres clases se realizo el mismo procedimiento. Puesto
+									=		que anteriormente la aplicacion funcionaba Stand Alone, desde 
+									=		los contructores de dichas clases se realizaba la lectura y 
+									=		escritura de la base de datos local sqlite, debido a esto, 
+									=		se decidio crear un constructor paralelo y/o homologo con 
+									=		parametros distintos a los contructores originales, los 
+									=		cuales manejaran solo los parametros utilizados en el 
+									=		consumo de los servicios web (API).
+==========================================================================================================
+==========================================================================================================
 NOTAS:
 
 1) MODIFICACION DE LAS VARIABLES DEL TIPO DateTime por variables del tipo Date

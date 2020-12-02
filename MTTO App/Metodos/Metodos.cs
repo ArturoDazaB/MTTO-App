@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.Http;
 
 namespace MTTO_App
 {
     //EN ESTA CLASE INTRODUCIREMOS LAS OPERACIONES LOGICAS
     //QUE LA APLICACION UTILIZA EN TODO EL CODIGO
-    public static class Metodos
+    public class Metodos
     {
         //===============================================================================
         //===============================================================================
@@ -475,5 +476,20 @@ namespace MTTO_App
             Console.WriteLine("==============================================================");
             Console.WriteLine("==============================================================\n\n");
         }
+
+        //===============================================================================
+        //===============================================================================
+        
+
     }
+
+    /*
+    public class HttpClientHandler
+    {
+        public HttpClientHandler GetInsecureHandler()
+        {
+
+        }
+    }
+    */
 }

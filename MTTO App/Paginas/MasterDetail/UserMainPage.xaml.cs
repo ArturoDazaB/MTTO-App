@@ -1,5 +1,6 @@
 ﻿using Android.Widget;
 using SQLite;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xamarin.Forms;
@@ -12,6 +13,8 @@ namespace MTTO_App
     {
         private UltimaConexion UltimaConexion, UltimaConexionAux;
 
+        //CONSTRUCTOR DE LA CLASE "UserMainPage"
+        //NOTA: ESTE CONSTRUCTOR ES INVOCADO CUANDO LA APLICACION TRABAJA STAND ALONE
         public UserMainPage(Personas Persona, Usuarios Usuario)
         {
             InitializeComponent();
@@ -84,11 +87,35 @@ namespace MTTO_App
             App.MasterDetail = this;
 
             //SE INDICA E INVOCA LAS PAGINAS QUE FUNCIONARAN COMO "MasterPage.xaml.cs" Y "DetailPage.xaml.cs"
-            this.Master = new MasterPage(Persona, Usuario, UltimaConexion);
+            this.Master = new MasterPage(Persona, Usuario, UltimaConexionAux);
             this.Detail = new NavigationPage(new DetailPage(Persona, Usuario, UltimaConexionAux));
 
             //SE GENERA EL MENSAJE "Bienvenido" AL MOMENTO DE INGRESAR
             Toast.MakeText(Android.App.Application.Context, "Bienvenido " + Usuario.Username, ToastLength.Short).Show();
+        }
+
+        //CONSTRUCTOR DE LA CLASE "UserMainPage"
+        //NOTA: ESTE CONSTRUCTOR ES INVOCADO CUANDO LA APLICACION TRABAJA MEDIANTE EL CONSUMO DE APIS
+        public UserMainPage(Personas Persona, Usuarios Usuario, DateTime UltimaFechaIngreso)
+        {
+            InitializeComponent();
+            //SE INDICAN E INICIALIZAN QUIENES VAN A SER LAS PAGINAS MasterPage y DetailPage, ADEMAS DE ENVIAR LOS PARAMETROS
+            //SOLICITADOS AL CONSTRUCTOR DE CADA PAGINA =>
+
+            //SE NOTIFICA A LA APLICACION QUE LA PAGINA ORIGEN DE LAS PAGINAS "MasterPage.xaml.cs" Y "DetailPage.xaml.cs"
+            App.MasterDetail = this;
+
+            //SE INDICA E INVOCA LAS PAGINAS QUE FUNCIONARAN COMO "MasterPage.xaml.cs" Y "DetailPage.xaml.cs"
+            this.Master = new MasterPage(Persona, Usuario, UltimaFechaIngreso);
+            this.Detail = new NavigationPage(new DetailPage(Persona, Usuario, UltimaFechaIngreso));
+
+            //SE GENERA EL MENSAJE "Bienvenido" AL MOMENTO DE INGRESAR
+            Toast.MakeText(Android.App.Application.Context, "Bienvenido " + Usuario.Username, ToastLength.Short).Show();
+        }
+
+        private void LogInStandAlone(Personas Persona, Usuarios Usuario)
+        {
+            
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using MTTO_App.Model;
+using System;
 
 namespace MTTO_App.ViewModel
 {
@@ -17,6 +18,13 @@ namespace MTTO_App.ViewModel
             //SE INSTANCIA EL OBJETO MODEL DE LA CLASE "MasterDetailPageUserInfoModel.cs" CON LA
             //INFORMACION DEL USUARIO LOGGEADO
             MasterPageUserInfo = new MasterDetailPageUserInfoModel(Persona, Usuario, ultimaconexion);
+        }
+
+        public MasterDetailPageUserInfoViewModel(Personas Persona, Usuarios Usuario, DateTime ultimafechaingreso)
+        {
+            //SE INSTANCIA EL OBJETO MODEL DE LA CLASE "MasterDetailPageUserInfoModel.cs" CON LA
+            //INFORMACION DEL USUARIO LOGGEADO
+            MasterPageUserInfo = new MasterDetailPageUserInfoModel(Persona, Usuario, ultimafechaingreso);
         }
 
         //===============================================================================================

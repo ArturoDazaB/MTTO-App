@@ -27,7 +27,7 @@ namespace MTTO_App.Paginas
 
             Persona = new Personas().NewPersona(persona);
             Usuario = new Usuarios().NewUsuario(usuario);
-            BindingContext = DatosPagina = new ConfiguracionAdminViewModel(true, Persona, Usuario);
+            BindingContext = DatosPagina = new ConfiguracionAdminViewModel(true, Persona, Usuario, Usuario.Cedula);
 
             //==============================================================================
             //==============================================================================
@@ -191,7 +191,7 @@ namespace MTTO_App.Paginas
                 " suministrada sera modificada. ¿Desea continuar?", "Si", "No"))
             {
                 //SE RECIBE EL MENSAJE DE RESPUESTA
-                respuesta = DatosPagina.Save();
+                respuesta = await DatosPagina.Save();
 
                 if (App.ConfigChangedFlag)
                 {

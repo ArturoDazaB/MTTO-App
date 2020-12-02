@@ -137,4 +137,12 @@ namespace MTTO_App.Tablas
         public string TableroId { get; set; }
         public string SapId { get; set; }
     }
+
+    //===================================================================================
+    //===================================================================================
+    public partial class RequestRegistroUsuario
+    {
+        public InformacionGeneral NewUser { get; set; }
+        public double UserId { get; set; }
+    }
 }

@@ -5,6 +5,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
+using Newtonsoft.Json;
+using System.Net.Http;
+using MTTO_App.Tablas;
 
 namespace MTTO_App.ViewModel
 {
@@ -67,6 +71,8 @@ namespace MTTO_App.ViewModel
         protected Personas Persona;
 
         protected Usuarios Usuario;
+
+        protected double UserId;
 
         //===============================================================================================
         //===============================================================================================
@@ -490,7 +496,7 @@ namespace MTTO_App.ViewModel
         //===============================================================================================
         //===============================================================================================
         //CONSTRUCTOR DE LA CLASE
-        public ConfiguracionAdminViewModel(bool flag, Personas persona, Usuarios usuario)
+        public ConfiguracionAdminViewModel(bool flag, Personas persona, Usuarios usuario, double userid)
         {
             //=================================================================================================================================
             //=================================================================================================================================
@@ -505,11 +511,11 @@ namespace MTTO_App.ViewModel
 
             //=================================================================================================================================
             //=================================================================================================================================
-            //SI "ConfiguracionAdminViewModel.cs" ES INVOCADA DESDE LAS PAGINAS "PaginaConfiguracion.xaml.cs" y "PaginaConfiguracionAdmin2.xaml.cs"
+            //SI "ConfiguracionAdminViewModel.cs" ES INVOCADA DESDE LAS PAGINAS "PaginaConfiguracion.xaml.cs" y "PaginaConfiguracionAdmin.xaml.cs"
             //SE PROCEDE A CARGAR TODA LA INFORMACION DE LA PERSONA A MODIFICAR. POR OTRO LADO, SI "ConfiguracionAdminViewModel.CS" ES INVOCADA
             //DESDE LA PAGINA "PaginaRegistro.xaml.cs" SE DEJAN VACIOS LOS CAMPOS
 
-            if (flagLecturaEscritura == false)
+            if (flagLecturaEscritura == false)//CLASE INVOCADA DESDE LA CLASE "PaginaRegistro"
             {
                 //SE INICIALIZAN LAS VARIABLES LOCALES
                 nombres = apellidos = cedula = numeroficha = telefono = correo = username = password = confirmacionpassword = string.Empty;
@@ -517,16 +523,22 @@ namespace MTTO_App.ViewModel
                 fechacreacion = fechanacimiento = DateTime.Now;
 
                 //SE ALMACENA LA INFORMACION DEL USUARIO QUE SE ENCUENTRA LOGGEADO EN EL MOMENTO
-                Persona = new Personas().NewPersona(persona);
-                Usuario = new Usuarios().NewUsuario(usuario);
+                Persona = new Personas();
+                Usuario = new Usuarios();
+
+                //SE ALMACENA EL ID DEL USUARIO QUE SE ENCUENTRA LOGGEADO DENTRO DE LA APLICACION
+                UserId = userid;
 
                 MensajeConsole("PUNTO DE ACCESO => PAGINA REGISTRO");
             }
-            else
+            else//CLASE INVOCADA DESDE LA CLASE "PaginaConfiguracion.xaml.cs" O "PaginaConfiguracionAdmin.xaml.cs"
             {
                 //SE CREAN LOS OBJETOS QUE CONTENDRAN LA INFORMACION DEL USUARIO A MODIFICAR
                 Persona = new Personas().NewPersona(persona);
                 Usuario = new Usuarios().NewUsuario(usuario);
+
+                //SE ALMACENA EL ID DEL USUARIO QUE SE ENCUENTRA LOGGEADO DENTRO DE LA APLICACION
+                UserId = userid;
 
                 //SE CARGA LA INFORMACION EN LAS VARIABLES LOCALES
                 nombres = Persona.Nombres;
@@ -543,15 +555,15 @@ namespace MTTO_App.ViewModel
                 password = Usuario.Password;
 
                 MensajeConsole("PUNTO DE ACCESO => PAGINA CONFIGURACION");
-            }
 
-            //=================================================================================================================================
-            //=================================================================================================================================
-            //SE VERIFICA QUE LOS DOS OBJETOS CONTENGAN EL MISMO IDENTIFICATIVO
-            if (Persona.Cedula != Usuario.Cedula)
-                flagCedula = true;
-            else
-                flagCedula = false;
+                //=================================================================================================================================
+                //=================================================================================================================================
+                //SE VERIFICA QUE LOS DOS OBJETOS CONTENGAN EL MISMO IDENTIFICATIVO
+                if (Persona.Cedula != Usuario.Cedula)
+                    flagCedula = true;
+                else
+                    flagCedula = false;
+            }
         }
 
         //===============================================================================================
@@ -568,7 +580,7 @@ namespace MTTO_App.ViewModel
         //===============================================================================================
         //METODO PARA ACTUALIZAR ("PaginaConfiguracion2.xaml.cs" y "PaginaConfiguracionAdmin2.xaml.cs"
         //Y GUARDAR DATOS ("PaginaRegistro.xaml.cs")
-        public string Save()
+        public async Task<string> Save()
         {
             //SE CREA E INICIALIZA EL MENSAJE QUE SERA RETORNADO A LA PAGINA DESDE
             //DONDE SE HAYA INVOCADO A LA CLASE
@@ -590,16 +602,14 @@ namespace MTTO_App.ViewModel
                     //SE VERIFICA QUE CADA UNA DE LAS PROPIEDADES CUMPLA CON LOS REQUISITOS MINIMOS
                     if (EvaluacionDeCampos3())
                     {
-                        //TODAS LAS PROPIEDADES CUMPLEN CON LOS REQUISITOS MINIMOS
-                        //SE APERTURA LA BASE DE DATOS
-                        using (SQLiteConnection connection = new SQLiteConnection(App.FileName))
-                        {
-                            //POR ULTIMO SE VERIFICA SI SE ESTAN MODIFICANDO DATOS O
-                            //REALIZANDO UN NUEVO REGISTRO
+                        //TODAS LAS PROPIEDADES CUMPLEN CON LOS REQUISITOS MINIMOS POR ULTIMO SE VERIFICA SI 
+                        //SE ESTAN MODIFICANDO DATOS O REALIZANDO UN NUEVO REGISTRO
 
-                            //flagLecturaEscritura = true => Acceso desde "PaginaConfiguracionAdmin.xaml.cs" o "PaginaConfiguracion.xaml.cs"
-                            //flagLecturaEscritura = false => Acceso desde "PaginaRegistro.xaml.cs"
-                            if (flagLecturaEscritura)
+                        //flagLecturaEscritura = true => Acceso desde "PaginaConfiguracionAdmin.xaml.cs" o "PaginaConfiguracion.xaml.cs"
+                        //flagLecturaEscritura = false => Acceso desde "PaginaRegistro.xaml.cs"
+                        if (flagLecturaEscritura)
+                        {
+                            using (SQLiteConnection connection = new SQLiteConnection(App.FileName))
                             {
                                 //----------------------------------------------------------------------------------------------------
                                 //----------SECCION QUE LUEGO SERA MODIFICADA PARA INGRESAR LOS COMANDOS DE HTTPCLIENT----------------
@@ -638,67 +648,19 @@ namespace MTTO_App.ViewModel
                                 //----------------------------------------------------------------------------------------------------
                                 //----------------------------------------------------------------------------------------------------
                             }
-                            else
-                            {
-                                //----------------------------------------------------------------------------------------------------
-                                //----------SECCION QUE LUEGO SERA MODIFICADA PARA INGRESAR LOS COMANDOS DE HTTPCLIENT----------------
-                                //------------------------API CONTROLLER CLASS: "RegistroUsuariosController"--------------------------
-                                //----------------------------------------------------------------------------------------------------
-                                //SE CREAN LAS TABLAS. LA LIBRERIA SQLite EVITA ESTA FUNCION DE
-                                //YA EXISTIR UNA TABLA DEL TIPO <objeto> YA CREADA PREVIAMENTE
-                                connection.CreateTable<Personas>();
-                                connection.CreateTable<Usuarios>();
-
-                                //SE VERIFICA UN ATRIBUTO DE CADA UNO DE LOS ITEMS Y SE COMPARA
-                                //CON EL VALOR DEL ATRIBUTO DEL NUEVO ITEM A REGISTRAR, DE EXISTIR
-                                //UN MATCH SE CANCELA EL REGISTRO
-                                flagExistingCedula = Metodos.MatchCedula(connection.Table<Personas>().ToList(), Cedula);
-                                flagExistingUsername = Metodos.MatchUsername(connection.Table<Usuarios>().ToList(), Username.ToLower());
-                                flagExistingNumeroFicha = Metodos.MatchNumeroFicha(connection.Table<Personas>().ToList(), NumeroFicha);
-
-                                if (!flagExistingCedula &&      //TRUE: SE ENCONTRO UN REGISTRO CON LA MISMA CEDULA (ID)
-                                    !flagExistingUsername &&    //TRUE: SE ENCONTRO UN REGISTRO CON EL MISMO NOMBRE DE USUARIO
-                                    !flagExistingNumeroFicha)   //TRUE: SE ENCONTRO UN REGISTRO CON EL MISMO NUMERO DE FICHA
-                                {
-                                    //SE INSERTAN LOS NUEVOS REGISTROS EN SUS RESPECTIVAS TABLAS
-                                    //TABLA PERSONAS:
-                                    connection.Insert(new Personas().NewPersona(FechaCreacion, Metodos.Mayuscula(Nombres), Metodos.Mayuscula(Apellidos),
-                                        Cedula, NumeroFicha, FechaNacimiento, Telefono, Correo.ToLower()));
-
-                                    //TABLA USUARIOS
-                                    connection.Insert(new Usuarios().NewUsuario(Username.ToLower(), Password, Cedula, FechaCreacion, NivelUsuario));
-
-                                    //SE GENERA UN MENSAJE DE NOTIFICACION DE ALMACENAMIENTO
-                                    MensajePantalla("Registro completado satisfactoriamente");
-
-                                    //SE MANDA A IMPRIMIR POR CONSOLA LOS RESULTADOS ALMACENADOS
-                                    NotificacionRegistro();
-
-                                    //SE NOTIFICA QUE SE REALIZO UN NUEVO REGISTRO
-                                    App.RegistroFlag = true;
-
-                                    //SE CIERRA LA BASE DE DATOS
-                                    connection.Close();
-                                }
-                                else
-                                {
-                                    //SI ALGUNA DE LAS BANDERAS SE DISPARA SE GENERARA UN MENSAJE DE NOTIFICACION DEPENDIENTO DE
-                                    //CUAL DE ELLAS SE HAYA DISPARADO
-                                    if (flagExistingCedula)
-                                        respuesta = "El numero de cedula que desea registrar ya ha sido previamente registrado." +
-                                            "\nVerifique la cedula e intente nuevamente";
-
-                                    if (flagExistingUsername)
-                                        respuesta = "El nombre de usuario que intenta registrar ya ha sido previamente registrado. " +
-                                            "\nIntente con un nombre distinto";
-
-                                    if (flagExistingNumeroFicha)
-                                        respuesta = "El Numero de Ficha que intenta registrar ya ha sido previamente registrado. " +
-                                            "\nIntente con un numero de ficha distinto";
-                                }
-                                //----------------------------------------------------------------------------------------------------
-                                //----------------------------------------------------------------------------------------------------
-                            }
+                        }
+                        else
+                        {
+                            //----------------------------------------------------------------------------------------------------
+                            //----------------------------------------------------------------------------------------------------
+                            //SE LLAMA AL METODO DE REGISTRO DE USUARO CUANDO LA APLICACION SE ENCUENTRE FUNCIONANDO STAND ALONE
+                            //respuesta = SaveUserStandAlone();
+                            //----------------------------------------------------------------------------------------------------
+                            //----------------------------------------------------------------------------------------------------
+                            //SE LLAMA AL METODO DE REGISTRO DE USUARO CUANDO LA APLICACION SE ENCUENTRE FUNCIONANDO STAND ALONE
+                            respuesta = await SaveUserHttpClient();
+                            //----------------------------------------------------------------------------------------------------
+                            //----------------------------------------------------------------------------------------------------
                         }
                     }
                     else
@@ -949,6 +911,136 @@ namespace MTTO_App.ViewModel
         public void MensajePantalla(string mensaje)
         {
             Toast.MakeText(Android.App.Application.Context, mensaje, ToastLength.Short).Show();
+        }
+
+        protected string SaveUserStandAlone()
+        {
+            using (SQLiteConnection connection = new SQLiteConnection(App.FileName))
+            {
+                //----------------------------------------------------------------------------------------------------
+                //----------SECCION QUE LUEGO SERA MODIFICADA PARA INGRESAR LOS COMANDOS DE HTTPCLIENT----------------
+                //------------------------API CONTROLLER CLASS: "RegistroUsuariosController"--------------------------
+                //----------------------------------------------------------------------------------------------------
+                //SE CREAN LAS TABLAS. LA LIBRERIA SQLite EVITA ESTA FUNCION DE
+                //YA EXISTIR UNA TABLA DEL TIPO <objeto> YA CREADA PREVIAMENTE
+                connection.CreateTable<Personas>();
+                connection.CreateTable<Usuarios>();
+
+                //SE VERIFICA UN ATRIBUTO DE CADA UNO DE LOS ITEMS Y SE COMPARA
+                //CON EL VALOR DEL ATRIBUTO DEL NUEVO ITEM A REGISTRAR, DE EXISTIR
+                //UN MATCH SE CANCELA EL REGISTRO
+                flagExistingCedula = Metodos.MatchCedula(connection.Table<Personas>().ToList(), Cedula);
+                flagExistingUsername = Metodos.MatchUsername(connection.Table<Usuarios>().ToList(), Username.ToLower());
+                flagExistingNumeroFicha = Metodos.MatchNumeroFicha(connection.Table<Personas>().ToList(), NumeroFicha);
+
+                if (!flagExistingCedula &&      //TRUE: SE ENCONTRO UN REGISTRO CON LA MISMA CEDULA (ID)
+                    !flagExistingUsername &&    //TRUE: SE ENCONTRO UN REGISTRO CON EL MISMO NOMBRE DE USUARIO
+                    !flagExistingNumeroFicha)   //TRUE: SE ENCONTRO UN REGISTRO CON EL MISMO NUMERO DE FICHA
+                {
+                    //SE INSERTAN LOS NUEVOS REGISTROS EN SUS RESPECTIVAS TABLAS
+                    //TABLA PERSONAS:
+                    connection.Insert(new Personas().NewPersona(FechaCreacion, Metodos.Mayuscula(Nombres), Metodos.Mayuscula(Apellidos),
+                        Cedula, NumeroFicha, FechaNacimiento, Telefono, Correo.ToLower()));
+
+                    //TABLA USUARIOS
+                    connection.Insert(new Usuarios().NewUsuario(Username.ToLower(), Password, Cedula, FechaCreacion, NivelUsuario));
+
+                    //SE GENERA UN MENSAJE DE NOTIFICACION DE ALMACENAMIENTO
+                    MensajePantalla("Registro completado satisfactoriamente");
+
+                    //SE MANDA A IMPRIMIR POR CONSOLA LOS RESULTADOS ALMACENADOS
+                    NotificacionRegistro();
+
+                    //SE NOTIFICA QUE SE REALIZO UN NUEVO REGISTRO
+                    App.RegistroFlag = true;
+
+                    //SE CIERRA LA BASE DE DATOS
+                    connection.Close();
+                }
+                else
+                {
+                    //SI ALGUNA DE LAS BANDERAS SE DISPARA SE GENERARA UN MENSAJE DE NOTIFICACION DEPENDIENTO DE
+                    //CUAL DE ELLAS SE HAYA DISPARADO
+                    if (flagExistingCedula)
+                        return "El numero de cedula que desea registrar ya ha sido previamente registrado." +
+                            "\nVerifique la cedula e intente nuevamente";
+
+                    if (flagExistingUsername)
+                        return "El nombre de usuario que intenta registrar ya ha sido previamente registrado. " +
+                            "\nIntente con un nombre distinto";
+
+                    if (flagExistingNumeroFicha)
+                        return "El Numero de Ficha que intenta registrar ya ha sido previamente registrado. " +
+                            "\nIntente con un numero de ficha distinto";
+                }
+
+                //----------------------------------------------------------------------------------------------------
+                //----------------------------------------------------------------------------------------------------
+
+                return string.Empty;
+            }
+        }
+
+        protected async Task<string> SaveUserHttpClient()
+        {
+            //SE CREA E INICIALIZA LA VARIABLE QUE RETENDRA EL URL PARA REALIZAR LA SOLICITUD HTTP
+            string url = "https://192.168.1.99:5000/mttoapp/registro";
+            //SE CREA E INICIALIZA LA VARIABLE QUE VERIFICARA EL ESTADO DE CONEXION A INTERNET
+            var current = Connectivity.NetworkAccess;
+
+            //SE VERIFICA SI EL DISPOSITIVO SE ENCUENTRA CONECTADO A INTERNET
+            if (current == NetworkAccess.Internet)
+            {
+                //EL EQUIPO SE ENCUENTRA CONECTADO A INTERNET
+                //SE INICIA EL CICLO TRY...CATCH
+                try
+                {
+                    //INICIAMOS EL SEGMENTO DEL CODIGO EN EL CUAL REALIZAREMOS EL CONSUMO DE SERVICIOS WEB MEDIANTE
+                    //LA INICIALIZACION Y CREACION DE UNA VARIABLE QUE FUNCIONARA COMO CLIENTE EN LAS SOLICITUDES 
+                    //Y RESPUESTAS ENVIADAS Y RECIBIDAS POR EL SERVIDOR (WEB API) 
+                    //----------------------------------------------------------------------------------------------
+                    //NOTA: CUANDO SE REALIZA LA CREACION E INICIALIZACION DE LA VARIABLE DEL TIPO HttpClient SE
+                    //HACE UN LLAMADO A UN METODO ALOJADO EN LA CLASE "App" Y QUE ES ENVIADO COMO PARAMETRO DEL 
+                    //TIPO HttpClientHandler => 
+                    //----------------------------------------------------------------------------------------------
+                    using (HttpClient client = new HttpClient(App.GetInsecureHandler()))
+                    {
+                        //SE CREA EL OBJETO MODELO DEL TIPO "RequestRegistroUsuario"
+                        var model = new RequestRegistroUsuario()
+                        {
+                            NewUser = new InformacionGeneral()
+                            {
+                                Persona = new Personas().NewPersona(FechaCreacion, Metodos.Mayuscula(Nombres), Metodos.Mayuscula(Apellidos),
+                                                                            Cedula, NumeroFicha, FechaNacimiento, Telefono, Correo.ToLower()),
+                                Usuario = new Usuarios().NewUsuario(Username.ToLower(), Password, Cedula, FechaCreacion, NivelUsuario),
+                            },
+                            UserId = UserId,
+                        };
+
+                        //SE REALIZA LA CONVERSION A OBJETO JSON
+                        var json = JsonConvert.SerializeObject(model);
+                        //SE AÑADE EL OBJETO JSON RECIEN CREADO COMO CONTENIDO BODY DEL NUEVO REQUEST
+                        HttpContent httpContent = new StringContent(json);
+                        //SE HACE LA CONFIGURACION DE LOS HEADERS DEL REQUEST
+                        httpContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+                        //SE REALIZA LA SOLICITUD HTTP
+                        HttpResponseMessage response = await client.PostAsync(url, httpContent);
+                        //SE RETORNA EL MENSAJE OBTENIDO POR 
+                        return await Task.FromResult(JsonConvert.DeserializeObject<string>(await response.Content.ReadAsStringAsync()));
+                    }
+                }
+                //DE OCURRIR UNA EXCEPCION DENTRO DEL CICLO TRY...CATCH SE PROCEDE A EJECUTAR LAS LINEAS DE CODIGO
+                //CONTENIDAS DENTRO DE LA SECCION CATCH. AQUI SE EVALUARAN LAS EXCEPCIONES MAS COMUNES OBTENIDAS DURANTE
+                //LAS PRUEBAS DE CONEXION CON EL SERVICIO WEB API
+                catch (Exception ex) when (ex is HttpRequestException ||
+                                           ex is Javax.Net.Ssl.SSLException ||
+                                           ex is Javax.Net.Ssl.SSLHandshakeException)
+                {
+                    return "Problemas de conexion con el servidor";
+                }
+            }
+
+            return string.Empty;
         }
     }
 }

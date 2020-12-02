@@ -26,7 +26,7 @@ namespace MTTO_App.Paginas
             //INICIALIZACION DE OBJETOS
             Persona = new Personas().NewPersona(per);
             Usuario = new Usuarios().NewUsuario(usu);
-            BindingContext = DatosPagina = new ConfiguracionAdminViewModel(true, Persona, Usuario);
+            BindingContext = DatosPagina = new ConfiguracionAdminViewModel(true, Persona, Usuario, 0);
             //DatosPagina.GetInfo(Persona, Usuario);
             //==============================================================================
             //==============================================================================
@@ -280,7 +280,7 @@ namespace MTTO_App.Paginas
             if (respuesta)
             {
                 //SE RECIBE EL MENSAJE DE RESPUESTA
-                var response = DatosPagina.Save();
+                var response = await DatosPagina.Save();
 
                 if (App.ConfigChangedFlag)
                 {

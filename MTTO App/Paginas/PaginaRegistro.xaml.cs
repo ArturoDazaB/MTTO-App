@@ -1,4 +1,5 @@
-﻿using MTTO_App.ViewModel;
+﻿using Android.Widget;
+using MTTO_App.ViewModel;
 using System;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -24,7 +25,7 @@ namespace MTTO_App.Paginas
             Usuario = new Usuarios().NewUsuario(usuario);
 
             //SE GENERA LA CONEXION DE LA CLASE "PaginaRegistro2.xaml.cs" CON LA CLASE
-            BindingContext = ConexionDatos = new ConfiguracionAdminViewModel(false, Persona, Usuario);
+            BindingContext = ConexionDatos = new ConfiguracionAdminViewModel(false, Persona, Usuario, Usuario.Cedula);
 
             ActivityIndicatorA.IsRunning = ActivityIndicatorA.IsVisible = false;
             DatosUsuarioGrid.IsVisible = false;
@@ -263,16 +264,34 @@ namespace MTTO_App.Paginas
                     if (await DisplayAlert("Alerta", "Esta a punto de realizar un nuevo registro." +
                         "\n\n¿Desea continuar?", "Si", "No"))
                     {
+                        //------------------------------------------------------------------------------------------------------
+                        //----------------------CODIGO PARA REGISTRAR UN USUARIO MEDIANTE CONSUMO DE API------------------------
                         //LLAMAMOS AL METODO "Save" DE LA CLASE "ConfiguracionAdminViewModel" Y GUARDAMOS LA RESPUESTA OBTENIDA
-                        respuesta = ConexionDatos.Save();
+                        //INICIAMOS EL ACTIVITY INDICATOR
+                        ActivityIndicatorA.IsRunning = true;
 
+                        await Task.Run(async () =>
+                        {
+                            respuesta = await ConexionDatos.Save();
+                            ActivityIndicatorA.IsRunning = false;
+                        });
+
+                        //SE MUESTRA EL MENSAJE OBTENIDO
+                        Toast.MakeText(Android.App.Application.Context, respuesta, ToastLength.Short).Show();
+
+                        //------------------------------------------------------------------------------------------------------
+                        //------------------------------------------------------------------------------------------------------
+                        //-----CODIGO PARA REGISTRAR UN USUARIO CUANDO LA APLICACION SE ENCUENTRA TRABAJANDO STAND ALONE--------
+                        /*respuesta = await ConexionDatos.Save();
                         //SE EVALUA SI SE REALIZO ALGUN REGISTRO
                         if (App.RegistroFlag)
                             //SE DA SET A LA BANDERA
                             App.RegistroFlag = false;
                         else
                             //SE MUESTRA EN PANATALLA MEDIANTE UN MENSAJE POP UP EL PORQUE NO SE PUDO REALIZAR EL REGISTRO DE USUARIO
-                            await DisplayAlert("Mensaje", respuesta, "Entendido");
+                            await DisplayAlert("Mensaje", respuesta, "Entendido");*/
+                        //------------------------------------------------------------------------------------------------------
+                        //------------------------------------------------------------------------------------------------------
                     }
                     break;
             }

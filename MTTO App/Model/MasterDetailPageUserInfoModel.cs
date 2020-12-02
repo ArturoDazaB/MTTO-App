@@ -1,4 +1,6 @@
-﻿namespace MTTO_App.Model
+﻿using System;
+
+namespace MTTO_App.Model
 {
     internal class MasterDetailPageUserInfoModel
     {
@@ -24,6 +26,23 @@
                     fullname = Persona.Apellidos + ", " + Persona.Nombres + ".";
 
                 ultimaconexion = Ultima.UltimaCon.ToString();
+                usericonfile = "UserIcon.png";
+            }
+        }
+
+        public MasterDetailPageUserInfoModel(Personas Persona, Usuarios Usuario, DateTime ultimafechaingreso)
+        {
+            if (Persona.Cedula == Usuario.Cedula)
+            {
+                //SE CARGA LA INFORMACION QUE VA A SER DESPLEGADA
+                username = Metodos.Mayuscula(Usuario.Username);
+
+                if (Persona.Cedula == 0)
+                    fullname = "N/A.";
+                else
+                    fullname = Persona.Apellidos + ", " + Persona.Nombres + ".";
+
+                ultimaconexion = ultimafechaingreso.ToString();
                 usericonfile = "UserIcon.png";
             }
         }

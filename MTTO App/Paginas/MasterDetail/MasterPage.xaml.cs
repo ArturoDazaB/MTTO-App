@@ -1,6 +1,6 @@
 ﻿using MTTO_App.Paginas;
 using MTTO_App.ViewModel;
-
+using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -13,9 +13,9 @@ namespace MTTO_App
         //=======================================================================
         //OBJETOS DE LA CLASE
         private Personas Persona;
-
         private Usuarios Usuario;
         private UltimaConexion Ultimaconexion;
+        private DateTime UltimaFechaIngreso;
 
         //=======================================================================
         //=======================================================================
@@ -36,26 +36,53 @@ namespace MTTO_App
         {
             InitializeComponent();
 
-            //SE INSTANCIAN LOS OBJETOS Persona, Usuario y UltimaConexion PARA LUEGO
-            //LLENARLOS CON LOS DATOS DEL USUARIO QUE SE ENCUENTRA NAVEGANDO
+            //SE INSTANCIAN LOS OBJETOS Persona, Usuario y UltimaConexion PARA LUEGO LLENARLOS CON LOS DATOS 
+            //DEL USUARIO QUE SE ENCUENTRA NAVEGANDO
             Persona = new Personas().NewPersona(per);
             Usuario = new Usuarios().NewUsuario(usu);
             Ultimaconexion = new UltimaConexion().NewUltimaConexion(ultima);
 
-            //SE INSTANCIA LOS DATOS DE LA PAGINA MEDIANTE EL LLAMADO
-            //DE LA CLASE "MasterDetailPageUserInfoViewModel.cs" JUNTO CON
-            //LOS DATOS DEL USUARIO QUE SE ENCUENTRE LOGGEADO
+            //SE INSTANCIA LOS DATOS DE LA PAGINA MEDIANTE EL LLAMADO DE LA CLASE "MasterDetailPageUserInfoViewModel.cs" 
+            //JUNTO CON LOS DATOS DEL USUARIO QUE SE ENCUENTRE LOGGEADO
             BindingContext = DatosPagina = new MasterDetailPageUserInfoViewModel(Persona, Usuario, Ultimaconexion);
 
             //SE INSTANCIA LA CLASE OpcionesViewModel.cs
             OpcionesViewModel = new OpcionesViewModel();
 
-            //CONFIGURACION DEL MENU DE OPCIONES
-            //DEPENDIENDO DEL NIVEL DEL USUARIO QUE SE ENCUENTRE LOGGEADO
-            //EL MENU LATERAL LLENARA LAS OPCIONES Y CARGARA LA INFORMACION
-            //DE MANERA DISTINTA. EN OTRAS PALABRAS, SE GENERO UNA LISTA DE
-            //OPCIONES PARA EL USUARIO ADMINISTRATOR Y OTRA PARA LOS USUARIOS
-            //DE BAJO NIVEL
+            //CONFIGURACION DEL MENU DE OPCIONES DEPENDIENDO DEL NIVEL DEL USUARIO QUE SE ENCUENTRE LOGGEADO
+            //EL MENU LATERAL LLENARA LAS OPCIONES Y CARGARA LA INFORMACION DE MANERA DISTINTA. EN OTRAS PALABRAS, 
+            //SE GENERO UNA LISTA DE OPCIONES PARA EL USUARIO ADMINISTRATOR Y OTRA PARA LOS USUARIOS DE BAJO NIVEL
+
+            switch (Usuario.NivelUsuario)
+            {
+                case 0:
+                    ListaNavegacion.ItemsSource = OpcionesViewModel.OpcionesNivelBajo;
+                    break;
+
+                case 5:
+                    ListaNavegacion.ItemsSource = OpcionesViewModel.OpcionesNivelMedio;
+                    break;
+
+                case 10:
+                    ListaNavegacion.ItemsSource = OpcionesViewModel.OpcionesNivelAlto;
+                    break;
+            }
+        }
+
+        public MasterPage(Personas per, Usuarios usu, DateTime ultima)
+        {
+            InitializeComponent();
+
+            //SE INSTANCIAN LOS OBJETOS Persona, Usuario y UltimaConexion PARA LUEGO
+            //LLENARLOS CON LOS DATOS DEL USUARIO QUE SE ENCUENTRA NAVEGANDO
+            Persona = new Personas().NewPersona(per);
+            Usuario = new Usuarios().NewUsuario(usu);
+            UltimaFechaIngreso = ultima;
+            //SE INSTANCIA LOS DATOS DE LA PAGINA MEDIANTE EL LLAMADO DE LA CLASE "MasterDetailPageUserInfoViewModel.cs" 
+            //JUNTO CON LOS DATOS DEL USUARIO QUE SE ENCUENTRE LOGGEADO
+            BindingContext = DatosPagina = new MasterDetailPageUserInfoViewModel(Persona, Usuario, UltimaFechaIngreso);
+            //SE INSTANCIA LA CLASE OpcionesViewModel.cs
+            OpcionesViewModel = new OpcionesViewModel();
 
             switch (Usuario.NivelUsuario)
             {
