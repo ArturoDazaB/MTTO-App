@@ -382,9 +382,6 @@
                 <!--====================================================================================-->
                 <!--====================================================================================-->
 
-                <ActivityIndicator IsRunning="{Binding OnSave}"
-                                   IsVisible="{Binding OnSave}" />
-
                 <!--BOTON DE GUARDADO-->
                 <Button VerticalOptions="Center"
                         Text="{Binding Actualizar}"
@@ -396,6 +393,13 @@
                         HeightRequest="35"
                         CornerRadius="10"
                         IsEnabled="{Binding IsBusy}" />
+
+                <!--================================================================================>
+                <=================================================================================-->
+                <!--ACTIVITY INDICATOR-->
+                <ActivityIndicator  x:Name = "ActivityIndicator"
+                                    HeightRequest = "30" />
+                
             </StackLayout>
         </Frame>
     </ScrollView>

@@ -277,7 +277,11 @@ namespace MTTO_App.Paginas
                         });
 
                         //SE MUESTRA EL MENSAJE OBTENIDO
-                        Toast.MakeText(Android.App.Application.Context, respuesta, ToastLength.Short).Show();
+                        Toast.MakeText(Android.App.Application.Context, respuesta, ToastLength.Long).Show();
+                        //SE HACE UN RETRAZO DE UN SEGUNDO
+                        await Task.Delay(1000);
+                        //SE CIERRA LA PAGINA "PaginaRegistro"
+                        await Navigation.PopAsync();
 
                         //------------------------------------------------------------------------------------------------------
                         //------------------------------------------------------------------------------------------------------

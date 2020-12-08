@@ -50,7 +50,7 @@ namespace MTTO_App
             //TENDRA LA REFERENCIA A BUSCAR
 
             List<Personas> QueryPersonas = new List<Personas>();
-            List<int> ListaUsuarioID = new List<int>();
+            List<double> ListaUsuarioID = new List<double>();
 
             //SE APERTURA LA BASE DE DATOS
             using (SQLite.SQLiteConnection connection = new SQLite.SQLiteConnection(App.FileName))

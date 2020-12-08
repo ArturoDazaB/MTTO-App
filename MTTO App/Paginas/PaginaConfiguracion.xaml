@@ -314,7 +314,6 @@
                 <!--====================================================================================-->
                 <!--====================================================================================-->
                 <!--BOTON DE GUARDADO-->
-
                 <Button VerticalOptions="Center"
                         Text="{Binding Actualizar}"
                         Clicked="OnActualizar"
@@ -324,6 +323,13 @@
                         TextColor="White"
                         HeightRequest="35"
                         CornerRadius="10" />
+                
+                <!--================================================================================>
+                <=================================================================================-->
+                <!--ACTIVITY INDICATOR-->
+                <ActivityIndicator  x:Name = "ActivityIndicator"
+                                    HeightRequest = "30" />
+                
             </StackLayout>
         </Frame>
     </ScrollView>

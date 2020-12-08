@@ -1,7 +1,8 @@
-﻿using MTTO_App.ViewModel;
+﻿using Android.Widget;
+using MTTO_App.ViewModel;
 using Rg.Plugins.Popup.Services;
 using System;
-
+using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -183,23 +184,37 @@ namespace MTTO_App.Paginas
             //VARIABLE LOCAL
             string respuesta = string.Empty;
 
-            //SE ACTIVA EL COMANDO SAVE CONTACT
-            await DatosPagina.SaveContact();
-
             //EVALUACION DE LA RESPUESTA
             if (await DisplayAlert("Alerta", "Esta a punto de realizar una modificacion de datos, toda la informacion" +
                 " suministrada sera modificada. ¿Desea continuar?", "Si", "No"))
             {
-                //SE RECIBE EL MENSAJE DE RESPUESTA
-                respuesta = await DatosPagina.Save();
+                //------------------------------------------------------------------------------------------------------
+                //----------------------CODIGO PARA REGISTRAR UN USUARIO MEDIANTE CONSUMO DE API------------------------
+                //LLAMAMOS AL METODO "Save" DE LA CLASE "ConfiguracionAdminViewModel" Y GUARDAMOS LA RESPUESTA OBTENIDA
+                //INICIAMOS EL ACTIVITY INDICATOR
+                ActivityIndicator.IsRunning = true;
 
-                if (App.ConfigChangedFlag)
+                await Task.Run(async () =>
+                {
+                    respuesta = await DatosPagina.Save();
+                    ActivityIndicator.IsRunning = false;
+                });
+
+                //SE MUESTRA EL MENSAJE OBTENIDO
+                Toast.MakeText(Android.App.Application.Context, respuesta, ToastLength.Long).Show();
+
+                if (respuesta.ToLower() == "datos actualizados")
+                    await Navigation.PopAsync();
+
+                /*
+                 *SECCION CUANDO LA APLICACION SE ENCUENTRA FUNCIONANDO STAND ALONE
+                 * if (App.ConfigChangedFlag)
                 {
                     App.ConfigChangedFlag = false;
                     await Navigation.PopModalAsync();
                 }
                 else
-                    await DisplayAlert("Mensaje", respuesta, "Entendido");
+                    await DisplayAlert("Mensaje", respuesta, "Entendido");*/
             }
         }
     }

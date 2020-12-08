@@ -1,7 +1,8 @@
-﻿using MTTO_App.ViewModel;
+﻿using Android.Widget;
+using MTTO_App.ViewModel;
 using Rg.Plugins.Popup.Services;
 using System;
-
+using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -269,19 +270,33 @@ namespace MTTO_App.Paginas
 
         async protected void OnActualizar(object sender, EventArgs e)
         {
-            //SE ACTIVA EL COMANDO SAVE CONTACT
-            await DatosPagina.SaveContact();
-
-            //SE REALIZA PREGUNTA DE CONFIRMACION
-            bool respuesta = await DisplayAlert("Alerta", "Esta a punto de realizar una modificacion de datos, toda la informacion" +
-                " suministrada sera modificada. ¿Desea continuar?", "Si", "No");
+            //VARIABLE LOCAL
+            string respuesta = string.Empty;
 
             //EVALUACION DE LA RESPUESTA
-            if (respuesta)
+            if (await DisplayAlert("Alerta", "Esta a punto de realizar una modificacion de datos, toda la informacion" +
+                " suministrada sera modificada. ¿Desea continuar?", "Si", "No"))
             {
-                //SE RECIBE EL MENSAJE DE RESPUESTA
-                var response = await DatosPagina.Save();
+                //------------------------------------------------------------------------------------------------------
+                //----------------------CODIGO PARA REGISTRAR UN USUARIO MEDIANTE CONSUMO DE API------------------------
+                //LLAMAMOS AL METODO "Save" DE LA CLASE "ConfiguracionAdminViewModel" Y GUARDAMOS LA RESPUESTA OBTENIDA
+                //INICIAMOS EL ACTIVITY INDICATOR
+                ActivityIndicator.IsRunning = true;
 
+                await Task.Run(async () =>
+                {
+                    respuesta = await DatosPagina.Save();
+                    ActivityIndicator.IsRunning = false;
+                });
+
+                //SE MUESTRA EL MENSAJE OBTENIDO
+                Toast.MakeText(Android.App.Application.Context, respuesta, ToastLength.Long).Show();
+
+                //SI LA RESPUESTA DE MODIFICACION ES SATISFACTORIA SE SALE DE LA PAGINA ACTUAL
+                if (respuesta == "Datos Actualizados")
+                    await Navigation.PopModalAsync();
+                /*
+                 * SECCION CUANDO LA APLICACION SE ENCUENTRA FUNCIONANDO STAND ALONE
                 if (App.ConfigChangedFlag)
                 {
                     App.ConfigChangedAdminFlag = false;
@@ -289,7 +304,7 @@ namespace MTTO_App.Paginas
                     await Navigation.PopAsync();
                 }
                 else
-                    await DisplayAlert("Mensaje", response, "Entendido");
+                    await DisplayAlert("Mensaje", respuesta, "Entendido");*/
             }
         }
 

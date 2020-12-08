@@ -539,24 +539,69 @@ VERSION DE BASE DE DATOS LOCAL		=		MODIFICACIONES
 									=		parametros distintos a los contructores originales, los 
 									=		cuales manejaran solo los parametros utilizados en el 
 									=		consumo de los servicios web (API).
+									=
+									=		*Se modificaron los siguientes archivos: 
+									=		PaginConfiguracion.xaml.cs, PaginaConfiguracionAdmin.xaml.cs
+									=		ConfiguracionAdminViewModel.cs.
+									=
+									=		- PaginaConfiguracion.xaml.cs: Se realizo la modificacion
+									=		del metodo "OnActualizar", donde se hizo la separacion
+									=		del codigo que debe ser ejecutado cuando la aplicacion
+									=		funciona Stand Alone (El cual se encuentra comentado
+									=		para que no sea ejecutado), y se añadieron las lineas de
+									=		comando activar el objeto "ActivityIndicator" mientras
+									=		se realiza el consumo de APIs de manera asincrona.
+									=
+									=		- PaginaConfiguracionAdmin.xaml.cs: Se realizo la modificacion
+									=		del metodo "OnActualizar", donde se hizo la separacion del
+									=		codigo que debe ser ejecutado cuando la aplicacion funciona 
+									=		Stand Alone (El cual se encuentra comentado para que no
+									=		sea ejecutado), y se añadieron las lineas de comando para 
+									=		activar el objeto "ActivityIndicator" mientras se realiza el 
+									=		consumo de APIs de manera asincrona.
+									=
+									=		- PaginaRegistro.xaml.cs: A pesar de que previamente ya 
+									=		se habian hecho modificaciones sobre la clase "PaginaRegistro"
+									=		esta vez se hizo exactamente el mismo procedimiento
+									=		que las modificaciones planteadas previamente.
+									=
+									=		- ConfiguracionAdminViewModel.cs: Aunque previamente se 
+									=		plantearon modificaciones sobre esta clase, debido a que 
+									=		se trabajo con las paginas destinadas a la modificacion
+									=		- "Configuracion" - de datos, fue necesario realizar
+									=		nuevas modificaciones. Para iniciar, justo al igual
+									=		que el codigo asignado para el registro de un usuario 
+									=		nuevo sobre la plataforma, el codigo usado para la modificacion
+									=		de datos de usuario cuando la aplicacion se encuentra trabajando
+									=		Stand Alone (modificacion por parte del administrador
+									=		mediante la pagina "PaginaConfiguracionAdmin" y modificacion 
+									=		por parte de un usuario de bajo nivel mediante la pagina 
+									=		"PaginaConfiguracion") fue mudado de metodo, creando asi
+									=		los metodos internos: "RegisterUserStandAlone" como el 
+									=		metodo llamado cuando se necesita registrar un usuario
+									=		nuevo dentro de la plataforma, y "ModifyUserStandAlone"
+									=		como el metodo llamado cuando se necesita modificar un
+									=		usuario dentro de la plataforma.
+									=
+									=		Continuando, tambien se crearon metodos homologos que 
+									=		que funcionaran para registrar o modificar usuarios dentro 
+									=		de la plataforma cuando esta se encuentre consumiento 
+									=		servicios web como un cliente HTTP, dichos metodos se 
+									=		llaman: RegisterUserHttpClient y ModifyUserHttpClient, 
+									=		siendo estos metodos homonimos a los previamente planteados.
+									=
+									=		*Es importante señalar que se agregaron nuevas propiedades
+									=		o variables a la clase "App", llamada en este case "BaseUrl"
+									=		y "TimeInSeconds". La primera contendra la base de la direccion
+									=		URL de los servicios web o APIs que seran consumidas, y el
+									=		segundo contendra el tiempo en segundos que debe esperar
+									=		la aplicacion para esperar una respuesta del servidor.
 ==========================================================================================================
 ==========================================================================================================
 NOTAS:
 
-1) MODIFICACION DE LAS VARIABLES DEL TIPO DateTime por variables del tipo Date
-	-CONSIDERAR LA HORA TAMBIEN 
-
-2) Puesto que se adicionaron y modificaron objetos dentro de la clase "Tableros.cs", todas las paginas
-que interactuan con el objeto "Tableros" deben ser modificadas.
-
-3) VERIFICAR EN LA PAGINA DE INGRESO LA SECCION DE ULTIMO REGISTRO.
-
 4) PROPONER LA CREACION DE UNA CLAVE ESPECIAL PARA USUARIOS DE ALTO NIVEL, ESTO CON LA FINALIDAD DE 
    SOLICITAR DICHA CLAVE CADA QUE SE DECIDA CREAR UN USUARIO O UN NUEVO TABLERO DENTRO DE LA PLATAFORMA
-
-5) SE ADICIONO EL OBJETO "ActivityIndicator" SIN EMBARGO TODO EL CODIGO QUE CONTROLA LA ACTIVACION
-   Y LA VISUALIZACION DEL CIRCULO DE CARGA SE ENCUENTRA EN EL METODO "OnIngresar" DE LA CLASE
-   "PaginaPrincipal.xaml.cs". SEGUIR AVERGUANDO LA MANERA DE INCLUIRLO MEDIANTE EL CONTROL DE MVVM
 ==========================================================================================================
 ==========================================================================================================
 

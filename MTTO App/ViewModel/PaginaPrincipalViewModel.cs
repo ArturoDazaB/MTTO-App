@@ -87,7 +87,8 @@ namespace MTTO_App.ViewModel
         public async Task<LogInResponse> LogInRequest()
         {
             //SE CREA E INICIALIZA LA VARIABLE QUE RETENDRA EL URL PARA REALIZAR LA SOLICITUD HTTP
-            string url = $"https://192.168.1.99:5000/mttoapp/login?username={Username}&password={Password}";
+            string url = App.BaseUrl + $"/login?username={Username}&password={Password}";
+
             //SE CREA E INICIALIZA LA VARIABLE QUE VERIFICARA EL ESTADO DE CONEXION A INTERNET
             var current = Connectivity.NetworkAccess;
 
@@ -108,6 +109,9 @@ namespace MTTO_App.ViewModel
                     //----------------------------------------------------------------------------------------------
                     using (HttpClient client = new HttpClient(App.GetInsecureHandler()))
                     {
+                        //SE DA SET AL TIEMPO MAXIMO DE ESPERA PARA RECIBIR UNA RESPUESTA DEL SERVIDOR
+                        client.Timeout = TimeSpan.FromSeconds(App.TimeInSeconds);
+
                         //SE CONFIGURAN LOS HEADERS DE LA SOLICITUD HTTP (HTTP REQUEST)
                         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
@@ -144,7 +148,8 @@ namespace MTTO_App.ViewModel
                 //LAS PRUEBAS DE CONEXION CON EL SERVICIO WEB API
                 catch (Exception ex) when (ex is HttpRequestException ||                
                                            ex is Javax.Net.Ssl.SSLException ||
-                                           ex is Javax.Net.Ssl.SSLHandshakeException)
+                                           ex is Javax.Net.Ssl.SSLHandshakeException ||
+                                           ex is System.Threading.Tasks.TaskCanceledException)
                 {
                     //SE MANDA A IMPRIMIR POR CONSOLA EL ERROR OBTENIDO (EJECUTADO SOLO CUANDO SE DEPURA EL PROYECTO)
                     ConsoleWriteline("\nOcurrio un error => \n\n" + ex.Message.ToString());

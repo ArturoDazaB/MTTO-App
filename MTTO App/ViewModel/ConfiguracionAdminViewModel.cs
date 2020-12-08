@@ -9,6 +9,8 @@ using Xamarin.Essentials;
 using Newtonsoft.Json;
 using System.Net.Http;
 using MTTO_App.Tablas;
+using System.Text;
+using System.Net.Http.Headers;
 
 namespace MTTO_App.ViewModel
 {
@@ -609,56 +611,25 @@ namespace MTTO_App.ViewModel
                         //flagLecturaEscritura = false => Acceso desde "PaginaRegistro.xaml.cs"
                         if (flagLecturaEscritura)
                         {
-                            using (SQLiteConnection connection = new SQLiteConnection(App.FileName))
-                            {
-                                //----------------------------------------------------------------------------------------------------
-                                //----------SECCION QUE LUEGO SERA MODIFICADA PARA INGRESAR LOS COMANDOS DE HTTPCLIENT----------------
-                                //---------------------------API CONTROLLER CLASS: "ConfiguracionController"--------------------------
-                                //----------------------------------------------------------------------------------------------------
-                                //DE NO EXISTIR SE CREA LA TABLA "ModificacionesUsuarios"
-                                connection.CreateTable<ModificacionesUsuarios>();
-
-                                //SE CREAN LOS OBJETOS QUE CONTENDRAN LA INFORMACION ACTUALIZADA
-                                Personas NewPersona = new Personas().NewPersona(FechaCreacion, Metodos.Mayuscula(Nombres), Metodos.Mayuscula(Apellidos),
-                                    Cedula, NumeroFicha, FechaNacimiento, Telefono, Correo);
-                                Usuarios NewUsuario = new Usuarios().NewUsuario(Username, Password, Cedula, FechaCreacion, NivelUsuario);
-
-                                //SE ACTUALIZAN LOS OBJETOS DENTRO DE SU RESPECTIVA TABLA
-                                connection.Update(NewPersona);
-                                connection.Update(NewUsuario);
-
-                                //SE CREA UN NUEVO OBJETO QUE ALMACENARA LA INFORMACION DEL REGISTRO DE UNA
-                                //NUEVA ENTRADA DE MODIFICACIONES
-                                ModificacionesUsuarios Modificaciones = new ModificacionesUsuarios()
-                                    .NewModificacionesUsuarios(NewPersona, Persona, NewUsuario, Usuario, DateTime.Now);
-
-                                //SE INSERTA EN LA TABLA EL NUEVO REGISTRO DE LAS MODIFICACIONES
-                                connection.Insert(Modificaciones);
-
-                                //SE CIERRA LA CONEXION CON LA BASE DE DATOS
-                                connection.Close();
-
-                                //SE GENERA UN MENSAJE TOAST (System Message) EL CUAL NOTIFICA AL USUARIO QUE LOS DATOS
-                                //HAN SIDO MODIFICADOS SATISFACTORIAMENTE
-                                MensajePantalla("Datos Modificados Satisfactoriamente");
-
-                                //SE ACTIVA LA BANDERA DE CAMBIO DE DATOS PARA EXPULSAR AL USUARIO LOGGEADO
-                                //ASI CUANDO EL USUARIO VUELVA LOGGEARSE LOS NUEVOS DATOS SE VERAN DESPLEGADOS
-                                App.ConfigChangedFlag = true;
-                                //----------------------------------------------------------------------------------------------------
-                                //----------------------------------------------------------------------------------------------------
-                            }
+                            //----------------------------------------------------------------------------------------------------
+                            //----------------------------------------------------------------------------------------------------
+                            //SE LLAMA AL METODO DE REGISTRO DE USUARO CUANDO LA APLICACION SE ENCUENTRE FUNCIONANDO STAND ALONE
+                            //ModifyUserStandAlone();
+                            //----------------------------------------------------------------------------------------------------
+                            //----------------------------------------------------------------------------------------------------
+                            //SE LLAMA AL METODO DE REGISTRO DE USUARO CUANDO LA APLICACION SE ENCUENTRE FUNCIONANDO COMO CLIENTE HTTP
+                            respuesta = await ModifyUserHttpClient();
                         }
                         else
                         {
                             //----------------------------------------------------------------------------------------------------
                             //----------------------------------------------------------------------------------------------------
                             //SE LLAMA AL METODO DE REGISTRO DE USUARO CUANDO LA APLICACION SE ENCUENTRE FUNCIONANDO STAND ALONE
-                            //respuesta = SaveUserStandAlone();
+                            //respuesta = RegisterUserStandAlone();
                             //----------------------------------------------------------------------------------------------------
                             //----------------------------------------------------------------------------------------------------
-                            //SE LLAMA AL METODO DE REGISTRO DE USUARO CUANDO LA APLICACION SE ENCUENTRE FUNCIONANDO STAND ALONE
-                            respuesta = await SaveUserHttpClient();
+                            //SE LLAMA AL METODO DE REGISTRO DE USUARO CUANDO LA APLICACION SE ENCUENTRE FUNCIONANDO COMO CLIENTE HTTP
+                            respuesta = await RegisterUserHttpClient();
                             //----------------------------------------------------------------------------------------------------
                             //----------------------------------------------------------------------------------------------------
                         }
@@ -710,7 +681,6 @@ namespace MTTO_App.ViewModel
         {
             onsave = isbusy = true;
             await Task.Delay(500);
-
             onsave = isbusy = false;
         }
 
@@ -817,36 +787,6 @@ namespace MTTO_App.ViewModel
 
         //===================================================================================
         //===================================================================================
-        //FUNCION PARA CARGAR LOS DATOS DE CADA UNO DE LOS OBJETOS DE LA CLASE
-
-        public void GetInfo(Personas persona, Usuarios usuario)
-        {
-            //=====================================================================
-            //=====================================================================
-            //SE CARGA LA INFORMACION PERSONAL Y DE USUARIO DEL USUARIO
-            //QUE FUE SELECCIONADO.
-            Persona = new Personas().NewPersona(persona);
-            Usuario = new Usuarios().NewUsuario(usuario);
-
-            //================================================================
-            //================================================================
-            //SE CARGA LA INFORMACION A LAS VARIABLES LOCALES
-            nombres = Persona.Nombres;
-            apellidos = Persona.Apellidos;
-            cedula = Persona.Cedula.ToString();
-            fechacreacion = Persona.FechaCreacion;
-            fechanacimiento = Persona.FechaNacimiento;
-            telefono = Persona.Telefono.ToString();
-            correo = Persona.Correo;
-
-            username = Usuario.Username;
-            password = Usuario.Password;
-            //================================================================
-            //================================================================
-        }
-
-        //===================================================================================
-        //===================================================================================
         //FUNCION LLAMADA CADA QUE SE EJECUTA UN CAMBIO EN ALGUNA DE LAS PROPIEDADES DE LA
         //CLASE
 
@@ -913,7 +853,11 @@ namespace MTTO_App.ViewModel
             Toast.MakeText(Android.App.Application.Context, mensaje, ToastLength.Short).Show();
         }
 
-        protected string SaveUserStandAlone()
+        //==================================================================================
+        //==================================================================================
+        //METODOS PARA EL REGISTRO Y MODIFICACION DE USUARIOS CUANDO LA APLICACION
+        //SE ENCUENTRA FUNCIONANDO STAND ALONE
+        protected string RegisterUserStandAlone()
         {
             using (SQLiteConnection connection = new SQLiteConnection(App.FileName))
             {
@@ -981,13 +925,59 @@ namespace MTTO_App.ViewModel
             }
         }
 
-        protected async Task<string> SaveUserHttpClient()
+        protected void ModifyUserStandAlone()
+        {
+            using (SQLiteConnection connection = new SQLiteConnection(App.FileName))
+            {
+                //----------------------------------------------------------------------------------------------------
+                //----------SECCION QUE LUEGO SERA MODIFICADA PARA INGRESAR LOS COMANDOS DE HTTPCLIENT----------------
+                //---------------------------API CONTROLLER CLASS: "ConfiguracionController"--------------------------
+                //----------------------------------------------------------------------------------------------------
+                //DE NO EXISTIR SE CREA LA TABLA "ModificacionesUsuarios"
+                connection.CreateTable<ModificacionesUsuarios>();
+
+                //SE CREAN LOS OBJETOS QUE CONTENDRAN LA INFORMACION ACTUALIZADA
+                Personas NewPersona = new Personas().NewPersona(FechaCreacion, Metodos.Mayuscula(Nombres), Metodos.Mayuscula(Apellidos),
+                    Cedula, NumeroFicha, FechaNacimiento, Telefono, Correo);
+                Usuarios NewUsuario = new Usuarios().NewUsuario(Username, Password, Cedula, FechaCreacion, NivelUsuario);
+
+                //SE ACTUALIZAN LOS OBJETOS DENTRO DE SU RESPECTIVA TABLA
+                connection.Update(NewPersona);
+                connection.Update(NewUsuario);
+
+                //SE CREA UN NUEVO OBJETO QUE ALMACENARA LA INFORMACION DEL REGISTRO DE UNA
+                //NUEVA ENTRADA DE MODIFICACIONES
+                ModificacionesUsuarios Modificaciones = new ModificacionesUsuarios()
+                    .NewModificacionesUsuarios(NewPersona, Persona, NewUsuario, Usuario, DateTime.Now);
+
+                //SE INSERTA EN LA TABLA EL NUEVO REGISTRO DE LAS MODIFICACIONES
+                connection.Insert(Modificaciones);
+
+                //SE CIERRA LA CONEXION CON LA BASE DE DATOS
+                connection.Close();
+
+                //SE GENERA UN MENSAJE TOAST (System Message) EL CUAL NOTIFICA AL USUARIO QUE LOS DATOS
+                //HAN SIDO MODIFICADOS SATISFACTORIAMENTE
+                MensajePantalla("Datos Modificados Satisfactoriamente");
+
+                //SE ACTIVA LA BANDERA DE CAMBIO DE DATOS PARA EXPULSAR AL USUARIO LOGGEADO
+                //ASI CUANDO EL USUARIO VUELVA LOGGEARSE LOS NUEVOS DATOS SE VERAN DESPLEGADOS
+                App.ConfigChangedFlag = true;
+                //----------------------------------------------------------------------------------------------------
+                //----------------------------------------------------------------------------------------------------
+            }
+        }
+
+        //==================================================================================
+        //==================================================================================
+        //METODOS PARA EL REGISTRO Y MODIFICACION DE USUARIOS CUANDO LA APLICACION
+        //SE ENCUENTRA FUNCIONANDO COMO CLIENTE HTTP
+        protected async Task<string> RegisterUserHttpClient()
         {
             //SE CREA E INICIALIZA LA VARIABLE QUE RETENDRA EL URL PARA REALIZAR LA SOLICITUD HTTP
-            string url = "https://192.168.1.99:5000/mttoapp/registro";
+            string url = App.BaseUrl + "/registro";
             //SE CREA E INICIALIZA LA VARIABLE QUE VERIFICARA EL ESTADO DE CONEXION A INTERNET
             var current = Connectivity.NetworkAccess;
-
             //SE VERIFICA SI EL DISPOSITIVO SE ENCUENTRA CONECTADO A INTERNET
             if (current == NetworkAccess.Internet)
             {
@@ -1005,6 +995,9 @@ namespace MTTO_App.ViewModel
                     //----------------------------------------------------------------------------------------------
                     using (HttpClient client = new HttpClient(App.GetInsecureHandler()))
                     {
+                        //SE DA SET AL TIEMPO MAXIMO DE ESPERA PARA RECIBIR UNA RESPUESTA DEL SERVIDOR
+                        client.Timeout = TimeSpan.FromSeconds(App.TimeInSeconds);
+
                         //SE CREA EL OBJETO MODELO DEL TIPO "RequestRegistroUsuario"
                         var model = new RequestRegistroUsuario()
                         {
@@ -1020,9 +1013,9 @@ namespace MTTO_App.ViewModel
                         //SE REALIZA LA CONVERSION A OBJETO JSON
                         var json = JsonConvert.SerializeObject(model);
                         //SE AÑADE EL OBJETO JSON RECIEN CREADO COMO CONTENIDO BODY DEL NUEVO REQUEST
-                        HttpContent httpContent = new StringContent(json);
+                        HttpContent httpContent = new StringContent(json, Encoding.UTF8, "application/json");
                         //SE HACE LA CONFIGURACION DE LOS HEADERS DEL REQUEST
-                        httpContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+                        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                         //SE REALIZA LA SOLICITUD HTTP
                         HttpResponseMessage response = await client.PostAsync(url, httpContent);
                         //SE RETORNA EL MENSAJE OBTENIDO POR 
@@ -1034,9 +1027,140 @@ namespace MTTO_App.ViewModel
                 //LAS PRUEBAS DE CONEXION CON EL SERVICIO WEB API
                 catch (Exception ex) when (ex is HttpRequestException ||
                                            ex is Javax.Net.Ssl.SSLException ||
-                                           ex is Javax.Net.Ssl.SSLHandshakeException)
+                                           ex is Javax.Net.Ssl.SSLHandshakeException ||
+                                           ex is System.Threading.Tasks.TaskCanceledException)
                 {
                     return "Problemas de conexion con el servidor";
+                }
+            }
+
+            return string.Empty;
+        }
+
+        protected async Task<string> ModifyUserHttpClient()
+        {
+            //SE EVALUA SI EL ACCESO A LA PAGINA "Configuracion" FUE LLAMADO 
+            //POR EL USUARIO ADMINISTRATOR O NO
+            if (UserId == 0)
+            {
+                //SE CREA E INICIALIZA LA VARIABLE QUE RETENDRA EL URL PARA REALIZAR LA SOLICITUD HTTP
+                string url = App.BaseUrl + $"/cofiguracion/administrator/{Persona.Cedula}";
+
+                //SE CREA EL OBJETO MODELO DEL TIPO "ConfiguracionA"
+                var model = new ConfiguracionA
+                {
+                    Cedula = Convert.ToDouble(Cedula),
+                    Nombre = Nombres, 
+                    Apellidos = Apellidos,
+                    FechaNacimiento = FechaNacimiento,
+                    Telefono = Convert.ToDouble(Telefono),
+                    Correo = Correo,
+                    Username = Username,
+                    Userpassword = Password,
+                };
+
+                //SE CREA E INICIALIZA LA VARIABLE QUE VERIFICARA EL ESTADO DE CONEXION A INTERNET
+                var current = Connectivity.NetworkAccess;
+                //SE VERIFICA SI EL DISPOSITIVO SE ENCUENTRA CONECTADO A INTERNET
+                if (current == NetworkAccess.Internet)
+                {
+                    //EL EQUIPO SE ENCUENTRA CONECTADO A INTERNET
+                    //SE INICIA EL CICLO TRY...CATCH
+                    try
+                    {
+                        //INICIAMOS EL SEGMENTO DEL CODIGO EN EL CUAL REALIZAREMOS EL CONSUMO DE SERVICIOS WEB MEDIANTE
+                        //LA INICIALIZACION Y CREACION DE UNA VARIABLE QUE FUNCIONARA COMO CLIENTE EN LAS SOLICITUDES 
+                        //Y RESPUESTAS ENVIADAS Y RECIBIDAS POR EL SERVIDOR (WEB API) 
+                        //----------------------------------------------------------------------------------------------
+                        //NOTA: CUANDO SE REALIZA LA CREACION E INICIALIZACION DE LA VARIABLE DEL TIPO HttpClient SE
+                        //HACE UN LLAMADO A UN METODO ALOJADO EN LA CLASE "App" Y QUE ES ENVIADO COMO PARAMETRO DEL 
+                        //TIPO HttpClientHandler => 
+                        //----------------------------------------------------------------------------------------------
+                        using (HttpClient client = new HttpClient(App.GetInsecureHandler()))
+                        {
+                            //SE DA SET AL TIEMPO MAXIMO DE ESPERA PARA RECIBIR UNA RESPUESTA DEL SERVIDOR
+                            client.Timeout = TimeSpan.FromSeconds(App.TimeInSeconds);
+                            //SE REALIZA LA CONVERSION A OBJETO JSON
+                            var json = JsonConvert.SerializeObject(model);
+                            //SE AÑADE EL OBJETO JSON RECIEN CREADO COMO CONTENIDO BODY DEL NUEVO REQUEST
+                            HttpContent httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+                            //SE HACE LA CONFIGURACION DE LOS HEADERS DEL REQUEST
+                            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                            //SE REALIZA LA SOLICITUD HTTP
+                            HttpResponseMessage response = await client.PutAsync(url, httpContent);
+                            //SE RETORNA EL MENSAJE OBTENIDO POR 
+                            return await Task.FromResult(JsonConvert.DeserializeObject<string>(await response.Content.ReadAsStringAsync()));
+                        }
+                    }
+                    //DE OCURRIR UNA EXCEPCION DENTRO DEL CICLO TRY...CATCH SE PROCEDE A EJECUTAR LAS LINEAS DE CODIGO
+                    //CONTENIDAS DENTRO DE LA SECCION CATCH. AQUI SE EVALUARAN LAS EXCEPCIONES MAS COMUNES OBTENIDAS DURANTE
+                    //LAS PRUEBAS DE CONEXION CON EL SERVICIO WEB API
+                    catch (Exception ex) when (ex is HttpRequestException ||
+                                               ex is Javax.Net.Ssl.SSLException ||
+                                               ex is Javax.Net.Ssl.SSLHandshakeException ||
+                                               ex is System.Threading.Tasks.TaskCanceledException)
+                    {
+                        return "Problemas de conexion con el servidor";
+                    }
+                }
+            }
+            else if(UserId != 0 )
+            {
+                //SE CREA E INICIALIZA LA VARIABLE QUE RETENDRA EL URL PARA REALIZAR LA SOLICITUD HTTP
+                string url = App.BaseUrl + $"/configuracion/usuario/{Persona.Cedula}";
+
+                //SE CREA EL OBJETO MODELO DEL TIPO "ConfiguracionU"
+                var model = new ConfiguracionU
+                {
+                    Cedula = Convert.ToDouble(Cedula),
+                    Telefono = Convert.ToDouble(Telefono),
+                    Correo = Correo,
+                    Userpassword = Password,
+                };
+
+                //SE CREA E INICIALIZA LA VARIABLE QUE VERIFICARA EL ESTADO DE CONEXION A INTERNET
+                var current = Connectivity.NetworkAccess;
+                //SE VERIFICA SI EL DISPOSITIVO SE ENCUENTRA CONECTADO A INTERNET
+                if (current == NetworkAccess.Internet)
+                {
+                    //EL EQUIPO SE ENCUENTRA CONECTADO A INTERNET
+                    //SE INICIA EL CICLO TRY...CATCH
+                    try
+                    {
+                        //INICIAMOS EL SEGMENTO DEL CODIGO EN EL CUAL REALIZAREMOS EL CONSUMO DE SERVICIOS WEB MEDIANTE
+                        //LA INICIALIZACION Y CREACION DE UNA VARIABLE QUE FUNCIONARA COMO CLIENTE EN LAS SOLICITUDES 
+                        //Y RESPUESTAS ENVIADAS Y RECIBIDAS POR EL SERVIDOR (WEB API) 
+                        //----------------------------------------------------------------------------------------------
+                        //NOTA: CUANDO SE REALIZA LA CREACION E INICIALIZACION DE LA VARIABLE DEL TIPO HttpClient SE
+                        //HACE UN LLAMADO A UN METODO ALOJADO EN LA CLASE "App" Y QUE ES ENVIADO COMO PARAMETRO DEL 
+                        //TIPO HttpClientHandler => 
+                        //----------------------------------------------------------------------------------------------
+                        using (HttpClient client = new HttpClient(App.GetInsecureHandler()))
+                        {
+                            //SE DA SET AL TIEMPO MAXIMO DE ESPERA PARA RECIBIR UNA RESPUESTA DEL SERVIDOR
+                            client.Timeout = TimeSpan.FromSeconds(App.TimeInSeconds);
+                            //SE REALIZA LA CONVERSION A OBJETO JSON
+                            var json = JsonConvert.SerializeObject(model);
+                            //SE AÑADE EL OBJETO JSON RECIEN CREADO COMO CONTENIDO BODY DEL NUEVO REQUEST
+                            HttpContent httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+                            //SE HACE LA CONFIGURACION DE LOS HEADERS DEL REQUEST
+                            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                            //SE REALIZA LA SOLICITUD HTTP
+                            HttpResponseMessage response = await client.PutAsync(url, httpContent);
+                            //SE RETORNA EL MENSAJE OBTENIDO POR 
+                            return await Task.FromResult(JsonConvert.DeserializeObject<string>(await response.Content.ReadAsStringAsync()));
+                        }
+                    }
+                    //DE OCURRIR UNA EXCEPCION DENTRO DEL CICLO TRY...CATCH SE PROCEDE A EJECUTAR LAS LINEAS DE CODIGO
+                    //CONTENIDAS DENTRO DE LA SECCION CATCH. AQUI SE EVALUARAN LAS EXCEPCIONES MAS COMUNES OBTENIDAS DURANTE
+                    //LAS PRUEBAS DE CONEXION CON EL SERVICIO WEB API
+                    catch (Exception ex) when (ex is HttpRequestException ||
+                                               ex is Javax.Net.Ssl.SSLException ||
+                                               ex is Javax.Net.Ssl.SSLHandshakeException ||
+                                               ex is System.Threading.Tasks.TaskCanceledException)
+                    {
+                        return "Problemas de conexion con el servidor";
+                    }
                 }
             }
 

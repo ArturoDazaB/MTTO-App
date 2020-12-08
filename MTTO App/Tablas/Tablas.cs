@@ -14,14 +14,14 @@ namespace MTTO_App
         //--------------------------------------------------------------------------------------------------
         //ID IDENTIFICATIVO
         [PrimaryKey]
-        public int Cedula { get; set; }
+        public double Cedula { get; set; }
 
         [Unique, MaxLength(4)]
         public int NumeroFicha { get; set; }
 
         //--------------------------------------------------------------------------------------------------
         [MaxLength(10)]
-        public Int64 Telefono { get; set; }
+        public double? Telefono { get; set; }
 
         public string Correo { get; set; }
         public DateTime FechaNacimiento { get; set; }
@@ -66,9 +66,9 @@ namespace MTTO_App
             {
                 Nombres = nombres,
                 Apellidos = apellidos,
-                Cedula = int.Parse(cedula),
+                Cedula = Convert.ToDouble(cedula),
                 NumeroFicha = int.Parse(numeroficha),
-                Telefono = Int64.Parse(telefono),
+                Telefono = Convert.ToDouble(telefono),
                 Correo = correo,
                 FechaCreacion = fechacreacion,
                 FechaNacimiento = fechanacimiento,
@@ -155,7 +155,7 @@ namespace MTTO_App
         public string Password { get; set; }
 
         [PrimaryKey]
-        public int Cedula { get; set; }
+        public double Cedula { get; set; }
 
         public DateTime FechaCreacion { get; set; }
 
@@ -197,7 +197,7 @@ namespace MTTO_App
             {
                 Username = username,
                 Password = password,
-                Cedula = int.Parse(cedula),
+                Cedula = Convert.ToDouble(cedula),
                 FechaCreacion = fechacreacion,
                 NivelUsuario = nivelusuario,
             };
@@ -278,7 +278,7 @@ namespace MTTO_App
 
         public DateTime UltimaCon { get; set; }
         public string Username { get; set; }
-        public int Cedula { get; set; }
+        public double Cedula { get; set; }
 
         //===============================================================================================
         //===============================================================================================
@@ -317,10 +317,10 @@ namespace MTTO_App
         public int ID { get; set; }
 
         //ID DE LA PERSONA Y USUARIO A LA CUAL SE LE REALIZO MODIFICACIONES
-        public int IDModificado { get; set; }
+        public double IDModificado { get; set; }
 
         //ID DE LA PERSONA Y USUARIO QUE REALIZO LA MODIFICACION
-        public int IDModificador { get; set; }
+        public double IDModificador { get; set; }
 
         //FECHA Y HORA EN LA CUAL SE REALIZO LA MODIFICACION
         public DateTime FechaHora { get; set; }
@@ -390,7 +390,7 @@ namespace MTTO_App
         public string TableroID { get; set; }
 
         public string SapID { get; set; }
-        public int IDCreador { get; set; }
+        public double IDCreador { get; set; }
         public string Filial { get; set; }
         public string AreaFilial { get; set; }
         public DateTime FechaRegistro { get; set; }
@@ -402,7 +402,7 @@ namespace MTTO_App
         //CADA QUE SE GENERA UN NUEVO REGISTRO
 
         //METODO QUE RECIBE UN OBJETO TABLERO COMO PARAMETRO
-        public static Tableros NuevoTablero(Tableros Tablero, int IDCreador)
+        public static Tableros NuevoTablero(Tableros Tablero, double IDCreador)
         {
             return new Tableros
             {
@@ -428,7 +428,7 @@ namespace MTTO_App
         //METODO QUE RECIBE LOS ATRIBUTOS POR SEPARADOS COMO PARAMETROS
 
         public static Tableros NuevoTablero(string tableroid, string sapid, string filial, string area, DateTime fecharegistro,
-            string codigoqrdata, string codigoqrfilename, int id)
+            string codigoqrdata, string codigoqrfilename, double id)
 
         {
             return new Tableros
@@ -466,7 +466,7 @@ namespace MTTO_App
         public string TableroID { get; set; }
 
         //ID DEL EMPLEADO QUE REALIZO LA ULTIMA REVISION DE TABLERO
-        public int UsuarioID { get; set; }
+        public double UsuarioID { get; set; }
 
         //ULTIMA REVISION DEL TABLERO
         public DateTime FechaDeConsulta { get; set; }
@@ -492,7 +492,7 @@ namespace MTTO_App
         //========================================================================================================
         //========================================================================================================
         //METODO QUE RECIBE LOS ATRIBUTOS POR SEPARADOS COMO PARAMETROS
-        public HistorialTableros NewRegistroHistorial(string TableroID, int Cedula, DateTime Fecha, string TipoDeConsulta)
+        public HistorialTableros NewRegistroHistorial(string TableroID, double Cedula, DateTime Fecha, string TipoDeConsulta)
         {
             return new HistorialTableros
             {
