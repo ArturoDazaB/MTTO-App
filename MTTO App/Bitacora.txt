@@ -596,12 +596,64 @@ VERSION DE BASE DE DATOS LOCAL		=		MODIFICACIONES
 									=		URL de los servicios web o APIs que seran consumidas, y el
 									=		segundo contendra el tiempo en segundos que debe esperar
 									=		la aplicacion para esperar una respuesta del servidor.
+									=
+									=		*Se realizaron modificaciones en los siguientes archivos =>
+									=		PaginaQueryAdmin.xaml.cs y QueryAdminViewModel:
+									=
+									=		- PaginaQueryAdmin.xaml.cs: Entre las modificaciones mas 
+									=		notables tenemos => 
+									=			+ Se añadieron nuevos parametros dentro del contructor
+									=			  de la clase "PaginaQueryAdmin". Estos parametros son
+									=			  objetos de tipo "Personas" y "Usuarios"
+									=			+ Se añadio la seccion de codigo que activa de manera
+									=			  asincrona el objeto "ActivityIndicator" mientras que 
+									=			  se envia la solicitud HTTP y se recibe una respuesta.
+									=			  Puesto que existe varios opciones de busqueda (busque - 
+									=			  da con parametros como: Cedula, Nombre, Apellido, etc)
+									=			  cuando se incia la busqueda, se seleccionan que parametros
+									=			  son enviados al metodo de consumo mediante un condicional
+									=			  switch, el cual indicara cual fue la opcion de busqueda
+									=			  seleccionada. Debido a lo previamente planteado, para 
+									=			  cada uno de los casos dentro del condicional switch
+									=			  se adiciono esta seccion de codigo, causando que 
+									=			  exista una misma seccion de codigo repetida 4 veces.
+									=
+									=		- QueryAdminViewModel: Entre las modificaciones mas notables
+									=		tenemos =>
+									=			+ Al igual que en el caso anterior, se modifico el 
+									=			  constructor de la clase "QueryAdminViewModel". Estos
+									=			  parametros son del tipo "Personas" y "Usuario", y su 
+									=			  unica funcion es obtener el id (cedula) del usuario
+									=			  que se encuentre haciendo la busqueda de usuarios en 
+									=			  dicho momento.
+									=			NOTA: AUNQUE ACTUALMENTE EL UNICO USUARIO CON ACCESO A 
+									=			ESTA PAGINA ES EL USUARIO ADMINISTRATOR (Id = 0), SE 
+									=			PLANEA PROPORCIONAR ACCESO A MAS USUARIOS EN ALGUNA 
+									=			MODIFICACION.
+									=			+ Anteriormente, debido a que el proyecto se encuentra 
+									=			  trabajando stand alone, todo el codigo de consulta 
+									=			  de la base de datos se realizaba dentro del metodo
+									=			  ListaPersonas (<List<Personas>>). Todo este codigo 
+									=			  fue mudado a un nuevo metodo que lleva por nombre
+									=			  "ListaPersonasStandAlone".
+									=			+ Se creo un nuevo metodo que lleva por nombre
+									=			  "ListaPersonasHttpClient" (Task<List<Personas>>)
+									=			  el cual contendra todos los comandos para realizar
+									=			  el consumo de servicios web.
 ==========================================================================================================
 ==========================================================================================================
 NOTAS:
 
 4) PROPONER LA CREACION DE UNA CLAVE ESPECIAL PARA USUARIOS DE ALTO NIVEL, ESTO CON LA FINALIDAD DE 
    SOLICITAR DICHA CLAVE CADA QUE SE DECIDA CREAR UN USUARIO O UN NUEVO TABLERO DENTRO DE LA PLATAFORMA
+
+
+LISTA DE PAGINAS MODIFICADAS PARA EL CONSUMO DE SERVICIOS WEB
+-PaginaPrincial; PaginaPrincipalViewModel
+-PaginaRegistro, PaginaConfiguracion; ConfiguracionAdminViewModel (P.1 => Registro de Usuario)
+-DetailPage, MasterPage, UserMainPage; MasterDetailPageUserInforViewModel.cs; MasterDetailPageUserInfoModel
+-PaginaConfiguracion, PaginaConfiguracionAdmin; ConfiguracionAdminViewModel (P.2 => Modificacion de Usuario)
+-
 ==========================================================================================================
 ==========================================================================================================
 

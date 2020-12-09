@@ -216,7 +216,7 @@ namespace MTTO_App
                         //PAGINA DE CONFIGURACION DE USUARIOS (ADMINISTRATOR)
                         case 3:
                             App.MasterDetail.IsPresented = false;
-                            await App.MasterDetail.Detail.Navigation.PushAsync(new PaginaQueryAdmin());
+                            await App.MasterDetail.Detail.Navigation.PushAsync(new PaginaQueryAdmin(Persona, Usuario));
                             ((ListView)sender).SelectedItem = null;
                             break;
                         //===================================================================

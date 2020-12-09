@@ -24,20 +24,19 @@ namespace MTTO_App
         //SE CREAN LOS OBJETOS
         private QueryAdminViewModel ConexionDatos;
 
-        public PaginaQueryAdmin()
+        public PaginaQueryAdmin(Personas persona, Usuarios usuario)
         {
             InitializeComponent();
 
             //============================================================================
             //============================================================================
-
-            //LLENADO DEL STACKLAYOUT MENU
-            BindableLayout.SetItemsSource(MenuBusqueda, new QueryAdminViewModel().InfoConfig);
-
-            //============================================================================
-            //============================================================================
             //REALIZAMOS LA CONEXION CON LA CLASE VIEW MODEL "PaginaQueryViewModel.cs"
-            BindingContext = ConexionDatos = new QueryAdminViewModel();
+            BindingContext = ConexionDatos = new QueryAdminViewModel(persona, usuario);
+
+            //============================================================================
+            //============================================================================
+            //LLENADO DEL STACKLAYOUT MENU
+            BindableLayout.SetItemsSource(MenuBusqueda, ConexionDatos.InfoConfig);
 
             //PUESTO QUE NO SE HA REALIZADO NINGUNA BUSQUEDA, LA SECCION QUE ORDENARA
             //EN FORMA DE LISTA TODOS LOS RESULTADOS ENCONTRADOS ESTARA OCULTA HASTA QUE
@@ -104,7 +103,12 @@ namespace MTTO_App
                             //SE LLENA LA LISTA CON EL RESULTADO ARROJADO POR EL
                             //METODO "ListasPersonas", PERTENECIENTE A LA CLASE
                             //"Metodos"
-                            Lista = ConexionDatos.ListaPersonas(Seleccion, EntryDatos.Text);
+                            ActivityIndicatorBusqueda.IsRunning = true;
+                            await Task.Run(async () =>
+                            {
+                                Lista = await ConexionDatos.ListaPersonas(Seleccion, EntryDatos.Text);
+                                ActivityIndicatorBusqueda.IsRunning = false;
+                            });
 
                             //SE EVALUA EL ESTADO DE LA LISTA (SI ESTA POPULADA O VACIA)
                             if (Lista == null)
@@ -139,7 +143,12 @@ namespace MTTO_App
                         if (!Metodos.EspacioBlanco(EntryDatos.Text))
                         {
                             //SE LLENA LA LISTA CON EL RESULTADO ARROJADO POR EL METODO "ListaPersonas"
-                            Lista = ConexionDatos.ListaPersonas(Seleccion, EntryDatos.Text);
+                            ActivityIndicatorBusqueda.IsRunning = true;
+                            await Task.Run(async () =>
+                            {
+                                Lista = await ConexionDatos.ListaPersonas(Seleccion, EntryDatos.Text);
+                                ActivityIndicatorBusqueda.IsRunning = false;
+                            });
 
                             if (Lista == null)
                             {
@@ -171,7 +180,13 @@ namespace MTTO_App
                         //DE DOS NOMBRES POR REGISTRO)
                         if (Metodos.CuantosEspaciosBlanco(EntryDatos.Text) < 2)
                         {
-                            Lista = ConexionDatos.ListaPersonas(Seleccion, EntryDatos.Text);
+                            //SE LLENA LA LISTA CON EL RESULTADO ARROJADO POR EL METODO "ListaPersonas"
+                            ActivityIndicatorBusqueda.IsRunning = true;
+                            await Task.Run(async () =>
+                            {
+                                Lista = await ConexionDatos.ListaPersonas(Seleccion, EntryDatos.Text);
+                                ActivityIndicatorBusqueda.IsRunning = false;
+                            });
 
                             if (Lista == null)
                                 ConexionDatos.MensajePantalla("No se obtuvo ningun resultado de busqueda");
@@ -194,7 +209,13 @@ namespace MTTO_App
                         //QUE LA OPCION DE BUSQUEDA POR NOMBRE(S)
                         if (Metodos.CuantosEspaciosBlanco(EntryDatos.Text) < 2)
                         {
-                            Lista = ConexionDatos.ListaPersonas(Seleccion, EntryDatos.Text);
+                            //SE LLENA LA LISTA CON EL RESULTADO ARROJADO POR EL METODO "ListaPersonas"
+                            ActivityIndicatorBusqueda.IsRunning = true;
+                            await Task.Run(async () =>
+                            {
+                                Lista = await ConexionDatos.ListaPersonas(Seleccion, EntryDatos.Text);
+                                ActivityIndicatorBusqueda.IsRunning = false;
+                            });
 
                             if (Lista == null)
                                 ConexionDatos.MensajePantalla("No se obtuvo ningun resultado de busqueda");
@@ -215,7 +236,13 @@ namespace MTTO_App
                         //QUE LA OPCION DE BUSQUEDA POR ID
                         if (!Metodos.EspacioBlanco(EntryDatos.Text))
                         {
-                            Lista = ConexionDatos.ListaPersonas(Seleccion, EntryDatos.Text);
+                            //SE LLENA LA LISTA CON EL RESULTADO ARROJADO POR EL METODO "ListaPersonas"
+                            ActivityIndicatorBusqueda.IsRunning = true;
+                            await Task.Run(async () =>
+                            {
+                                Lista = await ConexionDatos.ListaPersonas(Seleccion, EntryDatos.Text);
+                                ActivityIndicatorBusqueda.IsRunning = false;
+                            });
 
                             if (Lista == null)
                                 ConexionDatos.MensajePantalla("No se obtuvo ningun resultado de busqueda");

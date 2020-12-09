@@ -121,6 +121,9 @@
 
                         <StackLayout>
 
+                            <!--=========================================================================-->
+                            <!--=========================================================================-->
+                            <!--TITULO DE LA LISTA DE PERSONAS OBTENIDAS-->
                             <Label Text="Personas:"
                                    TextColor="Black"
                                    FontSize="20"
@@ -129,6 +132,9 @@
                                    VerticalOptions="Start"
                                    Grid.Row="0" />
 
+                            <!--=========================================================================-->
+                            <!--=========================================================================-->
+                            <!--TITULO DE CADA COLUMNA-->
                             <Grid ColumnSpacing="10"
                                   HorizontalOptions="StartAndExpand">
 
@@ -170,6 +176,9 @@
                                         Grid.Column="2" />
                             </Grid>
 
+                            <!--=========================================================================-->
+                            <!--=========================================================================-->
+                            <!--LISTA DE PERSONAS OBTENIDAS-->
                             <ListView   x:Name="ListViewPersonas"
                                         SeparatorColor="Black"
                                         ItemTapped="OnItemSelected">
@@ -212,7 +221,9 @@
                                     </DataTemplate>
                                 </ListView.ItemTemplate>
                             </ListView>
+                            
                         </StackLayout>
+                        
                     </Frame>
 
                     <!--=========================================================================-->
@@ -220,7 +231,9 @@
                     <!--ACTIVITY INDICATOR-->
                     <ActivityIndicator x:Name="ActivityIndicatorBusqueda"
                                                HeightRequest="30" />
+                    
                 </StackLayout>
+                
             </Frame>
 
             <!--======================================================================================================-->

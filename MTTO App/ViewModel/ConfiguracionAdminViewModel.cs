@@ -1044,7 +1044,7 @@ namespace MTTO_App.ViewModel
             if (UserId == 0)
             {
                 //SE CREA E INICIALIZA LA VARIABLE QUE RETENDRA EL URL PARA REALIZAR LA SOLICITUD HTTP
-                string url = App.BaseUrl + $"/cofiguracion/administrator/{Persona.Cedula}";
+                string url = App.BaseUrl + $"/configuracion/administrator/{Persona.Cedula}";
 
                 //SE CREA EL OBJETO MODELO DEL TIPO "ConfiguracionA"
                 var model = new ConfiguracionA

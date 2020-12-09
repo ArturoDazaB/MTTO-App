@@ -95,11 +95,11 @@ namespace MTTO_App.Tablas
 
     //===================================================================================
     //===================================================================================
-    public class QueryAdmin
+    public class ResponseQueryAdmin
     {
-        public static QueryAdmin NewQueryAdmin(Personas persona)
+        public static ResponseQueryAdmin NewQueryAdmin(Personas persona)
         {
-            return new QueryAdmin()
+            return new ResponseQueryAdmin()
             {
                 Nombres = persona.Nombres,
                 Apellidos = persona.Apellidos,
@@ -143,6 +143,14 @@ namespace MTTO_App.Tablas
     public partial class RequestRegistroUsuario
     {
         public InformacionGeneral NewUser { get; set; }
+        public double UserId { get; set; }
+    }
+
+    //===================================================================================
+    //===================================================================================
+    public partial class RequestQueryAdmin
+    {
+        public string Parametro { get; set; }
         public double UserId { get; set; }
     }
 }
