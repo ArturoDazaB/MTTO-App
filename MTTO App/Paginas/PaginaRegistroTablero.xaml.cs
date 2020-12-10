@@ -1,4 +1,5 @@
-﻿using MTTO_App.Paginas.Paginas_de_Informacion;
+﻿using Android.Widget;
+using MTTO_App.Paginas.Paginas_de_Informacion;
 using MTTO_App.ViewModel;
 using Rg.Plugins.Popup.Services;
 using System;
@@ -136,14 +137,13 @@ namespace MTTO_App.Paginas
             if (await DisplayAlert("Alerta", "Esta apunto de realizar un nuevo registro de tablero." +
                 "\n¿Desea continuat?", "Si", "No, volver"))
             {
-                //------------------------------------------------------------------------------------------------
+                //SE ACTIVA EL ACTIVITY INDICATOR MIENTRAS SE EJECUTA DE MANERA ASINCRONA LA FUNCION REGISTRARTABLERO
                 ActivityIndicator.IsVisible = ActivityIndicator.IsRunning = true;
-                await Task.Delay(750);
-                ActivityIndicator.IsVisible = ActivityIndicator.IsRunning = false;
-                //------------------------------------------------------------------------------------------------
-
-                //SE EJECUTA EL METODO REGISTRAR TABLERO, ESTA FUNCION RETORNARA UNA VARIABLE TEXTO DEL TIPO STRING
-                respuesta = DatosPagina.RegistrarTablero(Items);
+                await Task.Run(async() =>
+                {
+                    respuesta = await DatosPagina.RegistrarTablero(Items);
+                    ActivityIndicator.IsVisible = ActivityIndicator.IsRunning = false;
+                });
 
                 //SE EVALUA SI LA VARIABLE RETORNADA SE ENCUENTRA VACIA O NULA
                 //VACIA O NULA => SE REGISTRO SATISFACTORIAMENTE
@@ -152,22 +152,26 @@ namespace MTTO_App.Paginas
                 {
                     //SE MUESTRA POR MENSAJE DE CONSOLA Y DE ALERTA LA RESPUESTA OBTENIDA POR EL METODO REGISTRO TABLERO
                     Mensaje(respuesta);
-                    await DisplayAlert("Mensaje", respuesta, "Entendido");
+                    Toast.MakeText(Android.App.Application.Context, respuesta, ToastLength.Short).Show();
 
-                    //SE ESCONDE LA SECCION (FRAME) QUE CONTENDRA EL CODIGO QR
-                    CODIGO.IsVisible = false;
+                    //EVALUAMOS SI LA RESPUESTA OBTENIDA ES DE REGISRO EXITOSO 
+                    if (respuesta.ToLower() == "registro exitoso")
+                    {
+                        //SE ESCONDE LA SECCION (FRAME) QUE CONTENDRA EL CODIGO QR
+                        CODIGO.IsVisible = false;
 
-                    //SE HABILITA EL BOTON DE GENERAR CODIGO
-                    BotonGenerar.IsVisible = BotonGenerar.IsEnabled = true;
+                        //SE HABILITA EL BOTON DE GENERAR CODIGO
+                        BotonGenerar.IsVisible = BotonGenerar.IsEnabled = true;
 
-                    //SE DESHABILITA EL BOTON DE GUARDAR EL TABLERO (CODIGOQR)
-                    BotonImagen.IsVisible = BotonImagen.IsEnabled = false;
+                        //SE DESHABILITA EL BOTON DE GUARDAR EL TABLERO (CODIGOQR)
+                        BotonImagen.IsVisible = BotonImagen.IsEnabled = false;
 
-                    //SE DESHABILITA EL BOTON DE REGISTRAR EL TABLERO
-                    BotonRegistrar.IsVisible = BotonRegistrar.IsEnabled = false;
+                        //SE DESHABILITA EL BOTON DE REGISTRAR EL TABLERO
+                        BotonRegistrar.IsVisible = BotonRegistrar.IsEnabled = false;
 
-                    //SE REMUEVE TODO ELEMENTO QUE SE ENCUENTRE DENTRO DEL STACKLAYOUT DEL FRAME "CODIGO"
-                    StackQR.Children.Clear();
+                        //SE REMUEVE TODO ELEMENTO QUE SE ENCUENTRE DENTRO DEL STACKLAYOUT DEL FRAME "CODIGO"
+                        StackQR.Children.Clear();
+                    }
                 }
             }
         }

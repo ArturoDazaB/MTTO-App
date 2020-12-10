@@ -640,6 +640,7 @@ VERSION DE BASE DE DATOS LOCAL		=		MODIFICACIONES
 									=			  "ListaPersonasHttpClient" (Task<List<Personas>>)
 									=			  el cual contendra todos los comandos para realizar
 									=			  el consumo de servicios web.
+									=
 ==========================================================================================================
 ==========================================================================================================
 NOTAS:

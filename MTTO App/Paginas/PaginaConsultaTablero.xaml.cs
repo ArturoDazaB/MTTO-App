@@ -94,11 +94,9 @@ namespace MTTO_App.Paginas
                     //SE GUARDA EL RESULTADO EN LA PROPIEDAD "ResultadoScan" DEL OBJETO "DatosPagina"
                     DatosPagina.ResultadoScan = result.Text;
 
-                    //=============================================================================
-                    //=============================================================================
-                    //SE EVALUA LA PROPIEDAD "ShowResultadoScan", DE SER TRUE
-                    //SE PROCEDE A EXTRAER MANUALMENTE TODA LA INFORMACION DEL CODIGO QR
-                    //OBTENIDO MEDIANTE LAS PROPIEDADES DE LA CLASE "RegistroTableroViewModel.cs"
+                    //SE EVALUA LA PROPIEDAD "ShowResultadoScan", DE SER TRUE SE PROCEDE A EXTRAER MANUALMENTE TODA
+                    //LA INFORMACION DEL CODIGO QR OBTENIDO MEDIANTE LAS PROPIEDADES DE LA CLASE "RegistroTableroViewModel.cs"
+
                     if (DatosPagina.ShowResultadoScan)
                     {
                         //------------------------------------------------------------------------------------------------
