@@ -461,6 +461,12 @@ VERSION DE BASE DE DATOS LOCAL		=		MODIFICACIONES
 									=       SAP del tablero consultado). Esta clase fue creada para ser
 									=		enviada como parametro en la solicitud HTTP para la busqueda
 									=       de tableros dentro de la plataforma.
+									=
+----------------------------------------------------------------------------------------------------------
+									=		*SE ACABA DE CREAR UNA NUEVA VERSION (BRANCH) DEL PROYECTO
+									=		CON LA FINALIDAD DE REALIZAR MODIFICACIONES CONSIDERABLES
+									=		SOBRE LA PAGINA "PaginaConsultaTablero" y "RegistoTablero-
+									=		ViewModel".
 ==========================================================================================================
 ==========================================================================================================
 NOTAS:

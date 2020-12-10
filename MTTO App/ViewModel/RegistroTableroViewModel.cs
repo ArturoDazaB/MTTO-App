@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace MTTO_App.ViewModel
@@ -143,24 +144,24 @@ namespace MTTO_App.ViewModel
 
         public string ResultadoScan
         {
+            /*
+             * ----------------------------INFORMACION:------------------------
+             * PROPIEDAD QUE RECIBIRA EL PARAMETRO QUE SERA USADO DE REFERENCIA
+             * PARA LA BUSQUEDA DE TABLEROS DENTRO DE LA BASE DE DATOS
+             * ----------------------------------------------------------------
+             */
             get
             {
                 return resultadoscan;
             }
             set
             {
+                //Task.Run(async () => { showresultadoscan = await BuscarTablero(tipodeconsulta); });
                 resultadoscan = value;
-                showresultadoscan = BuscarTablero(tipodeconsulta);
             }
         }
 
-        public int OpcionConsultaID
-        {
-            set
-            {
-                opcionconsultaid = value;
-            }
-        }
+        public int OpcionConsultaID { set { opcionconsultaid = value; } }
 
         public string CodigoQRData
         {
@@ -200,7 +201,11 @@ namespace MTTO_App.ViewModel
             }
         }
 
+        
+        public DateTime UltimaFechaConsulta { get { return ultimafechaconsulta; } }
+
         //--------------------------------------------------------------------------------------------------
+        //PROPIEDADES USADAS PARA REPRESENTAR LOS ITEMS QUE FORMAN PARTE DEL TABLERO CONSULTADO
         public string Descripcion
         {
             get { return descripcion; }
@@ -231,21 +236,13 @@ namespace MTTO_App.ViewModel
         }
 
         //--------------------------------------------------------------------------------------------------
-        public List<string> Opciones
-        {
-            get
-            {
-                return new List<string>()
-                {
-                    "Tablero ID",
-                    "SAP ID",
-                };
-            }
-        }
-
+        //PROPIEDADES USADAS EXCLUSIVAMENTE EN LA PAGINA "PaginaConsultaTableros"
+        //LISTA DE OPCIONES DE BUSQUEDA CUANDO SE CONSULTA UN TABLERO MEDIANTE CONSULTA DE ID
+        public List<string> Opciones { get { return new List<string>(){ "Tablero ID","SAP ID"}; }  }
+        //PROPIEDAD QUE RECIBE QUE TIPO DE CONSULTA SE VA A EFECTUAR:
+        //"CONSULTA_ESCANER" => CONSULTA POR MEDIO DE ESCANEO DE CODIGO QR
+        //"CONSULTA_POR_ID" => CONSULTA POR MEDIO DEL INGRESO DE UN ID (Tablero ID o SAP ID)
         public string TipoDeConsulta { set { tipodeconsulta = value; } }
-
-        public DateTime UltimaFechaConsulta { get { return ultimafechaconsulta; } }
 
         //--------------------------------------------------------------------------------------------------
         //==================================================================================================
@@ -651,7 +648,7 @@ namespace MTTO_App.ViewModel
         //==================================================================================================
         //==================================================================================================
         //METODO PARA LA BUSQUEDA DE UN TABLERO EN LA BASE DE DATOS
-        private bool BuscarTablero(string TipoDeConsulta)
+        public async Task<bool> BuscarTablero(string id, string TipoDeConsulta)
         {
             //SE CREA LA BANDERA Y SE INICIALIZA EN FALSE (NO HAY MATCH DE TABLERO)
             var flag = false;
@@ -660,7 +657,7 @@ namespace MTTO_App.ViewModel
             //NOTA: ESTA PROPIEDAD SOLO ES LLAMADA EN LA CLASE
             //"PaginaConsultaTablero.xaml.cs" EN EL METODO "Escanear"
 
-            if (resultadoscan != null)
+            if (id != null)
             {
                 //DE NO SER NULA SE PROCEDE A APERTURAR LA BASE DE DATOS PARA BUSCAR EL ID
                 //OBTENIDO POR EL ESCANEO EN LA BASE DE DATOS
@@ -682,24 +679,28 @@ namespace MTTO_App.ViewModel
                             {
                                 //SE COMPARA SI EL PAYLOAD OBTENIDO DEL ESCANEO
                                 //ES IGUAL AL ID DEL TABLERO (tablero)
-                                if (tablero.TableroID.ToLower() == resultadoscan.ToLower())
+                                if (tablero.TableroID.ToLower() == id.ToLower())
                                 {
                                     //SE ACTIVA LA BANDERA
                                     flag = true;
 
-                                    //SE LLENAN LAS VARIABLES LOCALES
-                                    tableroID = tablero.TableroID;
-                                    sapid = tablero.SapID;
-                                    filial = tablero.Filial;
-                                    area = tablero.AreaFilial;
-                                    //-------------------------------------------------------------------------------
-                                    //SE OBTIENE LA INFORMACION DE LA IMAGEN (codigoqrdata) PARA LUEGO REALIZAR LA
-                                    //CONVERSION DE STRING A BITMAP
-                                    codigoqrdata = tablero.CodigoQRData;
-                                    codigoqrbyte = System.Convert.FromBase64String(codigoqrdata);
-                                    codigoqrfilename = tablero.CodigoQRFilename;
-                                    //-------------------------------------------------------------------------------
+                                    //SE LLENAN LAS VARIABLES LOCALES CON LA INFORMACION DEL TABLERO
+                                    await Task.Run(() =>
+                                    {
+                                        tableroID = tablero.TableroID;
+                                        sapid = tablero.SapID;
+                                        filial = tablero.Filial;
+                                        area = tablero.AreaFilial;
+                                        //-------------------------------------------------------------------------------
+                                        //SE OBTIENE LA INFORMACION DE LA IMAGEN (codigoqrdata) PARA LUEGO REALIZAR LA
+                                        //CONVERSION DE STRING A BITMAP
+                                        codigoqrdata = tablero.CodigoQRData;
+                                        codigoqrbyte = System.Convert.FromBase64String(codigoqrdata);
+                                        codigoqrfilename = tablero.CodigoQRFilename;
+                                        //-------------------------------------------------------------------------------
+                                    });
 
+                                    //SE LLENA LA LISTA DE LOS ITEMS QUE FORMAN PARTE DEL TABLERO CONSULTADO
                                     foreach (ItemTablero x in connection.Table<ItemTablero>().ToList())
                                     {
                                         if (tableroID.ToLower() == x.TableroId.ToLower())
@@ -804,24 +805,29 @@ namespace MTTO_App.ViewModel
                                     {
                                         //SE COMPARA SI EL TEXTO ENVIADO (TABLERO ID)
                                         //ES IGUAL AL ID DEL TABLERO (tablero)
-                                        if (tablero.TableroID.ToLower() == resultadoscan.ToLower())
+                                        if (tablero.TableroID.ToLower() == id.ToLower())
                                         {
                                             //SE ACTIVA LA BANDERA
                                             flag = true;
 
-                                            //SE LLENAN LAS VARIABLES LOCALES
-                                            tableroID = tablero.TableroID;
-                                            sapid = tablero.SapID;
-                                            filial = tablero.Filial;
-                                            area = tablero.AreaFilial;
-                                            //-------------------------------------------------------------------------------
-                                            //SE OBTIENE LA INFORMACION DE LA IMAGEN (codigoqrdata) PARA LUEGO REALIZAR LA
-                                            //CONVERSION DE STRING A BITMAP
-                                            codigoqrdata = tablero.CodigoQRData;
-                                            codigoqrbyte = System.Convert.FromBase64String(codigoqrdata);
-                                            codigoqrfilename = tablero.CodigoQRFilename;
-                                            //-------------------------------------------------------------------------------
+                                            //SE LLENAN LAS VARIABLES LOCALES CON LA INFORMACION DEL TABLERO
+                                            await Task.Run(() =>
+                                            {
+                                                //SE LLENAN LAS VARIABLES LOCALES
+                                                tableroID = tablero.TableroID;
+                                                sapid = tablero.SapID;
+                                                filial = tablero.Filial;
+                                                area = tablero.AreaFilial;
+                                                //-------------------------------------------------------------------------------
+                                                //SE OBTIENE LA INFORMACION DE LA IMAGEN (codigoqrdata) PARA LUEGO REALIZAR LA
+                                                //CONVERSION DE STRING A BITMAP
+                                                codigoqrdata = tablero.CodigoQRData;
+                                                codigoqrbyte = System.Convert.FromBase64String(codigoqrdata);
+                                                codigoqrfilename = tablero.CodigoQRFilename;
+                                                //-------------------------------------------------------------------------------
+                                            });
 
+                                            //SE LLENA LA LISTA DE LOS ITEMS QUE FORMAN PARTE DEL TABLERO CONSULTADO
                                             foreach (ItemTablero x in connection.Table<ItemTablero>().ToList())
                                             {
                                                 if (tableroID.ToLower() == x.TableroId.ToLower())
@@ -928,19 +934,24 @@ namespace MTTO_App.ViewModel
                                             //SE ACTIVA LA BANDERA
                                             flag = true;
 
-                                            //SE LLENAN LAS VARIABLES LOCALES
-                                            tableroID = tablero.TableroID;
-                                            sapid = tablero.SapID;
-                                            filial = tablero.Filial;
-                                            area = tablero.AreaFilial;
-                                            //-------------------------------------------------------------------------------
-                                            //SE OBTIENE LA INFORMACION DE LA IMAGEN (codigoqrdata) PARA LUEGO REALIZAR LA
-                                            //CONVERSION DE STRING A BITMAP
-                                            codigoqrdata = tablero.CodigoQRData;
-                                            codigoqrbyte = System.Convert.FromBase64String(codigoqrdata);
-                                            codigoqrfilename = tablero.CodigoQRFilename;
-                                            //-------------------------------------------------------------------------------
+                                            //SE LLENAN LAS VARIABLES LOCALES CON LA INFORMACION DEL TABLERO
+                                            await Task.Run(() =>
+                                            {
+                                                //SE LLENAN LAS VARIABLES LOCALES
+                                                tableroID = tablero.TableroID;
+                                                sapid = tablero.SapID;
+                                                filial = tablero.Filial;
+                                                area = tablero.AreaFilial;
+                                                //-------------------------------------------------------------------------------
+                                                //SE OBTIENE LA INFORMACION DE LA IMAGEN (codigoqrdata) PARA LUEGO REALIZAR LA
+                                                //CONVERSION DE STRING A BITMAP
+                                                codigoqrdata = tablero.CodigoQRData;
+                                                codigoqrbyte = System.Convert.FromBase64String(codigoqrdata);
+                                                codigoqrfilename = tablero.CodigoQRFilename;
+                                                //-------------------------------------------------------------------------------
+                                            });
 
+                                            //SE LLENA LA LISTA DE LOS ITEMS QUE FORMAN PARTE DEL TABLERO CONSULTADO
                                             foreach (ItemTablero x in connection.Table<ItemTablero>().ToList())
                                             {
                                                 if (tableroID.ToLower() == x.TableroId.ToLower())
@@ -1022,7 +1033,6 @@ namespace MTTO_App.ViewModel
                                     //SI NO EXISTE NINGUN REGISTRO SE RETORNA FALSE
                                     flag = false;
                                 }
-
                                 break;
                                 //----------------------------------------------------------------------------------------------
                         }
@@ -1036,8 +1046,8 @@ namespace MTTO_App.ViewModel
             }
 
             //SE RETORNA EL VALOR QUE CONTIENE LA VARIABLE "flag"
-            //TRUE => SE CONSIGUIO UN TABLERO CON EL ID ESCANEADO
-            //FALSE => NO SE CONSIGUIO NINGUN TABLERO CON EL ID ESCANEADO
+            //TRUE => SE CONSIGUIO UN TABLERO CON EL ID ENVIADO COMO PARAMETRO
+            //FALSE => NO SE CONSIGUIO NINGUN TABLERO CON EL ID ENVIADO COMO PARAMETRO
             return flag;
         }
     }
