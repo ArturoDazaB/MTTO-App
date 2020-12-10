@@ -27,26 +27,18 @@ namespace MTTO_App.ViewModel
         protected Personas Persona;
         protected Usuarios Usuario;
         protected string codigoqrdata;
+        //                                               NOTA
+        //ESTE OBJETO ALMACENA EL CODIGO QR GENERADO CON LA LIBRERIA
+        //QRCoder EN FORMATO DE byte[]
+        protected byte[] codigoqrbyte;
         protected string codigoqrfilename;
         protected DateTime ultimafechaconsulta;
         protected List<ItemTablero> items;
 
         //VARIABLE UTILIZADA CUANDO LA CLASE ES LLAMADA DESDE LA CLASE "PaginaConsultaTablero.xaml.cs"
         protected string tipodeconsulta;
-
-        //--------------------------------------------------------------------------------------------------
-        protected string resultadoscan;
-
         protected int opcionconsultaid;
-
-        //--------------------------------------------------------------------------------------------------
-        protected bool showresultadoscan;
-
-        //--------------------------------------------------------------------------------------------------
-        //                                               NOTA
-        //ESTE OBJETO ALMACENA EL CODIGO QR GENERADO CON LA LIBRERIA
-        //QRCoder EN FORMATO DE byte[]
-        protected byte[] codigoqrbyte;
+        //protected bool showresultadoscan;
 
         //--------------------------------------------------------------------------------------------------
         //BANDERAS
@@ -83,8 +75,7 @@ namespace MTTO_App.ViewModel
 
             //==========================================================================================
             //SE INICIALIZAN LAS VARIABLES ASIGNADAS A LAS PROPIEDADES DE LA CLASE VIEWMODEL
-            resultadoscan = string.Empty;
-            showresultadoscan = false;
+            //showresultadoscan = false;
             SourceOfCalling = sourceofcalling;
         }
 
@@ -142,27 +133,6 @@ namespace MTTO_App.ViewModel
 
         public DateTime FechaRegistro { get { return DateTime.Now; } }
 
-        public string ResultadoScan
-        {
-            /*
-             * ----------------------------INFORMACION:------------------------
-             * PROPIEDAD QUE RECIBIRA EL PARAMETRO QUE SERA USADO DE REFERENCIA
-             * PARA LA BUSQUEDA DE TABLEROS DENTRO DE LA BASE DE DATOS
-             * ----------------------------------------------------------------
-             */
-            get
-            {
-                return resultadoscan;
-            }
-            set
-            {
-                //Task.Run(async () => { showresultadoscan = await BuscarTablero(tipodeconsulta); });
-                resultadoscan = value;
-            }
-        }
-
-        public int OpcionConsultaID { set { opcionconsultaid = value; } }
-
         public string CodigoQRData
         {
             get
@@ -206,6 +176,7 @@ namespace MTTO_App.ViewModel
 
         //--------------------------------------------------------------------------------------------------
         //PROPIEDADES USADAS PARA REPRESENTAR LOS ITEMS QUE FORMAN PARTE DEL TABLERO CONSULTADO
+
         public string Descripcion
         {
             get { return descripcion; }
@@ -242,17 +213,12 @@ namespace MTTO_App.ViewModel
         //PROPIEDAD QUE RECIBE QUE TIPO DE CONSULTA SE VA A EFECTUAR:
         //"CONSULTA_ESCANER" => CONSULTA POR MEDIO DE ESCANEO DE CODIGO QR
         //"CONSULTA_POR_ID" => CONSULTA POR MEDIO DEL INGRESO DE UN ID (Tablero ID o SAP ID)
-        public string TipoDeConsulta { set { tipodeconsulta = value; } }
-
-        //--------------------------------------------------------------------------------------------------
-        //==================================================================================================
-        //==================================================================================================
-        //SE DECLARAN LAS PROPIEDADES/ATRIBUTOS LOGICAS
-        public bool ShowResultadoScan
+        public string TipoDeConsulta 
         {
-            get { return showresultadoscan; }
-            set { showresultadoscan = value; }
+            get { return tipodeconsulta; }
+            set { tipodeconsulta = value; } 
         }
+        public int OpcionConsultaID { set { opcionconsultaid = value; } }
 
         //==================================================================================================
         //==================================================================================================
@@ -262,10 +228,6 @@ namespace MTTO_App.ViewModel
         //--------------------------------------------------------------------------------------------------
         //SE UTILIZA EL RENDER DEL TIPO "PngByteQRCode", EL CUAL RETORNA UN ARRELO DE BYTES (byte[])
         //QUE CONTENDRA LA INFORMACION DE UNA IMAGEN DEL TIPO PNG.
-        public PngByteQRCode CodigoQR
-        {
-            get { return codigoqr; }
-        }
 
         //IMAGEN QUE SE MOSTRARA EN PANTALLA Y LA QUE SE GUARDARA EN EL TELEFONO
         public byte[] CodigoQRbyte { get { return codigoqrbyte; } }
@@ -278,7 +240,6 @@ namespace MTTO_App.ViewModel
 
         //----------------------------------PH PaginaRegistroTablero----------------------------------------
         public string TableroIDPH { get { return "Ingrese el codigo/ID del tablero"; } }
-
         public string SAPIDPH { get { return "Ingrese el codigo SAP asignado al tablero"; } }
         public string FilialPH { get { return "¿A que filial pertenece el tablero?"; } }
         public string AreaPH { get { return "¿A que area pertenece el tablero?"; } }
@@ -648,7 +609,7 @@ namespace MTTO_App.ViewModel
         //==================================================================================================
         //==================================================================================================
         //METODO PARA LA BUSQUEDA DE UN TABLERO EN LA BASE DE DATOS
-        public async Task<bool> BuscarTablero(string id, string TipoDeConsulta)
+        public async Task<bool> BuscarTablero(string id)
         {
             //SE CREA LA BANDERA Y SE INICIALIZA EN FALSE (NO HAY MATCH DE TABLERO)
             var flag = false;
@@ -929,7 +890,7 @@ namespace MTTO_App.ViewModel
                                     {
                                         //SE COMPARA SI EL TEXTO ENVIADO (SAP ID)
                                         //ES IGUAL AL ID DEL TABLERO (tablero)
-                                        if (tablero.SapID.ToLower() == resultadoscan.ToLower())
+                                        if (tablero.SapID.ToLower() == id.ToLower())
                                         {
                                             //SE ACTIVA LA BANDERA
                                             flag = true;

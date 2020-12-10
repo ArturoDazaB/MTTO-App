@@ -405,7 +405,6 @@
 
                                 <!--CODIGO QR DEL TABLERO-->
                                 <Image  x:Name="codigoqrtablero"
-
                                         HorizontalOptions="Center"
                                         VerticalOptions="Center" />
                             </Frame>

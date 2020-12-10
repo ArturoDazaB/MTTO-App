@@ -467,6 +467,41 @@ VERSION DE BASE DE DATOS LOCAL		=		MODIFICACIONES
 									=		CON LA FINALIDAD DE REALIZAR MODIFICACIONES CONSIDERABLES
 									=		SOBRE LA PAGINA "PaginaConsultaTablero" y "RegistoTablero-
 									=		ViewModel".
+									=
+==========================================================================================================
+==========================================================================================================
+		DB4_2_5_1.db3				=		*Se realizaron modificaciones significativas sobre las clases
+									=		"RegistroTableroViewModel" y "PaginaConsultaTablero". 
+									=		
+									=		*Inicialmente la mayoria de las operaciones logicas eran 
+									=		ejecutadas o evaluadas dentro de las declaraciones get; set 
+									=		de las propiedades declaradas dentro de la clase 
+									=		"RegistroTableroViewModel", sin embargo esta clase resultaba
+									=		ser un poco molesta debido a que no cumplia con la misma 
+									=		arquitectura que otras clases homologas 
+									=		(cualquier clase que funcione como clase ViewModel).
+									=
+									=		- Fueron removid@s las siguientes VARIABLES y PROPIEDADES:
+									=			+ protected string resultadoscan;
+									=			+ public string ResultadoScan;
+									=			+ protected bool showresultadoscan;
+									=			+ public bool ShowResultadoScan;
+									=
+									=		- Continuando, se modifico el metodo/funcion "BuscarTablero", 
+									=		  adicionando funciones asyncronas, modificando los parametros
+									=		  que son enviados, la respuesta que es devuelta.
+									=
+									=		*Se realizaron modificaciones de lineas de codigo asignadas
+									=		espeficiamente para la consulta de base de datos en busqueda 
+									=		de tableros. Debido a que fueron removidas varias propiedades
+									=		y variables de la clase "RegistroTableroViewModel", las cuales
+									=		se encargaban de controlar operaciones logicas (habilitar o no
+									=		la visibilidad de las secciones que muestran la informacion
+									=		del tablero consultado). Las modificaciones realizadas permiten
+									=		que estas operaciones sean ejecutadas directamente sobre la clase
+									=		"PaginaConsultaTablero", cambiando solamente cuando es ejecutado
+									=		el metodo de busqueda mencionado anteriormente donde recibe una
+									=		respuesta de esta.
 ==========================================================================================================
 ==========================================================================================================
 NOTAS:

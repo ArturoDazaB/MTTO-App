@@ -40,7 +40,7 @@ namespace MTTO_App.Paginas
             BindingContext = DatosPagina = new RegistroTableroViewModel(Persona, Usuario, false);
 
             //SE DA SET (FALSE) AL FRAME QUE CONTENDRA LA INFORMACION DEL CODIGO QR
-            FrameResultado.IsVisible = DatosPagina.ShowResultadoScan;
+            FrameResultado.IsVisible = false;
 
             //SE DA SET (FALSE) AL ActivityIndicator QUE INDICARA AL USUARIO CUANDO SE ESTA CUMPLIENDO ALGUN PROCESO
             ActivityIndicator.IsVisible = ActivityIndicator.IsRunning = false;
@@ -96,13 +96,14 @@ namespace MTTO_App.Paginas
                     //SE CIERRA LA PAGINA DE SCANEO
                     await App.MasterDetail.Navigation.PopModalAsync();
 
+                    //SE OCULTA EL FRAME QUE CONTENDRAN LOS RESULTADOS DE BUSQUEDA
+                    FrameResultado.IsVisible = false;
+
                     //SE ACTIVA EL "ActivityIndicator" MIENTRAS DE MANERA ASINCRONA SE REALIZA EL LLAMADO DEL TABLERO
                     ActivityIndicator.IsVisible = ActivityIndicator.IsRunning = true;
-                    await Task.Run(async () =>
-                    {
-                        SearchStatus = await DatosPagina.BuscarTablero(result.Text, "CONSULTA_ESCANER");
-                        ActivityIndicator.IsVisible = ActivityIndicator.IsRunning = false;
-                    });
+                    await Task.Delay(1500);
+                    SearchStatus = await DatosPagina.BuscarTablero(result.Text);
+                    ActivityIndicator.IsVisible = ActivityIndicator.IsRunning = false;
 
                     //=============================================================================
                     //=============================================================================
@@ -130,7 +131,8 @@ namespace MTTO_App.Paginas
                     {
                         //SE CAMBIA SI ES O NO VISIBLE EL FRAME CON LOS RESULTADOS
                         FrameResultado.IsVisible = SearchStatus;
-
+                        //SE VUELVE A REAJUSTAR EL TAMAÑO DE LA LISTA DE ITEMS 
+                        listViewItems.HeightRequest = 0;
                         //SE INFORMA AL USUARIO QUE EL TABLERO QUE ACABA DE SER ESCANEADO NO FUE LOCALIZADO
                         Toast.MakeText(Android.App.Application.Context, "No se encontro la informacion del tablero introducido...", ToastLength.Long).Show();
                     }
@@ -163,22 +165,24 @@ namespace MTTO_App.Paginas
             if (!string.IsNullOrEmpty(entryTableroID.Text) &&
                 PickerOpciones.SelectedIndex > -1)
             {
+                //SE OCULTA EL FRAME QUE CONTENDRAN LOS RESULTADOS DE BUSQUEDA
+                FrameResultado.IsVisible = false;
 
                 //SE ACTIVA EL "ActivityIndicator" MIENTRAS DE MANERA ASINCRONA SE REALIZA EL LLAMADO DEL TABLERO
                 ActivityIndicator.IsVisible = ActivityIndicator.IsRunning = true;
-                await Task.Run(async () =>
+                await Task.Delay(1500);
+                DatosPagina.OpcionConsultaID = PickerOpciones.SelectedIndex;
+                SearchStatus = await DatosPagina.BuscarTablero(entryTableroID.Text);
+                ActivityIndicator.IsVisible = ActivityIndicator.IsRunning = false;
+                /*await Task.Run(async () =>
                 {
-                    SearchStatus = await DatosPagina.BuscarTablero(entryTableroID.Text, "CONSULTA_ESCANER");
+                    SearchStatus = await DatosPagina.BuscarTablero(entryTableroID.Text, "CONSULTA_POR_ID");
                     ActivityIndicator.IsVisible = ActivityIndicator.IsRunning = false;
-                });
-
-                //ENVIAMOS EL VALOR INGRESADO POR EL USUARIO
-                //DatosPagina.ResultadoScan = entryTableroID.Text;
-                //DatosPagina.OpcionConsultaID = PickerOpciones.SelectedIndex;
+                });*/
 
                 //EVALUAMOS SI EL TABLERO SE ENCUENTRA EN LA BASE DE DATOS
                 //if (DatosPagina.ShowResultadoScan)
-                if(SearchStatus)
+                if (SearchStatus)
                 {
                     //SE CAMBIA LA VISIBILIDAD DEL "FrameResultado" CON LOS RESULTADOS
                     //FrameResultado.IsVisible = DatosPagina.ShowResultadoScan;
@@ -201,7 +205,8 @@ namespace MTTO_App.Paginas
                     //SE CAMBIA SI ES O NO VISIBLE EL FRAME CON LOS RESULTADOS
                     //FrameResultado.IsVisible = DatosPagina.ShowResultadoScan;
                     FrameResultado.IsVisible = SearchStatus;
-
+                    //SE VUELVE A REAJUSTAR EL TAMAÑO DE LA LISTA DE ITEMS 
+                    listViewItems.HeightRequest = 0;
                     //SE INFORMA AL USUARIO QUE EL TABLERO QUE ACABA DE SER ESCANEADO NO FUE LOCALIZADO
                     Toast.MakeText(Android.App.Application.Context, "No se encontro la informacion del tablero...", ToastLength.Long).Show();
                 }
