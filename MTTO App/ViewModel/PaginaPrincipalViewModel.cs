@@ -23,8 +23,7 @@ namespace MTTO_App.ViewModel
         protected string result;
 
         //=========================================================================================================
-        //=========================================================================================================
-        //PROPIEDADES DE LA CLASE
+        //----------------------------------------PROPIEDADES DE LA CLASE------------------------------------------
         public string Username
         {
             get { return username; }
@@ -53,6 +52,37 @@ namespace MTTO_App.ViewModel
         }
 
         //=========================================================================================================
+        //----------------------------------------PROPIEDADES DE LA PAGINA-----------------------------------------
+        //=========================================================================================================
+        //COLORES
+        public string BackGroundColor { get { return App.BackGroundColor; } }
+
+        public string HeaderBackGroundColor { get { return "#E53835"; } }
+        public string EntryBackGroundColor { get { return "#424242"; } }
+        public string IngresoDatosBackGroundColor { get { return "#ff6e60"; } }
+
+        //--------------------------------------------------------------------------------------------------------
+        //TEXTOS
+        public string HeaderText { get { return "MTTO App"; } }
+
+        public string UsernamePH { get { return "Nombre de usuario"; } }
+        public string PasswordPH { get { return "Contraseña"; } }
+        public string ButtonPH { get { return "INGRESAR"; } }
+
+        //--------------------------------------------------------------------------------------------------------
+        //TAMAÑO DE LA FUENTE
+        public int LabelFontSize { get { return App.LabelFontSize; } }
+
+        public int EntryFontSize { get { return App.EntryFontSize; } }
+        public int HeaderFontSize { get { return App.HeaderFontSize; } }
+
+        //=========================================================================================================
+        //---------------------------------------------------EVENTOS-----------------------------------------------
+        public event PropertyChangingEventHandler PropertyChanging;
+
+        //=========================================================================================================
+        //---------------------------------------------------METODOS-----------------------------------------------
+        //=========================================================================================================
         //=========================================================================================================
         //CONSTRUCTOR DE LA CLASE
         public PaginaPrincipalViewModel()
@@ -62,7 +92,6 @@ namespace MTTO_App.ViewModel
         }
 
         //=========================================================================================================
-        //---------------------------------------------------METODOS-----------------------------------------------
         //=========================================================================================================
         //METODO PARA IMPRIMIR POR CONSOLA EL CAMBIO DE LA VARIABLE
         private void ConsoleWriteline(string PROPIEDAD, string mensaje)
@@ -74,6 +103,9 @@ namespace MTTO_App.ViewModel
             Console.WriteLine("==================================================\n\n");
         }
 
+        //=========================================================================================================
+        //=========================================================================================================
+        //METODO PARA IMPRIMIR UN MENSAJE POR PANTALLAS
         private void ConsoleWriteline(string mensaje)
         {
             Console.WriteLine("\n\n==================================================");
@@ -83,7 +115,9 @@ namespace MTTO_App.ViewModel
             Console.WriteLine("==================================================\n\n");
         }
 
-        
+        //=========================================================================================================
+        //=========================================================================================================
+        //METODO PARA VALIDAR EL INGRESO DE UN USUARIO POR MEDIO DE CONSUMO DE SERVICIOS WEB
         public async Task<LogInResponse> LogInRequest()
         {
             //SE CREA E INICIALIZA LA VARIABLE QUE RETENDRA EL URL PARA REALIZAR LA SOLICITUD HTTP
@@ -168,40 +202,12 @@ namespace MTTO_App.ViewModel
             }
         }
 
-
         //=========================================================================================================
         //=========================================================================================================
-        public event PropertyChangingEventHandler PropertyChanging;
-
         //ACTUALIZA LA INFORMACION DE LA PROPIEDAD CADA QUE SE DECTECTA UN CAMBIO MINIMO
         private void OnPropertyChanged([CallerMemberName] string nombre = "")
         {
             PropertyChanging?.Invoke(this, new PropertyChangingEventArgs(nombre));
         }
-
-        //=========================================================================================================
-        //----------------------------------------PROPIEDADES DE LA PAGINA-----------------------------------------
-        //=========================================================================================================
-        //COLORES
-        public string BackGroundColor { get { return App.BackGroundColor; } }
-
-        public string HeaderBackGroundColor { get { return "#E53835"; } }
-        public string EntryBackGroundColor { get { return "#424242"; } }
-        public string IngresoDatosBackGroundColor { get { return "#ff6e60"; } }
-
-        //--------------------------------------------------------------------------------------------------------
-        //TEXTOS
-        public string HeaderText { get { return "MTTO App"; } }
-
-        public string UsernamePH { get { return "Nombre de usuario"; } }
-        public string PasswordPH { get { return "Contraseña"; } }
-        public string ButtonPH { get { return "INGRESAR"; } }
-
-        //--------------------------------------------------------------------------------------------------------
-        //TAMAÑO DE LA FUENTE
-        public int LabelFontSize { get { return App.LabelFontSize; } }
-
-        public int EntryFontSize { get { return App.EntryFontSize; } }
-        public int HeaderFontSize { get { return App.HeaderFontSize; } }
     }
 }

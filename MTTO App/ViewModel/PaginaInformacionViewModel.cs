@@ -7,15 +7,7 @@
         //CLASE CREADA PARA MANIPULAR TODA LA CONFIGURACION DE PARAMETROS DE LAS PAGINAS DE INFORMACION
         //============================================================================================================
         //CREACION E INICIALIZACION DE VARIABLES LOCALES
-        protected string SourceOfCalling = string.Empty;
-
-        //============================================================================================================
-        //CONSTRUCTOR DE LA CLASE
-        public PaginaInformacionViewModel(string sourceofcalling)
-        {
-            //IDENFICAMOS DE QUE PAGINA SE ESTA HACIENDO EL LLAMADO DE LA CLASE
-            SourceOfCalling = sourceofcalling.ToUpper();
-        }
+        private string SourceOfCalling = string.Empty;
 
         //============================================================================================================
         //============================================================================================================
@@ -115,9 +107,22 @@
         }
 
         //PROPIEDAD QUE RETORNA EN UN TEXTO LOS CARACTERES NO PERMITIDOS
-        public string Caracteres { get { return CaracteresNoPermitidos(); } }
+        public string Caracteres 
+        {
+            get { return CaracteresNoPermitidos(); }
+        }
 
-        //------------------------------------------------------------------------------------------------------------
+        //============================================================================================================
+        //============================================================================================================
+        //CONSTRUCTOR DE LA CLASE
+        public PaginaInformacionViewModel(string sourceofcalling)
+        {
+            //IDENFICAMOS DE QUE PAGINA SE ESTA HACIENDO EL LLAMADO DE LA CLASE
+            SourceOfCalling = sourceofcalling.ToUpper();
+        }
+
+        //============================================================================================================
+        //============================================================================================================
         //FUNCION QUE RETORNA EN FORMA DE TEXTO LOS CARACTERES NO PERMITIDOS
         public static string CaracteresNoPermitidos()
         {

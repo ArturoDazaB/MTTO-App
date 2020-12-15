@@ -497,6 +497,12 @@ namespace MTTO_App.ViewModel
 
         //===============================================================================================
         //===============================================================================================
+        //-------------------------------------------EVENTOS---------------------------------------------
+        public event PropertyChangingEventHandler PropertyChanging;
+
+        //===============================================================================================
+        //===============================================================================================
+        //-------------------------------------------METODOS---------------------------------------------
         //CONSTRUCTOR DE LA CLASE
         public ConfiguracionAdminViewModel(bool flag, Personas persona, Usuarios usuario, double userid)
         {
@@ -570,8 +576,6 @@ namespace MTTO_App.ViewModel
 
         //===============================================================================================
         //===============================================================================================
-        public event PropertyChangingEventHandler PropertyChanging;
-
         //ACTUALIZA LA INFORMACION DE LA PROPIEDAD CADA QUE SE DECTECTA UN CAMBIO MINIMO
         protected void OnPropertyChanged([CallerMemberName] string nombre = "")
         {
@@ -1050,7 +1054,7 @@ namespace MTTO_App.ViewModel
                 var model = new ConfiguracionA
                 {
                     Cedula = Convert.ToDouble(Cedula),
-                    Nombre = Nombres, 
+                    Nombres = Nombres, 
                     Apellidos = Apellidos,
                     FechaNacimiento = FechaNacimiento,
                     Telefono = Convert.ToDouble(Telefono),

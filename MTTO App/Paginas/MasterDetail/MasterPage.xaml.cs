@@ -47,7 +47,7 @@ namespace MTTO_App
             BindingContext = DatosPagina = new MasterDetailPageUserInfoViewModel(Persona, Usuario, Ultimaconexion);
 
             //SE INSTANCIA LA CLASE OpcionesViewModel.cs
-            OpcionesViewModel = new OpcionesViewModel();
+            //OpcionesViewModel = new OpcionesViewModel();
 
             //CONFIGURACION DEL MENU DE OPCIONES DEPENDIENDO DEL NIVEL DEL USUARIO QUE SE ENCUENTRE LOGGEADO
             //EL MENU LATERAL LLENARA LAS OPCIONES Y CARGARA LA INFORMACION DE MANERA DISTINTA. EN OTRAS PALABRAS, 
@@ -56,15 +56,15 @@ namespace MTTO_App
             switch (Usuario.NivelUsuario)
             {
                 case 0:
-                    ListaNavegacion.ItemsSource = OpcionesViewModel.OpcionesNivelBajo;
+                    ListaNavegacion.ItemsSource = new OpcionesModel().OpcionesNivelBajo();
                     break;
 
                 case 5:
-                    ListaNavegacion.ItemsSource = OpcionesViewModel.OpcionesNivelMedio;
+                    ListaNavegacion.ItemsSource = new OpcionesModel().OpcionesNivelMedio();
                     break;
 
                 case 10:
-                    ListaNavegacion.ItemsSource = OpcionesViewModel.OpcionesNivelAlto;
+                    ListaNavegacion.ItemsSource = new OpcionesModel().OpcionesNivelAlto();
                     break;
             }
         }

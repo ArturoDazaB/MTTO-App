@@ -47,8 +47,5 @@ namespace MTTO_App.ViewModel
         public int EntryFontSize { get { return App.EntryFontSize; } }
         public int HeaderFontSize { get { return App.HeaderFontSize; } }
         public int SmallHeaderFontSize { get { return App.SmallHeaderFontSize; } }
-
-        //===============================================================================================
-        //===============================================================================================
     }
 }

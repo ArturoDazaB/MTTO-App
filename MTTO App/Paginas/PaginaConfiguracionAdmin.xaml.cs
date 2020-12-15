@@ -281,6 +281,7 @@ namespace MTTO_App.Paginas
                 //----------------------CODIGO PARA REGISTRAR UN USUARIO MEDIANTE CONSUMO DE API------------------------
                 //LLAMAMOS AL METODO "Save" DE LA CLASE "ConfiguracionAdminViewModel" Y GUARDAMOS LA RESPUESTA OBTENIDA
                 //INICIAMOS EL ACTIVITY INDICATOR
+                ActivityIndicator.IsVisible = true;
                 ActivityIndicator.IsRunning = true;
 
                 await Task.Run(async () =>
@@ -289,22 +290,19 @@ namespace MTTO_App.Paginas
                     ActivityIndicator.IsRunning = false;
                 });
 
+                //SE DESACTIVA LA VISIBILIDAD DEL ACTIVITY INDICATOR
+                ActivityIndicator.IsVisible = false;
+
                 //SE MUESTRA EL MENSAJE OBTENIDO
                 Toast.MakeText(Android.App.Application.Context, respuesta, ToastLength.Long).Show();
 
-                //SI LA RESPUESTA DE MODIFICACION ES SATISFACTORIA SE SALE DE LA PAGINA ACTUAL
-                if (respuesta == "Datos Actualizados")
-                    await Navigation.PopModalAsync();
-                /*
-                 * SECCION CUANDO LA APLICACION SE ENCUENTRA FUNCIONANDO STAND ALONE
-                if (App.ConfigChangedFlag)
-                {
-                    App.ConfigChangedAdminFlag = false;
-                    App.ConfigChangedFlag = false;
+                //SE REALIZA UNA PAUSA DE 2 SEGUNDOS
+                await Task.Delay(2000);
+
+                //SE VERIFICA EL TEXTO CONTENIDO DENTRO DE LA RESPUESTA DE LA APLICACION 
+                if (respuesta.ToLower() == "datos actualizados")
+                    //SI LA RESPUESTA ES POSITIVA SE PROCEDE A CERRAR LA PAGINA 
                     await Navigation.PopAsync();
-                }
-                else
-                    await DisplayAlert("Mensaje", respuesta, "Entendido");*/
             }
         }
 

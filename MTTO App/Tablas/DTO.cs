@@ -38,7 +38,7 @@ namespace MTTO_App.Tablas
     //-----------------------------------------------------------------------------------
     public class ConfiguracionA : ConfiguracionU
     {
-        public string Nombre { get; set; }
+        public string Nombres { get; set; }
         public string Apellidos { get; set; }
         public DateTime FechaNacimiento { get; set; }
         public string Username { get; set; }
@@ -47,7 +47,7 @@ namespace MTTO_App.Tablas
         {
             return new ConfiguracionA
             {
-                Nombre = newinfo.Nombre,
+                Nombres = newinfo.Nombres,
                 Apellidos = newinfo.Apellidos,
                 Cedula = newinfo.Cedula,
                 FechaNacimiento = newinfo.FechaNacimiento,
@@ -152,5 +152,18 @@ namespace MTTO_App.Tablas
     {
         public string Parametro { get; set; }
         public double UserId { get; set; }
+    }
+
+    //===================================================================================
+    //===================================================================================
+    public partial class UserSelectedRequest
+    {
+        public double UserIdSelected { get; set; }
+        public double UserIdRequested { get; set; }
+
+        /* CLASE OBJETO FORMADA POR DOS PARAMETROS/PROPIEDADES, 
+         * UserIdSelected => Id del usuario a retornar
+         * UserIdRequested => Id del usuario que realiza al solicitud
+         */
     }
 }

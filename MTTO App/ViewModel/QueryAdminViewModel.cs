@@ -3,7 +3,6 @@ using MTTO_App.Tablas;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -14,19 +13,14 @@ namespace MTTO_App
 {
     internal class QueryAdminViewModel
     {
-        public QueryAdminViewModel(Personas persona, Usuarios usuario)
-        {
-            Persona = persona;
-            Usuario = usuario;
-        }
-
         //---------------------------------------------------------------------------------------------------------
-        //PROPIEDADES DE LA CLASE
+        //VARIABLES DE LA CLASE
         private Personas Persona;
         private Usuarios Usuario;
+        private string errormessage;
         //---------------------------------------------------------------------------------------------------------
         //PROPIEDADES DE LA CLASE
-        public List<QueryAdminModel> InfoConfig { get { return new QueryAdminModel().GetConfiguracion(); } } 
+        public List<QueryAdminModel> InfoConfig { get { return new QueryAdminModel().GetConfiguracion(); } }
         //---------------------------------------------------------------------------------------------------------
         //TEXTOS
         public string TituloPagina { get { return "Busqueda de Usuario"; } }
@@ -39,45 +33,34 @@ namespace MTTO_App
         //---------------------------------------------------------------------------------------------------------
         //COLOR DE FONTO Y DE BOTONES
         public string BackGroundColor { get { return App.BackGroundColor; } }
-
         public string ButtonColor { get { return App.ButtonColor; } }
-
         //---------------------------------------------------------------------------------------------------------
         //TAMAÑO DE LAS LETRAS
         public int LabelFontSize { get { return App.LabelFontSize; } }
-
         public int EntryFontSize { get { return App.EntryFontSize; } }
         public int HeaderFontSize { get { return App.HeaderFontSize; } }
-
+        //---------------------------------------------------------------------------------------------------------
+        public string ErrorMessage { get { return errormessage; } }
         //=========================================================================================================
         //-------------------------------------------------METODOS-------------------------------------------------
-        //=========================================================================================================
-        //BUSQUEDA DE PERSONAS
-        public async Task<List<Personas>> ListaPersonas(int SeleccionBusqueda, string Dato)
+        //CONSTRUCTOR DE LA CLASE 
+        public QueryAdminViewModel(Personas persona, Usuarios usuario)
         {
-            //SE RECIBE COMO PARAMETRO QUE TIPO DE BUSQUEDA VA A REALIZARSE (SeleccionBusqueda)
-            //LA CUAL PERMITE BUSCAR POR: ID, NOMBRES, APELLIDOS y USERNAME. MIENTRAS QUE Dato
-            //TENDRA LA REFERENCIA A BUSCAR
-
-            //BUSQUEDA DE USUARIO STAND ALONE
-            //return ListaPersonasStandAlone(SeleccionBusqueda, Dato);
-
-            //BUSQUEDA DE USUARIO HTTPCLIENT
-
-            return await ListaPersonasHttpClient(SeleccionBusqueda, Dato);
-            
+            Persona = persona;
+            Usuario = usuario;
+            errormessage = string.Empty;
         }
 
-        //==================================================================================
-        //==================================================================================
+        //=========================================================================================================
+        //=========================================================================================================
         //FUNCION PARA GENERAR UN MENSAJE NO INTERACTIVO POR PANTALLA
         public void MensajePantalla(string mensaje)
         {
             Toast.MakeText(Android.App.Application.Context, mensaje, ToastLength.Short).Show();
         }
 
-        //==================================================================================
-        //==================================================================================
+        //=========================================================================================================
+        //=========================================================================================================
         //BUSQUEDA DE USUARIOS (STAND ALONE)
         private List<Personas> ListaPersonasStandAlone(int SeleccionBusqueda, string Dato)
         {
@@ -186,7 +169,7 @@ namespace MTTO_App
                         }
                         break;
                         //=======================================================================================
-                        //======================================================================================= 
+                        //=======================================================================================
                 }
                 //SE CIERRA LA BASE DE DATOS
                 connection.Close();
@@ -195,13 +178,16 @@ namespace MTTO_App
             return QueryPersonas;
         }
 
-        private async Task<List<Personas>> ListaPersonasHttpClient(int SeleccionBusqueda, string Dato)
+        //=========================================================================================================
+        //=========================================================================================================
+        //BUSQUEDA DE USUARIOS (CONSUMO DE SERVICIOS WEB)
+        public async Task<List<ResponseQueryAdmin>> ListaPersonasHttpClient(int SeleccionBusqueda, string Dato)
         {
-            //SE CREA E INICIALIZA LA VARIABLE QUE CONTENDRA EL URL 
+            //SE CREA E INICIALIZA LA VARIABLE QUE CONTENDRA EL URL
             string url = App.BaseUrl + "/queryadmin";
 
             //SE CREA E INICIALIZA LA VARIABLE QUE RECIBIRA LA LISTA DE USUARIOS ENCONTRADOS
-            List<Personas> lista = null;
+            List<ResponseQueryAdmin> lista = null;
 
             //SE CREA E INICIALIZA LA VARIABLE QUE SERVIRA DE MODELO PARA EL OBJETO JSON ENVIADO EN LA SOLICITUD
             var model = new RequestQueryAdmin() { Parametro = Dato, UserId = Persona.Cedula, };
@@ -220,12 +206,12 @@ namespace MTTO_App
                 try
                 {
                     //INICIAMOS EL SEGMENTO DEL CODIGO EN EL CUAL REALIZAREMOS EL CONSUMO DE SERVICIOS WEB MEDIANTE
-                    //LA INICIALIZACION Y CREACION DE UNA VARIABLE QUE FUNCIONARA COMO CLIENTE EN LAS SOLICITUDES 
-                    //Y RESPUESTAS ENVIADAS Y RECIBIDAS POR EL SERVIDOR (WEB API) 
+                    //LA INICIALIZACION Y CREACION DE UNA VARIABLE QUE FUNCIONARA COMO CLIENTE EN LAS SOLICITUDES
+                    //Y RESPUESTAS ENVIADAS Y RECIBIDAS POR EL SERVIDOR (WEB API)
                     //----------------------------------------------------------------------------------------------
                     //NOTA: CUANDO SE REALIZA LA CREACION E INICIALIZACION DE LA VARIABLE DEL TIPO HttpClient SE
-                    //HACE UN LLAMADO A UN METODO ALOJADO EN LA CLASE "App" Y QUE ES ENVIADO COMO PARAMETRO DEL 
-                    //TIPO HttpClientHandler => 
+                    //HACE UN LLAMADO A UN METODO ALOJADO EN LA CLASE "App" Y QUE ES ENVIADO COMO PARAMETRO DEL
+                    //TIPO HttpClientHandler =>
                     //----------------------------------------------------------------------------------------------
                     using (HttpClient client = new HttpClient(App.GetInsecureHandler()))
                     {
@@ -233,16 +219,10 @@ namespace MTTO_App
                         client.Timeout = TimeSpan.FromSeconds(App.TimeInSeconds);
                         //SE REALIZA LA CONVERSION A OBJETO JSON
                         var json = JsonConvert.SerializeObject(model);
-
-                        HttpRequestMessage request = new HttpRequestMessage()
-                        {
-                            Method = HttpMethod.Get,
-                            Content = new StringContent(json, Encoding.UTF8, "application/json"),
-                        };
-
+                        //SE AÑADE EL OBJETO JSON RECIEN CREADO COMO CONTENIDO BODY DEL NUEVO REQUEST
+                        HttpContent httpContent = new StringContent(json, Encoding.UTF8, "application/json");
                         //SE HACE LA CONFIGURACION DE LOS HEADERS DEL REQUEST
                         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
                         //--------------------------------------------------------------------------------------------------------
                         //DEPENDIENDO DEL VALOR QUE POSEA SeleccionBusqueda:
                         //(EN ESTE CASO SOLO PUEDE TENER 4, QUE SON: 0-ID, 1-NUMERO DE FICHA, 2-NOMBRES, 3-APELLIDOS, 4-USERNAME)
@@ -252,53 +232,132 @@ namespace MTTO_App
                             //CASO BUSQUEDA POR CEDULA
                             case 0:
                                 //SE TERMINA DE ESPECIFICAR EL URL AL CUAL SE DEBE REALIZAR LA SOLICITUD CUANDO ES BUSQUEDA POR CEDULA
-                                request.RequestUri = new Uri(url + "/cedula");
+                                url = url + "/cedula";
                                 //SE HACE EL ENVIO DE LA SOLICITUD
-                                response = await client.SendAsync(request);
+                                response = await client.PostAsync(url, httpContent);
                                 break;
                             //CASO BUSQUEDA POR NUMERO DE FICHA
                             case 1:
                                 //SE TERMINA DE ESPECIFICAR EL URL AL CUAL SE DEBE REALIZAR LA SOLICITUD CUANDO ES BUSQUEDA POR CEDULA
-                                request.RequestUri = new Uri(url + "/ficha");
+                                url = url + "/ficha";
                                 //SE HACE EL ENVIO DE LA SOLICITUD
-                                response = await client.SendAsync(request);
+                                response = await client.PostAsync(url, httpContent);
                                 break;
                             //CASO BUSQUEDA POR NOMBRE
                             case 2:
                                 //SE TERMINA DE ESPECIFICAR EL URL AL CUAL SE DEBE REALIZAR LA SOLICITUD CUANDO ES BUSQUEDA POR CEDULA
-                                request.RequestUri = new Uri(url + "/nombres");
+                                url = url + "/nombres";
                                 //SE HACE EL ENVIO DE LA SOLICITUD
-                                response = await client.SendAsync(request);
+                                response = await client.PostAsync(url, httpContent);
                                 break;
                             //CASO BUSQUEDA POR APELLIDO
                             case 3:
                                 //SE TERMINA DE ESPECIFICAR EL URL AL CUAL SE DEBE REALIZAR LA SOLICITUD CUANDO ES BUSQUEDA POR CEDULA
-                                request.RequestUri = new Uri(url + "/apellidos");
+                                url = url + "/apellidos";
                                 //SE HACE EL ENVIO DE LA SOLICITUD
-                                response = await client.SendAsync(request);
+                                response = await client.PostAsync(url, httpContent);
                                 break;
                             //CASO BUSQUEDA POR USERNAME
                             case 4:
                                 //SE TERMINA DE ESPECIFICAR EL URL AL CUAL SE DEBE REALIZAR LA SOLICITUD CUANDO ES BUSQUEDA POR CEDULA
-                                request.RequestUri = new Uri(url + "/username");
+                                url = url + "/username";
                                 //SE HACE EL ENVIO DE LA SOLICITUD
-                                response = await client.SendAsync(request);
+                                response = await client.PostAsync(url, httpContent);
                                 break;
                         }
                     }
                 }
-                catch
+                catch (Exception ex) when (ex is HttpRequestException ||
+                                           ex is Javax.Net.Ssl.SSLException ||
+                                           ex is Javax.Net.Ssl.SSLHandshakeException ||
+                                           ex is System.Threading.Tasks.TaskCanceledException)
                 {
-
+                    await Task.FromResult(lista);
                 }
             }
 
-            //SE RETORNA LA RESPUESTA OBTENIDA POR EL SERVICIO WEB
-
+            //SE VERIFICA SI EL CODIGO DE ESTATUS DEL CONSUMO DEL SERVICIO WEB ES POSITIVO
             if (response.IsSuccessStatusCode)
-                lista = JsonConvert.DeserializeObject<List<Personas>>(await response.Content.ReadAsStringAsync());
+                //DE SER POSITIVO, SE DESERILIZA EL OBJETO JSON (List<>)CONTENIDO EN LA RESPUESTA RECIBIDA LUEGO DEL CONSUMO DEL SERVICIO WEB
+                lista = JsonConvert.DeserializeObject<List<ResponseQueryAdmin>>(await response.Content.ReadAsStringAsync());
+            else
+                //DE SER NEGATIVO, SE DESERIALIZA EL OBJETO JSON (STRING)
+                errormessage = JsonConvert.DeserializeObject<string>(await response.Content.ReadAsStringAsync());
 
+            //SE RETORNA LA LISTA DE USUARIOS ENCONTRADOS
             return await Task.FromResult(lista);
         }
-    } 
-}   
+
+        //=========================================================================================================
+        //=========================================================================================================
+        //SELECCION DE USUARIO (CONSUMO DE SERVICIOS WEB)
+        public async Task<InformacionGeneral> OnUserSelected(ResponseQueryAdmin userselected)
+        {
+            //SE CREA E INICIALIZA LA VARIABLE QUE CONTENDRA EL URL
+            string url = App.BaseUrl + "/queryadmin/onuserselected";
+
+            //SE CREA E INICIALIZA LA VARIABLE QUE RECIBIRA LA RESPUESTA DE LA SOLICITUD HTTP
+            HttpResponseMessage response = new HttpResponseMessage();
+
+            //SE CREA E INICIALIZA LA VARIABLE QUE VERIFICARA EL ESTADO DE CONEXION A INTERNET
+            var current = Connectivity.NetworkAccess;
+
+            //SE CREA LA CLASE MODELO QUE SERA CONVERTIDA A OBJETO JSON Y ENVIADA DENTRO DE LA SOLICITUD HTTP
+            var model = new UserSelectedRequest() { UserIdRequested = Usuario.Cedula, UserIdSelected = userselected.Cedula };
+
+            //SE CREA E INICIALIZA LA VARIABLE QUE RECIBIRA EL OBJETO JSON RETORNADO POR LA SOLICITUD HTTP
+            InformacionGeneral informacion = null;
+
+            //SE VERIFICA SI EL DISPOSITIVO SE ENCUENTRA CONECTADO A INTERNET
+            if (current == NetworkAccess.Internet)
+            {
+                //EL EQUIPO SE ENCUENTRA CONECTADO A INTERNET
+                //SE INICIA EL CICLO TRY...CATCH
+                try
+                {
+                    //INICIAMOS EL SEGMENTO DEL CODIGO EN EL CUAL REALIZAREMOS EL CONSUMO DE SERVICIOS WEB MEDIANTE
+                    //LA INICIALIZACION Y CREACION DE UNA VARIABLE QUE FUNCIONARA COMO CLIENTE EN LAS SOLICITUDES
+                    //Y RESPUESTAS ENVIADAS Y RECIBIDAS POR EL SERVIDOR (WEB API)
+                    //----------------------------------------------------------------------------------------------
+                    //NOTA: CUANDO SE REALIZA LA CREACION E INICIALIZACION DE LA VARIABLE DEL TIPO HttpClient SE
+                    //HACE UN LLAMADO A UN METODO ALOJADO EN LA CLASE "App" Y QUE ES ENVIADO COMO PARAMETRO DEL
+                    //TIPO HttpClientHandler =>
+                    //----------------------------------------------------------------------------------------------
+                    using (HttpClient client = new HttpClient(App.GetInsecureHandler()))
+                    {
+                        //SE DA SET AL TIEMPO MAXIMO DE ESPERA PARA RECIBIR UNA RESPUESTA DEL SERVIDOR
+                        client.Timeout = TimeSpan.FromSeconds(App.TimeInSeconds);
+                        //SE REALIZA LA CONVERSION A OBJETO JSON
+                        var json = JsonConvert.SerializeObject(model);
+                        //SE AÑADE EL OBJETO JSON RECIEN CREADO COMO CONTENIDO BODY DEL NUEVO REQUEST
+                        HttpContent httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+                        //SE HACE LA CONFIGURACION DE LOS HEADERS DEL REQUEST
+                        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                        //SE REALIZA LA SOLICITUD HTTP POST
+                        response = await client.PostAsync(url, httpContent);
+
+                        if (response.IsSuccessStatusCode)
+                        {
+                            //SE DESERIABLIZA EL OBJETO JSON CONTENIDO EN EL OBJETO "response" (<InformacionGeneral>)
+                            informacion = JsonConvert.DeserializeObject<InformacionGeneral>(await response.Content.ReadAsStringAsync());
+                        }
+                        else
+                        {
+                            //SE DESEREALIZA EL OBJETO JSON CONTENIDO EN EL OBJETO "response" (<string>)
+                            errormessage = JsonConvert.DeserializeObject<string>(await response.Content.ReadAsStringAsync());
+                        }
+                    }
+                }
+                catch (Exception ex) when (ex is HttpRequestException ||
+                                           ex is Javax.Net.Ssl.SSLException ||
+                                           ex is Javax.Net.Ssl.SSLHandshakeException ||
+                                           ex is System.Threading.Tasks.TaskCanceledException)
+                {
+                    return await Task.FromResult(informacion);
+                }
+            }
+
+            return await Task.FromResult(informacion);
+        }
+    }
+}

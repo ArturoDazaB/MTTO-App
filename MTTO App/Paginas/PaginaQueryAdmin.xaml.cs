@@ -1,5 +1,5 @@
 ﻿using MTTO_App.Paginas;
-using SQLite;
+using MTTO_App.Tablas;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -11,19 +11,18 @@ namespace MTTO_App
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PaginaQueryAdmin : ContentPage
     {
-        //LISTA QUE ALMACENARA TODOS LOS OBJETOS PERSONAS
-        //QUE SON OBTENIDOS LUEGO DE REALIZAR LA BUSQUEDA
-        private List<Personas> Lista;
-
-        //SE CREAN LAS VARIABLES
-        private int Seleccion;
-
         //SE CREAN LAS CONSTANTES
         private const int HeightRow = 45;
 
         //SE CREAN LOS OBJETOS
         private QueryAdminViewModel ConexionDatos;
 
+        //LISTA QUE ALMACENARA TODOS LOS OBJETOS PERSONAS
+        //QUE SON OBTENIDOS LUEGO DE REALIZAR LA BUSQUEDA
+        private List<ResponseQueryAdmin> Lista;
+
+        //SE CREAN LAS VARIABLES
+        private int Seleccion;
         public PaginaQueryAdmin(Personas persona, Usuarios usuario)
         {
             InitializeComponent();
@@ -43,25 +42,7 @@ namespace MTTO_App
             //SE GENERE UNA NUEVA BUSQUEDA
             FrameListaBusqueda.IsVisible = false;
             //ADEMAS EL OBJETO ActivityIndicator DEBE SER SETTEADO (FALSE)
-            ActivityIndicatorBusqueda.IsVisible = ActivityIndicatorBusqueda.IsRunning = false;
-        }
-
-        //========================================================================================================
-        //========================================================================================================
-        //METODO ACTIVADO CUANDO SE SELECCIONA UNA OPCION DE BUSQUEDA, ESTO CON LA FINALIDAD DE LIMITAR AL USUARIO
-        //A USAR EL TECLADO NUMERICO CUANDO SELECCIONE BUSQUEDA POR ID
-        private void OnSelectedOpciones(object sender, EventArgs args)
-        {
-            //============================================
-            //============================================
-            //Seleccion INDICA QUE OPCION FUE SELECCIONADA
-            Picker picker = sender as Picker;
-            Seleccion = picker.SelectedIndex;
-
-            if (picker.SelectedIndex < 2)
-                EntryDatos.Keyboard = Keyboard.Numeric;
-            else
-                EntryDatos.Keyboard = Keyboard.Text;
+            ActivityIndicatorBusqueda.IsVisible = false;
         }
 
         //========================================================================================================
@@ -69,10 +50,9 @@ namespace MTTO_App
         //METODO ACTIVADO AL PRESIONAR EL BOTON BUSCAR
         protected async void OnBuscar(Object sender, EventArgs e)
         {
-            Lista = new List<Personas>();
+            Lista = new List<ResponseQueryAdmin>();
             FrameListaBusqueda.IsVisible = false;
             ListViewPersonas.ItemsSource = Lista = null;
-            int Cant = 0;
 
             //================================================================================
             //================================================================================
@@ -84,11 +64,7 @@ namespace MTTO_App
                 ConexionDatos.MensajePantalla("Debe ingresar los datos a buscar");
             else
             {
-                //----------------------------------------------------------------------------
-                ActivityIndicatorBusqueda.IsVisible = ActivityIndicatorBusqueda.IsRunning = true;
-                await Task.Delay(1125);
-                ActivityIndicatorBusqueda.IsVisible = ActivityIndicatorBusqueda.IsRunning = false;
-                //----------------------------------------------------------------------------
+                ActivityIndicatorBusqueda.IsVisible = true;
 
                 //LUEGO SE EVALUA CUAL ES LA OPCION DE BUSQUEDA SELECCIONADA
                 switch (Seleccion)
@@ -106,7 +82,7 @@ namespace MTTO_App
                             ActivityIndicatorBusqueda.IsRunning = true;
                             await Task.Run(async () =>
                             {
-                                Lista = await ConexionDatos.ListaPersonas(Seleccion, EntryDatos.Text);
+                                Lista = await ConexionDatos.ListaPersonasHttpClient(Seleccion, EntryDatos.Text);
                                 ActivityIndicatorBusqueda.IsRunning = false;
                             });
 
@@ -125,8 +101,7 @@ namespace MTTO_App
                                 ListViewPersonas.ItemsSource = Lista;
                                 //SE PROCEDE A CONTAR LA CANTIDAD DE PERSONAS QUE POSEE LA LISTA
                                 //PARA LUEGO DIMENSIONAR EL TAMAÑO DEL LISTVIEW
-                                Cant = Lista.Count;
-                                ListViewPersonas.HeightRequest = (Cant * HeightRow);
+                                ListViewPersonas.HeightRequest = (Lista.Count * HeightRow);
                                 //POR ULTIMO SE HABILITA LA VISIBILIDAD DEL "FrameListaBusqueda"
                                 //QUE ALBERGA A "ListViewPersonas".
                                 FrameListaBusqueda.IsVisible = true;
@@ -146,7 +121,7 @@ namespace MTTO_App
                             ActivityIndicatorBusqueda.IsRunning = true;
                             await Task.Run(async () =>
                             {
-                                Lista = await ConexionDatos.ListaPersonas(Seleccion, EntryDatos.Text);
+                                Lista = await ConexionDatos.ListaPersonasHttpClient(Seleccion, EntryDatos.Text);
                                 ActivityIndicatorBusqueda.IsRunning = false;
                             });
 
@@ -161,8 +136,7 @@ namespace MTTO_App
                                 //OBTENIDO PREVIAMENTE
                                 ListViewPersonas.ItemsSource = Lista;
                                 //SE PROCEDE A CONTAR LA CANTIDAD DE PERSONAS QUE POSEE LA LISTA PARA LUEGO DIMENSIONAR EL TAMAÑO DEL LISTVIEW
-                                Cant = Lista.Count;
-                                ListViewPersonas.HeightRequest = (Cant * HeightRow);
+                                ListViewPersonas.HeightRequest = (Lista.Count * HeightRow);
                                 //POR ULTIMO SE HABILITA LA VISIBILIDAD DEL "FrameListaBusqueda" QUE ALBERGA A "ListViewPersonas".
                                 FrameListaBusqueda.IsVisible = true;
                             }
@@ -184,7 +158,7 @@ namespace MTTO_App
                             ActivityIndicatorBusqueda.IsRunning = true;
                             await Task.Run(async () =>
                             {
-                                Lista = await ConexionDatos.ListaPersonas(Seleccion, EntryDatos.Text);
+                                Lista = await ConexionDatos.ListaPersonasHttpClient(Seleccion, EntryDatos.Text);
                                 ActivityIndicatorBusqueda.IsRunning = false;
                             });
 
@@ -193,8 +167,7 @@ namespace MTTO_App
                             else
                             {
                                 ListViewPersonas.ItemsSource = Lista;
-                                Cant = Lista.Count;
-                                ListViewPersonas.HeightRequest = (Cant * HeightRow);
+                                ListViewPersonas.HeightRequest = (Lista.Count * HeightRow);
                                 FrameListaBusqueda.IsVisible = true;
                             }
                         }
@@ -213,7 +186,7 @@ namespace MTTO_App
                             ActivityIndicatorBusqueda.IsRunning = true;
                             await Task.Run(async () =>
                             {
-                                Lista = await ConexionDatos.ListaPersonas(Seleccion, EntryDatos.Text);
+                                Lista = await ConexionDatos.ListaPersonasHttpClient(Seleccion, EntryDatos.Text);
                                 ActivityIndicatorBusqueda.IsRunning = false;
                             });
 
@@ -222,8 +195,7 @@ namespace MTTO_App
                             else
                             {
                                 ListViewPersonas.ItemsSource = Lista;
-                                Cant = Lista.Count;
-                                ListViewPersonas.HeightRequest = (Cant * HeightRow);
+                                ListViewPersonas.HeightRequest = (Lista.Count * HeightRow);
                                 FrameListaBusqueda.IsVisible = true;
                             }
                         }
@@ -240,7 +212,7 @@ namespace MTTO_App
                             ActivityIndicatorBusqueda.IsRunning = true;
                             await Task.Run(async () =>
                             {
-                                Lista = await ConexionDatos.ListaPersonas(Seleccion, EntryDatos.Text);
+                                Lista = await ConexionDatos.ListaPersonasHttpClient(Seleccion, EntryDatos.Text);
                                 ActivityIndicatorBusqueda.IsRunning = false;
                             });
 
@@ -249,8 +221,7 @@ namespace MTTO_App
                             else
                             {
                                 ListViewPersonas.ItemsSource = Lista;
-                                Cant = Lista.Count;
-                                ListViewPersonas.HeightRequest = (Cant * HeightRow);
+                                ListViewPersonas.HeightRequest = (Lista.Count * HeightRow);
                                 FrameListaBusqueda.IsVisible = true;
                             }
                         }
@@ -259,6 +230,8 @@ namespace MTTO_App
                         break;
                 }
             }
+
+            ActivityIndicatorBusqueda.IsVisible = false;
         }
 
         //========================================================================================================
@@ -267,58 +240,73 @@ namespace MTTO_App
         async private void OnItemSelected(object sender, ItemTappedEventArgs e)
         {
             //TOMAMOS LA INFORMACION DEL ITEM SELECCIONADO
-            var Item = e.Item as Personas;
+            var Item = e.Item as ResponseQueryAdmin;
+
+            //CREAMOS EL OBJETO QUE RECIBIRA LA RESPUESTA DEL METODO "OnUserSelected"
+            InformacionGeneral userinfo = null;
 
             //REALIZAMOS LA PREGUNTA SOBRE SI SE DESEA MODIFICAR LA INFORMACION DEL USUARIO
             bool response = await DisplayAlert("Mensaje", "¿Desea modificar la informacion de este usuario?", "Si", "No, gracias");
 
             if (response)
             {
-                //----------------------------------------------------------------------------
-                /*ActivityIndicatorSeleccion.IsVisible = ActivityIndicatorSeleccion.IsRunning = true;
-                await Task.Delay(750);
-                ActivityIndicatorSeleccion.IsVisible = ActivityIndicatorSeleccion.IsRunning = false;*/
-                //----------------------------------------------------------------------------
+                //SE VUELVE VISIBLE EL ACTIVITYINDICATOR
+                ActivityIndicatorBusqueda.IsVisible = true;
 
-                //----------------------------------------------------------------------------
-                ActivityIndicatorBusqueda.IsVisible = ActivityIndicatorBusqueda.IsRunning = true;
-                await Task.Delay(750);
-                ActivityIndicatorBusqueda.IsVisible = ActivityIndicatorBusqueda.IsRunning = false;
-                //----------------------------------------------------------------------------
-
-                //SE APERTURA LA CONEXION CON LA BASE DE DATOS
-                using (SQLiteConnection connection = new SQLiteConnection(App.FileName))
+                //SE ACTIVA AL ACTIVITYINDICATOR MIENTRAS SE EJECUTA DE MANERA ASYNCORNA EL CONSUMO DEL METODO "OnUserSelected"
+                ActivityIndicatorBusqueda.IsRunning = true;
+                await Task.Run(async () =>
                 {
-                    //SE CREA LA LISTA DE USUARIOS
-                    List<Usuarios> ListaUsuarios = connection.Table<Usuarios>().ToList();
+                    //SE HACE UN LLAMADO AL METODO "OnUserSelected"
+                    userinfo = await ConexionDatos.OnUserSelected(Item);
+                    //DESPUES DE RECIBIR LA RESPUESTA SE DESACTIVA EL ACTIVITY INDICATOR
+                    ActivityIndicatorBusqueda.IsRunning = false;
+                });
 
-                    //SE BUSCA UN MATCH DE ID
-                    foreach (Usuarios usuario in ListaUsuarios)
-                    {
-                        //SE COMPRARAN LOS ID
-                        if (usuario.Cedula == Item.Cedula)
-                        {
-                            //SI LOS ID DEL OBJETO usuario ES IGUAL AL ID DEL OBJETO item (DEL TIPO Persona) SE PROCEDE A:
+                //SE DESACTIVA LA VISIBILIDAD DEL ACTIVITYINDICATOR
+                ActivityIndicatorBusqueda.IsVisible = false;
 
-                            //PUESTO QUE SE HA INGRESADO DESDE LA CUENTA DE ADMINISTRADOR
-                            //SE ACTIVA UNA BANDERA QUE MARQUE ESTE INGRESO
-                            App.ConfigChangedAdminFlag = true;
-                            //SE LLAMA A LA PAGINA DE CONFIGURACION DE ADMINISTRADOR
-                            await App.MasterDetail.Detail.Navigation.PushAsync(new PaginaConfiguracionAdmin(Item, usuario));
-                            //SE BORRA LA INFORMACION SUMINISTRADA POR EL USUARIO
-                            EntryDatos.Text = string.Empty;
-                            //SE LIMPIA LA LISTA
-                            ListViewPersonas.ItemsSource = null;
-                            //SE ESCONDE LA LISTA
-                            FrameListaBusqueda.IsVisible = false;
-                            break;
-                        }
-                    }
-                    connection.Close();
+                //SE VERIFICA SI LA INFORMACION RETORNADA POR EL METODO "OnUserSelected" ES NULA O NO
+                if (userinfo == null)
+                {
+                    //LA INFORMACION CONTENIDA EN EL OBJETO "userinfo" ES NULA
+                    //SE PROCEDE A NOTIFICA AL USUARIO SOBRE EL ERROR
+                    ConexionDatos.MensajePantalla(ConexionDatos.ErrorMessage);
+                }
+                else
+                {
+                    //LA INFORMACION CONTENIDA EN EL OBJETO "userinfo" NO ES NULA
+                    //SE PROCEDE A REALIZAR EL LLAMADO A LA PAGINA "PaginaConfiguracionAdmin"
+                    await App.MasterDetail.Detail.Navigation.PushAsync(new PaginaConfiguracionAdmin(userinfo.Persona, userinfo.Usuario));
+                    //SE BORRA LA INFORMACION SUMINISTRADA POR EL USUARIO
+                    EntryDatos.Text = string.Empty;
+                    //SE LIMPIA LA LISTA
+                    ListViewPersonas.ItemsSource = null;
+                    //SE ESCONDE LA LISTA
+                    FrameListaBusqueda.IsVisible = false;
                 }
             }
 
+            //SE LIBERA EL OBJETO SELECCIONADO DENTRO DE LA LISTA DE USUARIOS SOLICITADOS
             ((ListView)sender).SelectedItem = null;
+        }
+
+        //========================================================================================================
+        //========================================================================================================
+        //METODO ACTIVADO CUANDO SE SELECCIONA UNA OPCION DE BUSQUEDA, ESTO CON LA FINALIDAD DE LIMITAR AL USUARIO
+        //A USAR EL TECLADO NUMERICO CUANDO SELECCIONE BUSQUEDA POR ID
+        private void OnSelectedOpciones(object sender, EventArgs args)
+        {
+            //============================================
+            //============================================
+            //Seleccion INDICA QUE OPCION FUE SELECCIONADA
+            Picker picker = sender as Picker;
+            Seleccion = picker.SelectedIndex;
+
+            if (picker.SelectedIndex < 2)
+                EntryDatos.Keyboard = Keyboard.Numeric;
+            else
+                EntryDatos.Keyboard = Keyboard.Text;
         }
     }
 }

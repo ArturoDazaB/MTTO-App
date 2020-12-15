@@ -641,6 +641,75 @@ VERSION DE BASE DE DATOS LOCAL		=		MODIFICACIONES
 									=			  el cual contendra todos los comandos para realizar
 									=			  el consumo de servicios web.
 									=
+----------------------------------------------------------------------------------------------------------
+									=		NOTA: DEBIDO A LOS COMPLICADO QUE RESULTO LA MODIFICACION
+									=		DE CODIGO DE LA CLASE "RegistroTableroViewModel" y 
+									=		"PaginaConsultaTablero" A CAUSA DE QUE ESTAS TENIAN UNA
+									=		ARQUITECTURA O FORMATO DE CODIGO DISTINTO AL APLICADO 
+									=		EN LAS DEMAS CLASES QUE HACEN CONSUMO DE SERVICIOS WEB
+									=		SE DECIDIO REGRESAR A LA VERSION ORIGINAL Y REALIZAR MODIFI - 
+									=		CACIONES SOBRE ESA SECCION DE CODIGO. DICHA VERSION O RAMA 
+									=		(BRANCH) LLEVA POR NOMBRE:
+									=
+									=			"MTTOAPP(ConsultaTableroUpdate)"
+									=
+									=		EL NUEVO CODIGO TRANSCRITO EN DICHA VERSION SERA AGREGADA
+									=		A ESTA VERSION COPIANDO Y PEGANDO LAS LINEAS DE CODIGO.
+----------------------------------------------------------------------------------------------------------
+									=		*Se realizaron modificaciones sobre los siguientes archivos:
+									=		
+									=		-PaginaConfiguracion.xaml.cs y PaginaConfiguracionAdmin.xaml.cs
+									=		Se escribieron lineas de codigo para desactivar la visibilidad
+									=		de el objeto "ActivityIndicator" (declarado en los archivos
+									=		"PaginaConfiguracion.xaml" y "PaginaConfiguracionAdmin.xaml")
+									=		en el constructor de respectivas clases de cada archivo.
+									=		Tambien fueron agregadas lineas de codigo para activar la 
+									=		visualizacion y la animacion del objeto. Con anterioridad
+									=		estas dos propiedades eran ejecutadas de manera simultanea
+									=
+									=	Ej. ActivityIndicator.IsVisible = ActivityIndicator.IsRunning = true
+									=
+									=		Sin embargo, esta asignacion de valores a dichas propieda-
+									=		des causaba una excepcion en el llamado asyncrono del metodo
+									=		de la clase ViewModel de dichas paginas ("ConfiguracionAdmin-
+									=		ViewModel.cs"). Debido a esto se decidio tomar el siguiente
+									=		formato de codigo cuando se active el metodo "OnActualizar"
+									=		en ambas clases:
+									=
+									=	Ej. ActivityIndicator.IsVisible = true;
+									=		ActivityIndicator.IsRunning = true;
+									=		await Task.Run(async () =>
+									=		{
+									=			<COMANDO PARA EJECUTAR TODAS LAS INSTRUCCIONES DEL METODO "OnActualizar">
+									=			ActivityIndicator.IsRunning = false;
+									=		});
+									=		ActivityIndicator.IsVisible = false;
+									=
+									=		-PaginaConsultaTablero.xaml.cs: Se codificaron los comandos
+									=		dentro del metodo "OnBuscar" para que se realice el consumo 
+									=		de servicios web dentro de la clase ViewModel aisgnada a la 
+									=		pagina "PaginaConsultaTablero".
+									=
+									=		-PaginaQueryAdmin.xaml.cs: Al igual que la clase previa se 
+									=		modifico el codigo del metodo "OnBuscar" para que realice 
+									=		consultas a la base de datos mediante servicios web.
+									=
+									=		-QueryAdminViewModel.cs: 
+									=		 *Se adicionaron la variable y la propiedad "errormessage"
+									=		 y "ErrorMessage" respectivamente (ambas string). Esta
+									=		 variable/propiedad se encargara de recibir la respuesta
+									=		 del servicio web cuando el registro no sea exitoso (esto
+									=		 exceptua las excepciones especificadas en el ciclo
+									=		 try... catch del metodo de la clase que realiza el 
+									=		 consumo del servicio web.)
+									=
+									=		-DTO.cs
+									=		 *Dentro de este archivo se agrego una nueva clase que re-
+									=		 presentara el un objeto llamado "UserSelectedRequest", 
+									=		 clase del tipo DTO (Data Transfer Object)
+									=
+									=		-RegistroTableroViewModel.cs:
+									=		*Se agrego la variable y la propiedad "httperrorresponse"
 ==========================================================================================================
 ==========================================================================================================
 NOTAS:
