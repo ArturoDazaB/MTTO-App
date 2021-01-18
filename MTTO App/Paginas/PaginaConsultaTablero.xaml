@@ -343,11 +343,11 @@
                                         <!--===========================================================================================-->
                                         <!--0) COLUMNA NOMBRES-->
                                         <Label  Text="{Binding ColumnaDescripcion}"
-                                        FontSize="15"
-                                        FontAttributes="Bold"
-                                        HorizontalOptions="Start"
-                                        TextColor="Black"
-                                        Grid.Column="1" />
+                                                FontSize="15"
+                                                FontAttributes="Bold"
+                                                HorizontalOptions="Start"
+                                                TextColor="Black"
+                                                Grid.Column="1" />
                                     </Grid>
 
                                     <ListView x:Name="listViewItems"
@@ -391,6 +391,7 @@
                                             </DataTemplate>
                                         </ListView.ItemTemplate>
                                     </ListView>
+                                    
                                 </StackLayout>
                             </Frame>
 

@@ -9,7 +9,7 @@ using System.IO;
 namespace MTTO_App.Droid
 {
     [Activity(Label = "MTTOApp",
-               Icon = "@mipmap/icon",
+               Icon = "@mipmap/MTTOAPP11",
                Theme = "@style/MainTheme",
                MainLauncher = true,
                ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]

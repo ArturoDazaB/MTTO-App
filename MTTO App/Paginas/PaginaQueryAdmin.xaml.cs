@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
+using MTTO_App.Paginas.Paginas_de_Informacion;
+
 namespace MTTO_App
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
@@ -48,7 +50,7 @@ namespace MTTO_App
         //========================================================================================================
         //========================================================================================================
         //METODO ACTIVADO AL PRESIONAR EL BOTON BUSCAR
-        protected async void OnBuscar(Object sender, EventArgs e)
+        private async void OnBuscar(Object sender, EventArgs e)
         {
             Lista = new List<ResponseQueryAdmin>();
             FrameListaBusqueda.IsVisible = false;
@@ -307,6 +309,15 @@ namespace MTTO_App
                 EntryDatos.Keyboard = Keyboard.Numeric;
             else
                 EntryDatos.Keyboard = Keyboard.Text;
+        }
+
+        //===============================================================================================================================
+        //===============================================================================================================================
+        //LLAMADO A LA PAGINA DE INFORMACION
+        [Obsolete]
+        private async void OnInfoClicked(object sender, EventArgs e)
+        {
+            await Rg.Plugins.Popup.Services.PopupNavigation.PushAsync(new PaginaInformacionQueryAdmin());
         }
     }
 }

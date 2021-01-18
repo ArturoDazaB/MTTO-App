@@ -15,12 +15,23 @@
 
         //-----------------------------------------TAMAÑO DE LA FUENTE------------------------------------------------
         public int HeaderFontSize { get { return App.HeaderFontSize; } }
-
         public int EntryFontSize { get { return App.EntryFontSize; } }
         public int LabelFontSize { get { return App.LabelFontSize; } }
 
         //--------------------------------------------COLOR DE FONDO--------------------------------------------------
         public string BackGroundColor { get { return App.BackGroundColorPopUp; } }
+
+        public string FrameColor { get { return "Black"; } }
+
+        //-----------------------------------------------IMAGENES-----------------------------------------------------
+        public string CloseButton
+        {
+            /*https://iconos8.es/icons/set/close-window"
+              Cerrar ventana icon by a target="_blank"
+              href "https://iconos8.es"*/
+
+            get { return "Cerrar24px2.png"; } 
+        }
 
         //------------------------------------------TEXTOS DINAMICOS--------------------------------------------------
         //PROPIEDAD QUE EVALUA DESDE QUE CLASE SE ESTA LLAMANDO PARA LUEGO DECIDIR QUE TEXTO RETORNAR
@@ -56,6 +67,19 @@
             }
         }
 
+        //PROPIEDAD QUE RETIENE LA LISTA DE LOS METODOS DE BUSQUEDA DE USUARIO DENTRO DE LA PAGINA QUERY ADMIn
+        public string ListaMetodosDeConsulta
+        {
+            get
+            {
+                return "       -Consulta por ID (Cedula)\n"+
+                       "       -Consulta por Ficha\n"+
+                       "       -Consulta por Nombre(s)\n"+
+                       "       -Consulta por Apellido(s)\n"+
+                       "       -Consulta por Usuario";
+            }
+        }
+
         //PROPIEDAD QUE RETORNA EN UN TEXTO LOS ATRIBUTOS DE LA TABLA "ModificacionesUsuarios"
         public string ListaUltimasModificaciones
         {
@@ -63,10 +87,10 @@
             {
                 string Lista = string.Empty;
 
-                Lista = "       -ID del usuario que acaba de ser modificado\n" +
-                        "       -ID del usuario que realizo la modificacion\n" +
-                        "       -Fecha en la que se realizo la modificacion\n" +
-                        "       -Atributo(s)/campo(s) modificado";
+                Lista = "       -ID del usuario que acaba de ser modificado.\n" +
+                        "       -ID del usuario que realizo la modificación.\n" +
+                        "       -Fecha en la que se realizo la modificación.\n" +
+                        "       -Atributo(s)/campo(s) modificado.";
 
                 return Lista;
             }
@@ -77,9 +101,9 @@
         {
             get
             {
-                return "       -Nivel Bajo (0)\n" +
-                         "       -Nivel Medio (5)\n" +
-                         "       -Nivel Alto (10)\n";
+                return "       -Nivel Bajo (0).\n" +
+                         "       -Nivel Medio (5).\n" +
+                         "       -Nivel Alto (10).\n";
             }
         }
 
@@ -88,8 +112,8 @@
         {
             get
             {
-                return "       -Consulta por escaneo\n" +
-                       "       -Consulta por ID (ID del tablero)";
+                return "       -Consulta por escaneo.\n" +
+                       "       -Consulta por ID (ID del tablero o ID Sap).";
             }
         }
 
@@ -98,11 +122,12 @@
         {
             get
             {
-                return "       -Codigo del Tablero (ID)\n" +
-                       "       -Filial (filial a la que pertenece)\n" +
-                       "       -Area (area/zona de la filial)\n" +
-                       "       -Ultima consulta del tablero (fecha)\n" +
-                       "       -Codigo QR asignado al tablero (imagen)";
+                return "       -Codigo del Tablero (ID).\n" +
+                       "       -Filial (filial a la que pertenece).\n" +
+                       "       -Area (area/zona de la filial).\n" +
+                       "       -Ultima consulta del tablero (fecha).\n" +
+                       "       -Items del tablero (lista).\n"+
+                       "       -Codigo QR asignado al tablero (imagen).";
             }
         }
 
@@ -110,6 +135,12 @@
         public string Caracteres 
         {
             get { return CaracteresNoPermitidos(); }
+        }
+
+        //PROPIEDAD QUE RETORNA EL TEXTO QUE FUNCIONARA DE TITULO A LA PAGINA POP UP EMERGENTE
+        public string TituloPH 
+        { 
+            get { return "INFORMACIÓN"; } 
         }
 
         //============================================================================================================

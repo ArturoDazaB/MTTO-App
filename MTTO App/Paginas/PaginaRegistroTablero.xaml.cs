@@ -138,12 +138,15 @@ namespace MTTO_App.Paginas
                 "\n¿Desea continuat?", "Si", "No, volver"))
             {
                 //SE ACTIVA EL ACTIVITY INDICATOR MIENTRAS SE EJECUTA DE MANERA ASINCRONA LA FUNCION REGISTRARTABLERO
-                ActivityIndicator.IsVisible = ActivityIndicator.IsRunning = true;
+                ActivityIndicator.IsVisible = true;
+                ActivityIndicator.IsRunning = true;
                 await Task.Run(async() =>
                 {
                     respuesta = await DatosPagina.RegistrarTablero(Items);
-                    ActivityIndicator.IsVisible = ActivityIndicator.IsRunning = false;
+                    ActivityIndicator.IsRunning = false;
                 });
+
+                ActivityIndicator.IsVisible = false;
 
                 //SE EVALUA SI LA VARIABLE RETORNADA SE ENCUENTRA VACIA O NULA
                 //VACIA O NULA => SE REGISTRO SATISFACTORIAMENTE

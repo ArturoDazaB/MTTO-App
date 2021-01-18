@@ -55,7 +55,8 @@ namespace MTTO_App
         public const string ButtonColor = "#E53935";
 
         //DIRECCION URL BASE PARA LAS SOLICITUDES HTTP
-        public const string BaseUrl = "https://192.168.1.99:8000/mttoapp";
+        //public const string BaseUrl = "https://192.168.1.99:8000/mttoapp";
+        public const string BaseUrl = "https://192.168.0.120:8000/mttoapp";
         //public const string BaseUrl = "https://10.10.4.154:8000/mttoapp";
 
         //TIEMPO DE ESPERA CUANDO SE REALIZA UNA SOLICITUD HTTP
@@ -137,7 +138,8 @@ namespace MTTO_App
             HttpClientHandler handler = new HttpClientHandler();
             handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) =>
             {
-                if (cert.Issuer.Equals("CN=localhost"))
+                //if(cert.Issuer.Equals("CN=localhost"))
+                if (cert.Issuer.Equals("CN=DESKTOP-BEEFDVC"))
                     return true;
                 return errors == System.Net.Security.SslPolicyErrors.None;
             };

@@ -1130,7 +1130,7 @@ namespace MTTO_App.ViewModel
             bool flag = false;
 
             //SE CREA E INICIALIZA LA VARIABLE QUE RETENDRA EL URL PARA REALIZAR LA SOLICITUD HTTP
-            string url = App.BaseUrl + "/consultatablero";
+            string url = App.BaseUrl + "/consultatableros";
 
             //SE CREA E INICIALIZA EL OBJETO QUE SERVIRA COMO MODELO PARA EL OBJETO JSON ENVIADO EN LA SOLICITUD HTTP
             RequestConsultaTablero model = null;
@@ -1210,20 +1210,17 @@ namespace MTTO_App.ViewModel
                         //SE REALIZA LA CONVERSION A OBJETO JSON
                         var json = JsonConvert.SerializeObject(model);
                         //SE AÑADE EL OBJETO JSON RECIEN CREADO COMO CONTENIDO BODY DEL NUEVO REQUEST
+                        HttpContent httpContent = new StringContent(json, Encoding.UTF8, "application/json");
                         //HttpContent httpContent = new StringContent(json, Encoding.UTF8, "application/json");
-                        HttpRequestMessage request = new HttpRequestMessage()
-                        {
-                            Method = HttpMethod.Get,
-                            Content = new StringContent(json, Encoding.UTF8, "application/json"),
-                            RequestUri = new Uri(url),
-                        };
+                        //HttpRequestMessage request = new HttpRequestMessage() { Method = HttpMethod.Get, Content = new StringContent(json, Encoding.UTF8, "application/json"), RequestUri = new Uri(url)};
                         //SE HACE LA CONFIGURACION DE LOS HEADERS DEL REQUEST
                         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                         //SE REALIZA LA SOLICITUD HTTP
-                        response = await client.SendAsync(request);
+                        response = await client.PostAsync(url, httpContent);
+                        //response = await client.SendAsync(request);
 
                         //SE EVALUA SI EL CODIGO DE ESTADO RETORNADO ES: 200 OK
-                        if(response.IsSuccessStatusCode)
+                        if (response.IsSuccessStatusCode)
                         {
                             //EL CODIGO DE ESTATUS OBTENIDO ES EL 200 OK
                             //SE ACTIVA LA BANDERA

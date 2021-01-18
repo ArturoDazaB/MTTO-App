@@ -710,6 +710,16 @@ VERSION DE BASE DE DATOS LOCAL		=		MODIFICACIONES
 									=
 									=		-RegistroTableroViewModel.cs:
 									=		*Se agrego la variable y la propiedad "httperrorresponse"
+----------------------------------------------------------------------------------------------------------
+18/01/2021							=		*Se realizaron modificaciones sobre las paginas pertenecientes
+									=		a la carpeta Paginas.Paginas_de_informacion para darles formato.
+									=		En dichas paginas de agrego en forma de comentarios el texto
+									=		general que aparecera el instructivo y el texto de cada una de
+									=		las filas que ordenan los parrafos e incisos.
+									=
+									=		*Se creo la pagina "PaginaInformacionQueryAdmin" como pagina
+									=		del tipo pop up que contendra los instructivos para poder 
+									=		realizar consultas de usuarios de la plataforma.
 ==========================================================================================================
 ==========================================================================================================
 NOTAS:

@@ -51,6 +51,9 @@
     <EmbeddedResource Update="Paginas\Paginas de Informacion\PaginaInformacionConsultaTablero.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="Paginas\Paginas de Informacion\PaginaInformacionQueryAdmin.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Paginas\Paginas de Informacion\PaginaInformacionRegistro.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>

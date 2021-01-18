@@ -100,15 +100,18 @@ namespace MTTO_App.Paginas
                     FrameResultado.IsVisible = false;
 
                     //SE ACTIVA EL "ActivityIndicator" MIENTRAS DE MANERA ASINCRONA SE REALIZA EL LLAMADO DEL TABLERO
-                    ActivityIndicator.IsVisible = ActivityIndicator.IsRunning = true;
+                    ActivityIndicator.IsVisible = true;
+                    ActivityIndicator.IsRunning = true;
                     await Task.Run(async () =>
                     {
                         //SE HACE UN LLAMADO AL METODO BUSQUEDA DEL OBJETO "DatosPagina" EL CUAL RETORNARA:
                         //TRUE = SE CONSIGUIO EL TABLERO
                         //FALSE = NO SE CONSIGUIO EL TABLERO O HUBO ALGUN ERROR EN EL PROCESO DE BUSQUEDA
                         SearchStatus = await DatosPagina.BuscarTablero(result.Text);
-                        ActivityIndicator.IsVisible = ActivityIndicator.IsRunning = false;
+                        ActivityIndicator.IsRunning = false;
                     });
+
+                    ActivityIndicator.IsVisible = false;
 
                     if (SearchStatus)
                     {
@@ -167,7 +170,8 @@ namespace MTTO_App.Paginas
                 FrameResultado.IsVisible = false;
 
                 //SE ACTIVA EL "ActivityIndicator" MIENTRAS DE MANERA ASINCRONA SE REALIZA EL LLAMADO DEL TABLERO
-                ActivityIndicator.IsVisible = ActivityIndicator.IsRunning = true;
+                ActivityIndicator.IsVisible = true;
+                ActivityIndicator.IsRunning = true;
                 await Task.Run(async () =>
                 {
                     //SE HACE UN LLAMADO AL METODO BUSQUEDA DEL OBJETO "DatosPagina" EL CUAL RETORNARA:
@@ -175,8 +179,11 @@ namespace MTTO_App.Paginas
                     //FALSE = NO SE CONSIGUIO EL TABLERO O HUBO ALGUN ERROR EN EL PROCESO DE BUSQUEDA
                     DatosPagina.OpcionConsultaID = PickerOpciones.SelectedIndex;
                     SearchStatus = await DatosPagina.BuscarTablero(entryTableroID.Text);
-                    ActivityIndicator.IsVisible = ActivityIndicator.IsRunning = false;
+                    ActivityIndicator.IsRunning = false;
                 });
+
+                //SE DESACTIVA LA VISIBILIDAD DEL OBJETO "ActivityIndicator"
+                ActivityIndicator.IsVisible = false;
 
                 //EVALUAMOS SI EL TABLERO SE ENCUENTRA EN LA BASE DE DATOS
                 if (SearchStatus)

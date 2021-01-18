@@ -3,7 +3,7 @@ using System;
 using System.Threading.Tasks;
 using Xamarin.Forms.Xaml;
 
-namespace MTTO_App
+namespace MTTO_App.Paginas.Paginas_de_Informacion
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PaginaInformacionRegistro : Rg.Plugins.Popup.Pages.PopupPage

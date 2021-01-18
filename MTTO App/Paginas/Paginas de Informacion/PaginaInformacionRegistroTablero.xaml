@@ -10,7 +10,6 @@
 
     <!--===============================================================================-->
     <!--===============================================================================-->
-
     <!--CONFIGURACION DE LA ANIMACION DE LA PAGINA INFORMACION COMO UNA PAGINA POP UP-->
 
     <pages:PopupPage.Animation>
@@ -28,7 +27,7 @@
 
     <!--===============================================================================-->
     <!--===============================================================================-->
-
+    <!--MARCO DE LA VENTANA POP UP EMERGENTE-->
     <Frame BorderColor="Black"
            BackgroundColor="{Binding BackGroundColor}"
            CornerRadius="10"
@@ -56,97 +55,178 @@
 
                 <!--===========================================================================================-->
                 <!--===========================================================================================-->
+                <!--CONTENIDO
+                    
+                    TEXTO: INFORMACION
+                           
+                           Bienvenido, en la siguiente pagina obtendra toda la informacion necesaria en lo que 
+                           respecta a condiciones minimas para poder realizar un registro de tablero exitoso.
+                
+                           1) Ningun campo debe quedar vacio o nulo
+                
+                           2) No se permiten espacioes en blanco al momento de ingresar el ID del tablero (TableroId) o el 
+                              ID de SAP (SAP ID) asignado a dicho tablero.
+                
+                           3) No se permiten ninguno de los siguientes caracteres:
+                    
+                                !, @, #, $, %, (, ), +, =, /, | .
+                
+                -->
 
-                <!--CONTENIDO-->
-
+                <!--INFORMACION-->
                 <Grid>
 
                     <Grid.RowDefinitions>
 
-                        <RowDefinition Height="3" />
                         <RowDefinition Height="auto" />
-                        <!--TITULO-->
-                        <RowDefinition Height="3" />
+                        <!--0) TITULO-->
+                        <RowDefinition Height="10" />
+                        <!--1) ESPACIO-->
+                        <RowDefinition Height="auto" />
+                        <!--2) TEXTO EXPLICATIVO-->
+                        <RowDefinition Height="auto" />
+                        <!--3) NUMERO UNO-->
+                        <RowDefinition Height="auto" />
+                        <!--4) NUMERO DOS-->
+                        <RowDefinition Height="auto" />
+                        <!--5) NUMERO TRES-->
+
                     </Grid.RowDefinitions>
 
-                    <Label  Text="Informacion"
+                    <!--=====================================================================================================-->
+                    <!--0) TITULO: INFORMACION-->
+                    <Label  Text="{Binding TituloPH}"
                             FontSize="{Binding HeaderFontSize}"
                             FontAttributes="Bold"
                             TextColor="Black"
-                            Grid.Row="1"
+                            Grid.Row="0"
                             HorizontalOptions="Center"
                             HorizontalTextAlignment="Center" />
-                </Grid>
 
-                <Label  TextColor="Black"
-                        FontSize="{Binding EntryFontSize}"
-                        HorizontalTextAlignment="Center">
+                    <!--=====================================================================================================-->
+                    <!--2) TEXTO EXPLICATIVO-->
+                    <!--TEXTO: Bienvenido, en la siguiente pagina obtendra toda la informacion necesaria en lo que 
+                               respecta a condiciones minimas para poder realizar un registro de tablero exitoso.-->
+                    <Label  TextColor="Black"
+                            FontSize="{Binding EntryFontSize}"
+                            HorizontalTextAlignment="Center"
+                            Grid.Row="2">
 
-                    <Label.FormattedText>
+                        <Label.FormattedText>
 
-                        <FormattedString>
+                            <FormattedString>
 
-                            <Span   Text="Bienvenido, "
+                                <Span   Text="Bienvenido, "
                                         FontAttributes="Bold"
                                         FontSize="{Binding EntryFontSize}" />
-                            <Span   Text=" en la siguiente pagina obtendra toda la informacion necesaria en lo que " />
-                            <Span   Text="respecta a condiciones minimas para poder registrar un tablero." />
-                        </FormattedString>
-                    </Label.FormattedText>
-                </Label>
+                                <Span   Text=" en la siguiente pagina obtendra toda la informacion necesaria en lo que"/>
+                                <Span   Text=" respecta a condiciones minimas para poder realizar un registro de tablero exitoso."/>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
 
-                <Label  TextColor="Black"
+                    <!--=====================================================================================================-->
+                    <!--2) NUMERO UNO-->
+                    <!--TEXTO: Ningun campo debe quedar vacio o nulo-->
+                    <Label  TextColor="Black"
+                            FontSize="{Binding EntryFontSize}"
+                            Grid.Row="2">
+
+                        <Label.FormattedText>
+
+                            <FormattedString>
+
+                                <Span   Text="1)"
+                                        FontAttributes="Bold"
+                                        FontSize="{Binding EntryFontSize}"/>
+                                <Span   Text=" Ningun campo debe quedar vacio o nulo."/>
+                                <Span   Text=" vacio"
+                                        FontAttributes="Bold"
+                                        FontSize="{Binding EntryFontSize}"/>
+                                <Span   Text=" o"/>
+                                <Span   Text=" nulo."
+                                        FontAttributes="Bold"
+                                        FontSize="{Binding EntryFontSize}"/>
+
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <!--=====================================================================================================-->
+                    <!--3) NUMERO DOS-->
+                    <!--TEXTO: No se permiten espacioes en blanco al momento de ingresar el ID del tablero (TableroId) o el 
+                               ID de SAP (SAP ID) asignado a dicho tablero.-->
+                    <Label  TextColor="Black"
+                            FontSize="{Binding EntryFontSize}"
+                            Grid.Row="3">
+
+                        <Label.FormattedText>
+
+                            <FormattedString>
+
+                                <Span   Text="2)"
+                                        FontAttributes="Bold"
+                                        FontSize="{Binding EntryFontSize}" />
+                                <Span   Text=" No se permiten" />
+                                <Span   Text=" espacios en blanco"
+                                        FontAttributes="Bold"
+                                        FontSize="{Binding EntryFontSize}" />
+                                <Span   Text=" al momento de ingresar el ID del tablero (TableroId) o el ID de SAP (SAP ID) asignado a dicho tablero."/>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <!--=====================================================================================================-->
+                    <!--4) NUMERO TRES-->
+                    <!--TEXTO: No se permiten ninguno de los siguientes caracteres:
+                    
+                                !, @, #, $, %, (, ), +, =, /, | .-->
+                    <StackLayout Grid.Row="4">
+
+                        <Label  TextColor="Black"
                         FontSize="{Binding EntryFontSize}">
 
-                    <Label.FormattedText>
+                            <Label.FormattedText>
 
-                        <FormattedString>
+                                <FormattedString>
 
-                            <Span   Text="1)"
+                                    <Span   Text="3)"
                                         FontAttributes="Bold"
                                         FontSize="{Binding EntryFontSize}" />
-                            <Span   Text=" Ningun campo debe quedar vacio o nulo" />
-                        </FormattedString>
-                    </Label.FormattedText>
-                </Label>
+                                    <Span   Text=" Ademas, no se permiten ninguno de los siguientes caracteres: " />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
 
-                <Label  TextColor="Black"
-                            FontSize="{Binding EntryFontSize}">
+                        <!--==========================================================-->
+                        <!--LISTA DE OPCIONES DISPONIBLES-->
+                        <Grid>
 
-                    <Label.FormattedText>
+                            <Grid.ColumnDefinitions>
 
-                        <FormattedString>
+                                <ColumnDefinition Width="5" />
+                                <!--0) ESPACIO-->
+                                <ColumnDefinition Width="auto" />
+                                <!--1) LISTA DE OPCIONES-->
+                            </Grid.ColumnDefinitions>
 
-                            <Span   Text="2)"
-                                        FontAttributes="Bold"
-                                        FontSize="{Binding EntryFontSize}" />
-                            <Span   Text=" No se permite" />
-                            <Span   Text=" espacios en blanco"
-                                        FontAttributes="Bold"
-                                        FontSize="{Binding EntryFontSize}" />
-                            <Span   Text=" al momento de ingresar el ID del tablero" />
-                        </FormattedString>
-                    </Label.FormattedText>
-                </Label>
+                            <!--1) LISTA DE OPCIONES-->
+                            <Label  TextColor="Black"
+                                    FontSize="{Binding LabelFontSize}"
+                                    FontAttributes="Bold"
+                                    Text="{Binding Caracteres}"
+                                    Grid.Column="1" />
+                        </Grid>
+                        <!--==========================================================-->
 
-                <Label  TextColor="Black"
-                            FontSize="{Binding EntryFontSize}">
+                    </StackLayout>
 
-                    <Label.FormattedText>
+                </Grid>
 
-                        <FormattedString>
-
-                            <Span   Text="3)"
-                                        FontAttributes="Bold"
-                                        FontSize="{Binding EntryFontSize}" />
-                            <Span   Text=" Ademas, no se permiten ninguno de los siguientes caracteres: " />
-                            <Span   Text="!, @, #, $, %, (, ), +, =, /, | ."
-                                    FontSize="{Binding EntryFontSize}"
-                                    FontAttributes="Bold" />
-                        </FormattedString>
-                    </Label.FormattedText>
-                </Label>
             </StackLayout>
+            
         </ScrollView>
+        
     </Frame>
+    
 </pages:PopupPage>

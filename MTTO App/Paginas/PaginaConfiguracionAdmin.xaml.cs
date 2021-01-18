@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
+using MTTO_App.Paginas.Paginas_de_Informacion;
+
 namespace MTTO_App.Paginas
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]

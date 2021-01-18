@@ -6,7 +6,7 @@
                  mc:Ignorable="d"
                  xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
                  xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
-                 x:Class="MTTO_App.Paginas.Paginas_de_Informacion.PaginaInformacionConsultaTablero">
+                 x:Class="MTTO_App.Paginas.Paginas_de_Informacion.PaginaInformacionQueryAdmin">
 
     <!--===============================================================================-->
     <!--===============================================================================-->
@@ -28,6 +28,7 @@
     <!--===============================================================================-->
     <!--===============================================================================-->
     <!--MARCO DE LA VENTANA POP UP EMERGENTE-->
+
     <Frame BorderColor="{Binding FrameColor}"
            BackgroundColor="{Binding BackGroundColor}"
            CornerRadius="10"
@@ -38,12 +39,12 @@
 
             <StackLayout Orientation="Vertical"
                          BackgroundColor="{Binding BackGroundColor}">
-
+                
                 <!--===========================================================================================-->
                 <!--===========================================================================================-->
                 <!--DISEÑO Y CONFIGURACION DEL BOTON CERRAR CON IMAGEBUTTON PARA PAGINAS POP-UP-->
 
-                <ImageButton    Source="Cerrar24px2.png"
+                <ImageButton    Source="{Binding CloseButton}"
                                 HorizontalOptions="End"
                                 VerticalOptions="Start"
                                 Clicked="OnClose"
@@ -58,38 +59,32 @@
                 <!--CONTENIDO
                     TEXTO: INFORMACION
                 
-                           Bienvenido, en la siguiente pagina obtendra toda la informacion necesaria en lo que respecta
-                           a conficiones minimas para poder realizar consulta de tableros dentro de la plataforma.
+                           Bienvenido, en la siguiente página obtendrá toda la información necesaria en lo que respecta
+                           a condiciones mínimas para poder realizar la búsqueda de un usuario en específico.
                 
-                           1) Existen dos metodos para la busqueda o consulta de un tablero especifico:
+                           1) Existen cuatro métodos para la búsqueda o consulta de un tablero especifico:
                     
-                                      -Consulta por escaneo
-                                      -Consulta por ID (ID del tablero o ID Sap)
-                            
-                           2) Para realizar una consulta por escaneo solo es necesario presionar el boton "ESCANEAR CODIGO".
-                              Esto generará un salto a la pagina de escaneo y aperturara la camara del dispositivo. Luego, 
-                              posicione el telefono frente al codigo QR que desea escanear
+                                      -Consulta por ID (Cedula)
+                                      -Consulta por Ficha
+                                      -Consulta por Nombre(s)
+                                      -Consulta por Apellido(s)
+                                      -Consulta por Usuario
                 
-                           3) Para realizar una consulta por ID solo es necesario seleccionar cual ID desea consultar 
-                              (Tablero ID o SAP ID), luego ingresar el parametro de consulta y por ultimo presionar el
-                              botón BUSQUEDA POR ID.
+                            2) Luego de seleccionar el método de búsqueda debe ingresar el parámetro que será usado como
+                               referencia para la búsqueda.
                 
-                           4) Luego de realizar (por cualquiera de los dos metodos previamente descritor), si el codigo QR o el 
-                              ID ingresado pertenecen a un tablero registrado en la base de datos se mostrará la informacion
-                              general de dicho tablero:
-                    
-                                      -Codigo del Tablero (ID)
-                                      -Filial (filial a la que pertenece)
-                                      -Area (area/zona de la filial)
-                                      -Ultima consulta del tablero (fecha)
-                                      -Items del tablero (lista)
-                                      -Codigo QR asignado al tablero (imagen)-->
+                            3) Luego de la búsqueda se presentará una lista con los usuarios cuyos parámetros coincidan 
+                               con el parámetro usado como referencia.
+                
+                            4) Para modificar la información de un usuario basta con seleccionar el usuario deseado de 
+                               la lista. Esto generará un mensaje del tipo Pop Up en el cual solicita la confirmación del 
+                               usuario actual para poder acceder a la página de modificación donde se vera desplegada toda 
+                               la información del usuario seleccionado.-->
+
                 <Grid>
 
-                    <!--=====================================================================================================-->
-                    <!--DEFINICIÓN DE COLUMNAS-->
                     <Grid.RowDefinitions>
-
+                        
                         <RowDefinition Height="auto" />
                         <!--0) TITULO: INFORMACION-->
                         <RowDefinition Height="5" />
@@ -104,6 +99,7 @@
                         <!--5) NUMERO TRES-->
                         <RowDefinition Height="auto" />
                         <!--6) NUMERO CUATRO-->
+                        
                     </Grid.RowDefinitions>
 
                     <!--=====================================================================================================-->
@@ -119,7 +115,7 @@
                     <!--=====================================================================================================-->
                     <!--2) TEXTO EXPLICATIVO-->
                     <!--TEXTO: Bienvenido, en la siguiente pagina obtendra toda la informacion necesaria en lo que respecta
-                               a conficiones minimas para poder realizar consulta de tableros dentro de la plataforma.-->
+                               a condiciones minimas para poder realizar la busqueda de un usuario en especifico.-->
                     <Label  TextColor="Black"
                             FontSize="{Binding EntryFontSize}"
                             HorizontalTextAlignment="Center"
@@ -134,18 +130,23 @@
                                 <Span   Text="Bienvenido"
                                         FontAttributes="Bold"
                                         FontSize="{Binding EntryFontSize}" />
-                                <Span   Text=", en la siguiente pagina obtendra toda la informacion necesaria en lo que " />
-                                <Span   Text="respecta a condiciones minimas para poder realizar consulta de tableros dentro de la plataforma." />
+                                <Span   Text=", en la siguiente página obtendrá toda la información necesaria en lo que " />
+                                <Span   Text="respecta a condiciones mínimas para poder realizar la búsqueda de un usuario en específico."/>
+                                
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
 
                     <!--=====================================================================================================-->
-                    <!--3) NUMERO UNO-->
-                    <!--TEXTO: 1) Existen dos metodos para la busqueda o consulta de un tablero especifico:
+                    <!--3) NUMERO DOS-->
+                    <!--TEXTO: 1) Existen cuatro métodos para la búsqueda o consulta de un tablero especifico:
                     
-                                      -Consulta por escaneo
-                                      -Consulta por ID (ID del tablero o ID Sap)-->
+                                      -Consulta por ID (Cedula)
+                                      -Consulta por Ficha
+                                      -Consulta por Nombre(s)
+                                      -Consulta por Apellido(s)
+                                      -Consulta por Usuario-->
+                    
                     <StackLayout Grid.Row="3">
 
                         <Label  TextColor="Black"
@@ -158,7 +159,7 @@
                                     <Span   Text="1)"
                                             FontAttributes="Bold"
                                             FontSize="{Binding EntryFontSize}" />
-                                    <Span   Text=" Existen dos metodos para la busqueda o consulta de un tablero especifico:" />
+                                    <Span   Text=" Existen cuatro métodos para la búsqueda o consulta de un tablero especifico:" />
                                 </FormattedString>
                             </Label.FormattedText>
                         </Label>
@@ -179,19 +180,21 @@
                             <Label  TextColor="Black"
                                     FontSize="{Binding LabelFontSize}"
                                     FontAttributes="Bold"
-                                    Text="{Binding ListaOpcionesEscaneo}"
+                                    Text="{Binding ListaMetodosDeConsulta}"
                                     Grid.Column="1" />
                         </Grid>
                         <!--==========================================================-->
+                        
                     </StackLayout>
 
                     <!--=====================================================================================================-->
                     <!--4) NUMERO DOS-->
-                    <!--TEXTO: 2) Para realizar una consulta por escaneo solo es necesario presionar el boton "ESCANEAR CODIGO".
-                               Esto generará un salto a la pagina de escaneo y aperturara la camara del dispositivo. Luego, 
-                               posicione el telefono frente al codigo QR que desea escanear.-->
+                    <!--TEXTO: 2) Luego de seleccionar el método de búsqueda debe ingresar el parámetro que será usado como
+                                  referencia para la búsqueda.-->
                     <Label  TextColor="Black"
                             FontSize="{Binding EntryFontSize}"
+                            HorizontalTextAlignment="Center"
+                            VerticalTextAlignment="Center"
 
                             Grid.Row="4">
 
@@ -202,27 +205,21 @@
                                 <Span   Text="2)"
                                         FontAttributes="Bold"
                                         FontSize="{Binding EntryFontSize}" />
-                                <Span   Text=" Para realizar una " />
-                                <Span   Text=" consulta por escaneo"
-                                        FontSize="{Binding EntryFontSize}"
-                                        FontAttributes="Bold" />
-                                <Span   Text=" solo es necesario presionar" />
-                                <Span   Text=" ESCANEAR CODIGO"
-                                        FontSize="{Binding EntryFontSize}"
-                                        FontAttributes="Bold" />
-                                <Span   Text=". Esto generará un salto a la pagina de escaneo y aperturará la camara del dispositivo." />
-                                <Span   Text=" Luego, posicione el telefono frente al codigo QR que desea escanear." />
+                                <Span   Text=" Luego de seleccionar el método de búsqueda debe ingresar el parámetro que será usado como referencia para la busqueda."/>
+
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
 
+
                     <!--=====================================================================================================-->
                     <!--5) NUMERO TRES-->
-                    <!--TEXTO: 3) Para realizar una consulta por ID solo es necesario seleccionar cual ID desea consultar 
-                               (Tablero ID o SAP ID), luego ingresar el parametro de consulta y por ultimo presionar el
-                               botón BUSQUEDA POR ID.-->
+                    <!--TEXTO: 3) Luego de la búsqueda se presentará una lista con los usuarios cuyos parámetros coincidan 
+                                  con el parámetro usado como referencia.-->
                     <Label  TextColor="Black"
                             FontSize="{Binding EntryFontSize}"
+                            HorizontalTextAlignment="Center"
+                            VerticalTextAlignment="Center"
 
                             Grid.Row="5">
 
@@ -233,74 +230,57 @@
                                 <Span   Text="3)"
                                         FontAttributes="Bold"
                                         FontSize="{Binding EntryFontSize}" />
-                                <Span   Text=" Para realizar una" />
-                                <Span   Text=" consulta por ID"
-                                        FontSize="{Binding EntryFontSize}"
-                                        FontAttributes="Bold" />
-                                <Span   Text=" solo es necesario seleccionar cual ID desea consultar (Tablero ID o SAP ID), luego ingresar EL" />
-                                <Span   Text=" parametro de consulta y por ultimo presiona el botón "/>
-                                <Span   Text=" BUSQUEDA POR ID"
-                                        FontAttributes="Bold"
-                                        FontSize="{Binding EntryFontSize}" />
-                                <Span   Text="." />
+                                <Span   Text=" Luego de la búsqueda se presentará una lista con los usuarios cuyos parámetros coincidan con el parámetro usado como referencia."/>
+
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
 
                     <!--=====================================================================================================-->
                     <!--6) NUMERO CUATRO-->
-                    <!--TEXTO: 4) Luego de realizar (por cualquiera de los dos metodos previamente descritor), si el codigo QR o el 
-                               ID ingresado pertenecen a un tablero registrado en la base de datos se mostrará la informacion
-                               general de dicho tablero:
+                    <!--TEXTO: 4) Para modificar la información de un usuario basta con seleccionar el usuario deseado de 
+                                  la lista. Esto generará un mensaje del tipo Pop Up en el cual solicita la confirmación del 
+                                  usuario actual para poder acceder a la página de modificación donde se vera desplegada toda 
+                                  la información del usuario seleccionado.-->
+                    <Label  TextColor="Black"
+                            FontSize="{Binding EntryFontSize}"
+                            HorizontalTextAlignment="Center"
+                            VerticalTextAlignment="Center"
+
+                            Grid.Row="6">
+
+                        <Label.FormattedText>
+
+                            <FormattedString>
+
+                                <Span   Text="4)"
+                                        FontAttributes="Bold"
+                                        FontSize="{Binding EntryFontSize}" />
+                                <Span   Text=" Para"/>
+                                <Span   Text=" modificar"
+                                        FontAttributes="Bold"
+                                        FontSize="{Binding EntryFontSize}" />
+                                <Span   Text=" la información de un usuario basta con"/>
+                                <Span   Text=" seleccionar el usuario deseado"
+                                        FontAttributes="Bold"
+                                        FontSize="{Binding EntryFontSize}" />
+                                <Span   Text=" de la lista. Esto generará un mensaje del tipo pop-up en el cual se solicita la confirmación"/>
+                                <Span   Text=" del usuario actual para poder acceder a la pafina de modificacion donde se vera desplegada"/>
+                                <Span   Text=" toda la información del usuario seleccionado."/>
+
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
                     
-                                      -Codigo del Tablero (ID)
-                                      -Filial (filial a la que pertenece)
-                                      -Area (area/zona de la filial)
-                                      -Ultima consulta del tablero (fecha)
-                                      -Items del tablero (lista)
-                                      -Codigo QR asignado al tablero (imagen)-->
-                    <StackLayout Grid.Row="6">
 
-                        <Label  TextColor="Black"
-                                FontSize="{Binding EntryFontSize}">
-
-                            <Label.FormattedText>
-
-                                <FormattedString>
-
-                                    <Span   Text="4)"
-                                    FontAttributes="Bold"
-                                    FontSize="{Binding EntryFontSize}" />
-                                    <Span   Text=" Luego de realizar la consulta (por cualquiera de los dos metodos previamente descritos)," />
-                                    <Span   Text=" si el codigo QR o el ID ingresado pertenecen a un tablero registrado en la plataforma" />
-                                    <Span   Text=" se mostrará la información general de dicho tablero: " />
-                                </FormattedString>
-                            </Label.FormattedText>
-                        </Label>
-
-                        <!--==========================================================-->
-                        <!--LISTA DE OPCIONES DISPONIBLES-->
-                        <Grid>
-
-                            <Grid.ColumnDefinitions>
-
-                                <ColumnDefinition Width="5" />
-                                <!--0) ESPACIO-->
-                                <ColumnDefinition Width="auto" />
-                                <!--1) LISTA DE OPCIONES-->
-                            </Grid.ColumnDefinitions>
-
-                            <!--1) LISTA DE OPCIONES-->
-                            <Label  TextColor="Black"
-                                    FontSize="{Binding LabelFontSize}"
-                                    FontAttributes="Bold"
-                                    Text="{Binding ListaInformacionTablero}"
-                                    Grid.Column="1" />
-                        </Grid>
-                        <!--==========================================================-->
-                    </StackLayout>
                 </Grid>
+
             </StackLayout>
+
         </ScrollView>
+
     </Frame>
+
 </pages:PopupPage>
+    
+    

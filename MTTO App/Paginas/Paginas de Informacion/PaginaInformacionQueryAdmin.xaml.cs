@@ -1,48 +1,25 @@
-﻿using Rg.Plugins.Popup.Services;
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+
+using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+
+using Rg.Plugins.Popup.Services;
 
 namespace MTTO_App.Paginas.Paginas_de_Informacion
 {
-    [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class PaginaInformacionConfiguracion : Rg.Plugins.Popup.Pages.PopupPage
+	[XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class PaginaInformacionQueryAdmin : Rg.Plugins.Popup.Pages.PopupPage
     {
-        public PaginaInformacionConfiguracion(string source)
+        public PaginaInformacionQueryAdmin()
         {
             InitializeComponent();
 
-            BindingContext = new MTTO_App.ViewModel.PaginaInformacionViewModel(source);
+            BindingContext = new MTTO_App.ViewModel.PaginaInformacionViewModel("QUERYADMIN");
         }
-
-        //===================================================================================================
-        //===================================================================================================
-
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();
-            Console.WriteLine("\n=================================================");
-            Console.WriteLine("=================================================");
-            Console.WriteLine("SE APERTURO LA PAGINA DE INFORMACION DE CONFIGURACION");
-            Console.WriteLine("=================================================");
-            Console.WriteLine("=================================================\n");
-        }
-
-        //===================================================================================================
-        //===================================================================================================
-
-        protected override void OnDisappearing()
-        {
-            base.OnDisappearing();
-            Console.WriteLine("\n=================================================");
-            Console.WriteLine("=================================================");
-            Console.WriteLine("SE CLAUSURO LA PAGINA DE INFORMACION DE CONFIGURACION");
-            Console.WriteLine("=================================================");
-            Console.WriteLine("=================================================\n");
-        }
-
-        //===================================================================================================
-        //===================================================================================================
 
         //===========================================================================================================================================
         //===========================================================================================================================================
@@ -111,7 +88,6 @@ namespace MTTO_App.Paginas.Paginas_de_Informacion
 
         //===========================================================================================================================================
         //===========================================================================================================================================
-
         //CLAURUSA DE LA PAGINA MEDIANTE BOTON
 
         [Obsolete]
@@ -119,5 +95,6 @@ namespace MTTO_App.Paginas.Paginas_de_Informacion
         {
             await PopupNavigation.PopAllAsync();
         }
+
     }
 }

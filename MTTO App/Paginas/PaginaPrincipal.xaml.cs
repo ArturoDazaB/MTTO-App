@@ -42,6 +42,7 @@ namespace MTTO_App
                 //------------------------------------------------------------------------------
                 //CONEXION CON LA BASE DE DATOS (CLIENTE - SERVIDOR)
                 //SE LLAMA AL METODO QUE REALIZA LA SOLICITUD HTTP
+                ActivityIndicator.IsVisible = true;
                 ActivityIndicator.IsRunning = true;
                 await Task.Run(async () =>
                  {
@@ -49,6 +50,8 @@ namespace MTTO_App
                      ActivityIndicator.IsRunning = false;
                  });
 
+                //SE DESACTIVA LA VISIBILIDAD DEL OBJETO ACTIVITYINDICATOR
+                ActivityIndicator.IsVisible = false;
 
                 //SE EVALUA EL ESTADO DE LA RESPUESTA
                 if (loginresponse != null)
