@@ -7,71 +7,63 @@ namespace MTTO_App
         //============================================================================================================
         //============================================================================================================
         //VARIABLE LOCALES
-        private string nombreopcion, iconfilename;
+        private string nombreopcion, //=> NOMBRE QUE IDENTIFICARA A LA OPCION  
+                       iconfilename; //=> NOMBRE DEL ARCHIVO (IMAGEN) QUE REPRESENTARA A LA OPCION
 
         //============================================================================================================
         //============================================================================================================
-        //ATRIBUTOS DE LA CLASE Opciones: nombreOpcion, imageFilename
-        public string NombreOpcion
-        {
-            get { return nombreopcion; }
-            set { nombreopcion = value; }
-        }
-
-        public string IconFileName
-        {
-            get { return iconfilename; }
-            set { iconfilename = value; }
-        }
+        //PROPIEDADES
+        //NOMBRE DE LA OPCION
+        //public string NombreOpcion { get { return nombreopcion; } }
+        //ICONO DE LA OPCION
+        //public string IconFileName { get { return iconfilename; } }
 
         //============================================================================================================
         //============================================================================================================
-        //CONSTRUCTOR
-        public OpcionesModel()
-        {
-            nombreopcion = iconfilename = string.Empty;
-        }
-
-        //============================================================================================================
-        //============================================================================================================
-        //FUNCION PARA RETORNAR LA LISTA DE OPCIONES DEL USUARIO ADMINISTRATOR
+        //FUNCION PARA RETORNAR LA LISTA DE OPCIONES DEL USUARIO DE NIVEL ALTO
+        //NOTA: ACTUALMENTE EL UNICO USUARIO CON NIVEL ALTO ES EL USUARIO ADMINISTRATOR
         public List<OpcionesModel> OpcionesNivelAlto()
         {
             //------------------------------------------------------------------------------------
             /*NOTA: LISTA DE OPCIONES DISPONIBLES PARA NAVEGAR DENTRO DE LA APLICACION A USUARIOS 
-             * DE ALTO NIVEL. EJ: EL USUARIO ADMINISTRATOR*/
+             *DE ALTO NIVEL. EJ: USUARIOS QUE PUEDEN CREAR Y CONSULTAR TABLEROS; CREAR, CONSULTAR 
+             Y MODIFICAR USUARIOS*/
             //------------------------------------------------------------------------------------
-
-            List<OpcionesModel> listaDeOpciones = new List<OpcionesModel>()
+            //SE CREA E INICIALIZA UNA LISTA DE OBJETOS DE TIPO "OpcionesModel" (LISTA DE OPCIONES)
+            return new List<OpcionesModel>()
             {
+                //DENTRO DE LA LISTA DE OPCIONES SE CREAN E INICIALIZAN CADA UNA DE LAS OPCIONES
+                //CREACION E INICIALIZACION DE LA OPCION "Consulta de Tableros"
                 new OpcionesModel()
                 {
                     nombreopcion = "Consulta",
                     iconfilename = "Consulta.png"
                 },
+                //CREACION E INICIALIZACION DE LA OPCION "Registro de Tablero"
                 new OpcionesModel()
                 {
                     nombreopcion = "Nuevo Tablero",
                     iconfilename = "Plus.png",
                 },
+                //CREACION E INICIALIZACION DE LA OPCION "Registro de Usuario"
                 new OpcionesModel()
                 {
                     nombreopcion = "Registro",
                     iconfilename = "Registro.png"
                 },
+                //CREACION E INICIALIZACION DE LA OPCION "Configuracion" (Configuracion Administrator)
                 new OpcionesModel()
                 {
                     nombreopcion = "Configuracion",
                     iconfilename = "Configuracion.png"
                 },
+                //CREACION E INICIALIZACION DE LA OPCION "Salir"
                 new OpcionesModel()
                 {
                     nombreopcion = "Salir",
                     iconfilename = "Salir.png"
                 },
             };
-
-            return listaDeOpciones;
         }
 
         //============================================================================================================
@@ -84,27 +76,29 @@ namespace MTTO_App
              *DE BAJO NIVEL. EJ: USUARIOS QUE SOLO TIENEN PERMITIDA LA CONSULTA Y MODIFICACION
               DE DATOS PERSONALES*/
             //------------------------------------------------------------------------------------
-
-            List<OpcionesModel> listaDeOpciones = new List<OpcionesModel>()
+            //SE CREA E INICIALIZA UNA LISTA DE OBJETOS DE TIPO "OpcionesModel" (LISTA DE OPCIONES)
+            return new List<OpcionesModel>()
             {
+                //DENTRO DE LA LISTA DE OPCIONES SE CREAN E INICIALIZAN CADA UNA DE LAS OPCIONES
+                //CREACION E INICIALIZACION DE LA OPCION "Consulta de Tableros"
                 new OpcionesModel()
                 {
                     nombreopcion = "Consulta",
                     iconfilename = "Consulta.png"
                 },
+                //CREACION E INICIALIZACION DE LA OPCION "Configuracion de Informacion"
                 new OpcionesModel()
                 {
                     nombreopcion = "Configuracion",
                     iconfilename = "Configuracion.png"
                 },
+                //CREACION E INICIALIZACION DE LA OPCION "Salir"
                 new OpcionesModel()
                 {
                     nombreopcion = "Salir",
                     iconfilename = "Salir.png"
                 },
             };
-
-            return listaDeOpciones;
         }
 
         //============================================================================================================
@@ -117,28 +111,28 @@ namespace MTTO_App
              *DE MEDIO NIVEL. EJ: USUARIOS ASIGNADOS A SUPERVISORES O GERENTES(?), PERMITIENDO
              *EL REGISTRO DE NUEVOS USUARIOS DENTRO DE LA PLATAFORMA, Y CONSULTA DE TABLEROS*/
             //------------------------------------------------------------------------------------
-
+            //SE CREA E INICIALIZA UNA LISTA DE OBJETOS DE TIPO "OpcionesModel" (LISTA DE OPCIONES)
             return new List<OpcionesModel>()
             {
-                //OPCION CONSULTA
+                //CREACION E INICIALIZACION DE LA OPCION "Consulta de Tableros"
                 new OpcionesModel()
                 {
                     nombreopcion = "Consulta",
                     iconfilename = "Consulta.png",
                 },
-                //OPCION REGISTRO
+                //CREACION E INICIALIZACION DE LA OPCION "Registro de Usuarios"
                 new OpcionesModel()
                 {
                     nombreopcion = "Registro",
                     iconfilename = "Registro.png",
                 },
-                //OPCION CONFIGURACION
+                //CREACION E INICIALIZACION DE LA OPCION "Configuracion"
                 new OpcionesModel()
                 {
                     nombreopcion = "Configuracion",
                     iconfilename = "Configuracion.png",
                 },
-                //SALIR
+                //CREACION E INICIALIZACION DE LA OPCION "Salir"
                 new OpcionesModel()
                 {
                     nombreopcion = "Salir",

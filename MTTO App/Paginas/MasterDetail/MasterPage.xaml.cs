@@ -18,7 +18,6 @@ namespace MTTO_App
         private UltimaConexion Ultimaconexion; //=> APP STANS ALONE
         private DateTime UltimaFechaIngreso; //=> APP CONSUMO DE API
         private MasterDetailPageUserInfoViewModel DatosPagina;
-        private OpcionesViewModel OpcionesViewModel;
         //private string Codigo = string.Empty;
 
         //============================================================================================

@@ -50,8 +50,10 @@ namespace MTTO_App
         //COLOR DEL FONDO
         public const string BackGroundColor = "#fcf3e3";
 
-        //COLOR DEL FONTO (PAGINAS DE INFORMACION)
+        //COLOR DEL FONDO (PAGINAS DE INFORMACION)
         public const string BackGroundColorPopUp = "#FFFDE7";
+        //COLOR DEL MARCO (PAGINAS DE INFORMACION)
+        public const string FrameColorPopUp = "#000000";
 
         //COLOR DE LOS BOTONES
         public const string ButtonColor = "#E53935";

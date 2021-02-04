@@ -880,26 +880,26 @@ namespace MTTO_App.ViewModel
                         //EN CASO DE QUE ALGUNA DE LAS CONDICIONES NO SE CUMPLA SE VERIFICA CUAL DE ELLAS ES
                         //Y SE PROCEDE A ENVIAR UN MENSAJE AL USUARIO.
 
-                        if (Metodos.EspacioBlanco(Correo))
-                            respuesta = "El correo no puede contener espacios en blanco";
+                        if (Metodos.EspacioBlanco(Correo)) //=> true => El correo tiene espacios en blanco
+                            respuesta = OnCompletedCorreoWhiteSpace;
 
-                        if (Metodos.EspacioBlanco(Password))
-                            respuesta = "La contraseña no puede contener espacios en blanco";
+                        if (Metodos.EspacioBlanco(Password)) //=> true => La contraseña tiene espacios en blanco
+                            respuesta = OnCompletePasswordWhiteSpace;
 
-                        if (Metodos.EspacioBlanco(Username))
-                            respuesta = "El nombre de usuario no puede contener espacios en blanco";
+                        if (Metodos.EspacioBlanco(Username)) //=> true => El nombre de usuario tiene espacios en blanco
+                            respuesta = OnCompletedUsernameWhiteSpace;
 
-                        if (Metodos.Caracteres(Password))
-                            respuesta = "La contraseña no puede contener los siguientes caracteres: " + PaginaInformacionViewModel.CaracteresNoPermitidos();
+                        if (Metodos.Caracteres(Password)) //=> true => La contraseña tiene caracteres prohibidos
+                            respuesta = "La contraseña no puede contener los siguientes caracteres: " + App.ForbiddenCharacters;
 
-                        if (Metodos.Caracteres(Username))
-                            respuesta = "El nombre de usuario no puede contener los siguientes caracteres: " + PaginaInformacionViewModel.CaracteresNoPermitidos();
+                        if (Metodos.Caracteres(Username)) //=> true => El nombre de usuario tiene caracteres prohibidos
+                            respuesta = "El nombre de usuario no puede contener los siguientes caracteres: " + App.ForbiddenCharacters;
 
-                        if (Metodos.Caracteres(Nombres))
-                            respuesta = "El nombre no puede contener los siguientes caracteres: " + PaginaInformacionViewModel.CaracteresNoPermitidos();
+                        if (Metodos.Caracteres(Nombres)) //=> true => El/los Nombre(s) tiene(n) caracteres prohibidos
+                            respuesta = "El nombre no puede contener los siguientes caracteres: " + App.ForbiddenCharacters;
 
-                        if (Metodos.Caracteres(Apellidos))
-                            respuesta = "El apellido no puede contener los siguientes caracteres: " + PaginaInformacionViewModel.CaracteresNoPermitidos();
+                        if (Metodos.Caracteres(Apellidos)) //=> true => El/los Apellido(s) tiene(n) caracteres prohibidos
+                            respuesta = "El apellido no puede contener los siguientes caracteres: " + App.ForbiddenCharacters;
                     }
                 }
                 else
