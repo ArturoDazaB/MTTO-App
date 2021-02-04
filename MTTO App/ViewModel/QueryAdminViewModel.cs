@@ -18,6 +18,7 @@ namespace MTTO_App
         private Personas Persona;
         private Usuarios Usuario;
         private string errormessage;
+        public int OpcionSeleccionada;
         //---------------------------------------------------------------------------------------------------------
         //PROPIEDADES DE LA CLASE
         public List<QueryAdminModel> InfoConfig { get { return new QueryAdminModel().GetConfiguracion(); } }
@@ -41,6 +42,53 @@ namespace MTTO_App
         public int HeaderFontSize { get { return App.HeaderFontSize; } }
         //---------------------------------------------------------------------------------------------------------
         public string ErrorMessage { get { return errormessage; } }
+        //TEXTO USADO EN EL MENSAJE DEL TIPO POP-UP INFORMATIVO AL EJECUTAR EL METODO "OnBuscar" Y NO OBTENER RESULTADOS
+        public string OnBuscarMethodMessage
+        {
+            //NOTA: PUESTO QUE EXISTEN VARIOS METODOS DE BUSQUEDA: Id (cedula), ficha, nombres, apellidos y username
+            //SE DECIDIO CREA UNA PROPIEDAD QUE CONTIVERA EL TEXTO INFORMATIVO CUANDO UNA DE LAS CONDICIONES DE
+            //BUSQUEDA NO SE CUMPLEN PARA CADA UNA DE LAS OPCIONES DE BUSQUEDA (SIENDO ESTE EL CASO EL FORMATO DEL 
+            //TEXTO INGRESADO COMO PARAMETRO DE CONSULTA)
+            get
+            {
+                //SE CREA E INICIALIZA LA VARIABLE QUE RETORNARA EL TEXTO CORRESPONDIENTE
+                string message = string.Empty;
+
+                switch(OpcionSeleccionada)
+                {
+                    //CONSULTA POR Id (NUMERO DE CEDULA)
+                    case 0:
+                        message = "El número de ID (cedula) no puede contener espacios en blanco";
+                        break;
+                    //CONSULTA POR NUMERO DE FICHA
+                    case 1:
+                        message = "El número de ficha no puede contener espacios en blanco";
+                        break;
+                    //CONSULTA POR NOMBRE(S) DE USUARIO
+                    case 2:
+                        message = "Verifique la cantidad de espacios en blanco ingresados";
+                        break;
+                    //CONSULTA POR APELLIDO(S) DE USUARIO
+                    case 3:
+                        message = "Verifique la cantidad de espacios en blanco usados";
+                        break;
+                    //CONSULTA POR NOMBRE DE USUARIO
+                    case 4:
+                        message = "El nombre de usuario no puede contener espacios en blanco";
+                        break;
+                }
+
+                return message;
+            }
+        }
+        //TEXTO USADO EN EL MENSAJE DEL TIPO POP-UP AL EJECUTAR EL METODO "OnItemSelected" y
+        public string OnItemSelectedMethodMessage { get { return "¿Desea modificar la información del usuario seleccionado?"; } }
+        //TEXTOS UTILIZADOS PARA REPRESENTAR LA AFIRMACION O NEGACION DEL USUARIO ANTE UNA PETICION
+        //NOTA: DICHOS TEXTOS SON USADOS EN LOS DISPLAYALERT EN LAS SECCIONES DE AFIRMACION (SI) Y NEGACION (NO) DEL MENSAJE APARENTE
+        public string AffirmativeText { get { return App.AffirmativeText; } } //=> SI
+        public string NegativeText { get { return App.NegativeText; } } //=> NO
+        //TEXTO USADO EN EL BOTON DEL MENSAJE DEL TIPO POP-UP INFORMATIVO
+        public string OkText { get { return App.OkText; } }
         //=========================================================================================================
         //-------------------------------------------------METODOS-------------------------------------------------
         //CONSTRUCTOR DE LA CLASE 

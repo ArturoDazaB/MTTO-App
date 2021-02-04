@@ -112,7 +112,7 @@ namespace MTTO_App
                         else
                             //SI EL ID INTEGRADO TIENE UN ESPACIO EN BLANCO
                             //SE LE NOTIFICA AL USUARIO MEDIANTE UN MENSAJE DE ALERTA
-                            await DisplayAlert("Alerta", "El numero de ID (cedula) no puede contener espacios en blanco", "Entendido");
+                            await DisplayAlert("Alerta", ConexionDatos.OnBuscarMethodMessage, ConexionDatos.OkText);
                         break;
                     //OPCION BUSQUEDA POR NUMERO DE FICHA
                     case 1:
@@ -146,7 +146,7 @@ namespace MTTO_App
                         else
                         {
                             //SI EL NUMERO DE FICHA INGRESADO TIENE UN ESPACIO EN BLANCO SE LE NOTIFICA AL USUARIO MEDIANTE UN MENSAJE DE ALERTA
-                            await DisplayAlert("Alerta", "El numero de ficha no puede contener espacios en blanco", "Entendido");
+                            await DisplayAlert("Alerta", ConexionDatos.OnBuscarMethodMessage, ConexionDatos.OkText);
                         }
                         break;
                     //OPCION BUSQUEDA POR NOMBRE(S)
@@ -176,7 +176,7 @@ namespace MTTO_App
                         else
                             //SI EL TEXTO INGRESADO TIENE MAS DE DOS ESPACIOS EN BLANCO
                             //SE PROCEDE A NOTIFICARLE AL USUARIO
-                            await DisplayAlert("Alerta", "Verifique la cantidad de espacios en blanco ingresados", "Entendido");
+                            await DisplayAlert("Alerta", ConexionDatos.OnBuscarMethodMessage, ConexionDatos.OkText);
                         break;
                     //OPCION BUSQUEDA POR APELLIDO(S)
                     case 3:
@@ -202,7 +202,7 @@ namespace MTTO_App
                             }
                         }
                         else
-                            await DisplayAlert("Alerta", "Verifique la cantidad de espacios en blanco ingresados", "Entendido");
+                            await DisplayAlert("Alerta", ConexionDatos.OnBuscarMethodMessage, ConexionDatos.OkText);
                         break;
                     //OPCION BUSQUEDA POR NOMBRE DE USUARIO
                     case 4:
@@ -228,7 +228,7 @@ namespace MTTO_App
                             }
                         }
                         else
-                            await DisplayAlert("Alerta", "El numero de ID (cedula) no puede contener espacios en blanco", "Entendido");
+                            await DisplayAlert("Alerta", ConexionDatos.OnBuscarMethodMessage, ConexionDatos.OkText);
                         break;
                 }
             }
@@ -248,7 +248,7 @@ namespace MTTO_App
             InformacionGeneral userinfo = null;
 
             //REALIZAMOS LA PREGUNTA SOBRE SI SE DESEA MODIFICAR LA INFORMACION DEL USUARIO
-            bool response = await DisplayAlert("Mensaje", "¿Desea modificar la informacion de este usuario?", "Si", "No, gracias");
+            bool response = await DisplayAlert("Mensaje", ConexionDatos.OnItemSelectedMethodMessage, ConexionDatos.AffirmativeText, ConexionDatos.NegativeText);
 
             if (response)
             {
@@ -309,6 +309,9 @@ namespace MTTO_App
                 EntryDatos.Keyboard = Keyboard.Numeric;
             else
                 EntryDatos.Keyboard = Keyboard.Text;
+
+            //PASAMOS EL VALOR DE LA OPCION SELECCIONADA A LA PAGINA VIEWMODEL "QueryAdminViewModel "
+            ConexionDatos.OpcionSeleccionada = Seleccion;
         }
 
         //===============================================================================================================================

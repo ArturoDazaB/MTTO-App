@@ -20,35 +20,31 @@ namespace MTTO_App.ViewModel
         //==================================================================================================
         //==================================================================================================
         //SE CREAN LAS VARIABLES LOCALES DE LA CLASE
-
         //ATRIBUTOS DEL OBJETO TABLERO: TableroID (Pagina de registro y consulta)
         //                              Filial (Pagina de registro y consulta)
         //                              Area (Pagina de registro y consulta)
         //                              Fecha de Creacion (Pagina de registro y consulta)
-        //                              CodigoQRData (Pagina de consulta)
+        //                              CodigoQRData (Pagina de registro y consulta)
         //                              CodigoQRFilename (Pagina de registro y consulta)
 
         protected string sapid, tableroID, filial, area, descripcion, cantidad;
         protected Personas Persona;
         protected Usuarios Usuario;
         protected string codigoqrdata;
-
         //--------------------------------------------------NOTA--------------------------------------------
-        //ESTE OBJETO ALMACENA EL CODIGO QR GENERADO CON LA LIBRERIA
-        //QRCoder EN FORMATO DE byte[]
+        //ESTA VARIABLE ALMACENA EL CODIGO QR GENERADO CON LA LIBRERIA QRCoder EN FORMATO DE byte[]
         protected byte[] codigoqrbyte;
+        //--------------------------------------------------------------------------------------------------
         protected string codigoqrfilename;
         protected DateTime ultimafechaconsulta;
-        protected List<ItemTablero> items;
-        protected string tipodeconsulta;    // => VARIABLE UTILIZADA CUANDO LA CLASE ES LLAMADA DESDE LA CLASE "PaginaConsultaTablero.xaml.cs"
-        protected int opcionconsultaid;
+        protected List<ItemTablero> items;  
+        protected string tipodeconsulta;    //=> VARIABLE UTILIZADA CUANDO LA CLASE ES LLAMADA DESDE LA CLASE "PaginaConsultaTablero.xaml.cs"
+        protected int opcionconsultaid;     //=> VARIABLE UTILIZADA CUANDO LA CLASE ES LLAMADA DESDE LA CLASE "PaginaConsultaTablero.xaml.cs"
         protected string httperrorresponse;
-
         //---------------------------------------------NOTA-------------------------------------------------
         //Puesto que este proyecto es una aplicacion movil (es decir utiliza la version PCL de la libreria 
         //QRCoder) los objteos del tipo PngByteQRCode y BitMapByteQRCode son los unicos renders dispoibles
         protected PngByteQRCode codigoqr;
-
         //--------------------------------------------------------------------------------------------------
         //BANDERAS
         //SourceOfInvoke => TRUE  => Se llama a la clase desde "PaginaRegistroTablero.xaml.cs"
@@ -58,7 +54,6 @@ namespace MTTO_App.ViewModel
         //==================================================================================================
         //==================================================================================================
         //SE DECLARAN LAS PROPIEDADES/ATRIBUTOS DE LA CLASE
-
         public string SapID
         {
             get { return sapid; }
@@ -70,7 +65,6 @@ namespace MTTO_App.ViewModel
                 NotificacionCambio("SapID", SapID);
             }
         }
-
         public string TableroID
         {
             get { return tableroID; }
@@ -82,7 +76,6 @@ namespace MTTO_App.ViewModel
                 NotificacionCambio("TableroID", TableroID);
             }
         }
-
         public string Filial
         {
             get { return filial; }
@@ -94,7 +87,6 @@ namespace MTTO_App.ViewModel
                 NotificacionCambio("Filial", Filial);
             }
         }
-
         public string Area
         {
             get { return area; }
@@ -106,9 +98,16 @@ namespace MTTO_App.ViewModel
                 NotificacionCambio("Area", Area);
             }
         }
-
         public DateTime FechaRegistro { get { return DateTime.Now; } }
+        public byte[] CodigoQRbyte
+        {
+            //-------------------------------------------------NOTA---------------------------------------------
+            //PROPIEDAD QUE CONTENDRAN LOS CODIGO QR IMAGEN QUE SE MOSTRARA EN PANTALLA Y LA QUE SE GUARDARA EN 
+            //EL TELEFONO. SE UTILIZA EL RENDER DEL TIPO "PngByteQRCode", EL CUAL RETORNA UN ARRELO DE BYTES 
+            //(byte[]) QUE CONTENDRA LA INFORMACION DE UNA IMAGEN DEL TIPO PNG.
 
+            get { return codigoqrbyte; }
+        }
         public string CodigoQRData
         {
             get
@@ -120,7 +119,6 @@ namespace MTTO_App.ViewModel
                 return codigoqrdata;
             }
         }
-
         public string CodigoQRFileName
         {
             get
@@ -147,11 +145,9 @@ namespace MTTO_App.ViewModel
             }
         }
 
-        public DateTime UltimaFechaConsulta { get { return ultimafechaconsulta; } }
-
         //--------------------------------------------------------------------------------------------------
         //PROPIEDADES USADAS PARA REPRESENTAR LOS ITEMS QUE FORMAN PARTE DEL TABLERO CONSULTADO
-
+        public DateTime UltimaFechaConsulta { get { return ultimafechaconsulta; } }
         public string Descripcion
         {
             get { return descripcion; }
@@ -163,7 +159,6 @@ namespace MTTO_App.ViewModel
                 NotificacionCambio("Descripcion", Descripcion);
             }
         }
-
         public string Cantidad
         {
             get { return cantidad; }
@@ -175,7 +170,6 @@ namespace MTTO_App.ViewModel
                 NotificacionCambio("Cantidad", Cantidad);
             }
         }
-
         public List<ItemTablero> Items
         {
             get { return items; }
@@ -201,30 +195,28 @@ namespace MTTO_App.ViewModel
         public int OpcionConsultaID { set { opcionconsultaid = value; } }
         public string HttpErrorResponse { get { return httperrorresponse; } }
 
-        //--------------------------------------------------------------------------------------------------
-        public byte[] CodigoQRbyte 
-        {
-            //-------------------------------------------------NOTA---------------------------------------------
-            //PROPIEDAD QUE CONTENDRAN LOS CODIGO QR IMAGEN QUE SE MOSTRARA EN PANTALLA Y LA QUE SE GUARDARA EN 
-            //EL TELEFONO. SE UTILIZA EL RENDER DEL TIPO "PngByteQRCode", EL CUAL RETORNA UN ARRELO DE BYTES 
-            //(byte[]) QUE CONTENDRA LA INFORMACION DE UNA IMAGEN DEL TIPO PNG.
-
-            get { return codigoqrbyte; } 
-        }
-
         //==================================================================================================
         //===============================PROPIEDADES INTERNAS DE LA PAGINA==================================
         //----------------------------Place Holder(PH) PaginaRegistroTablero--------------------------------
         public string TableroIDPH { get { return "Ingrese el codigo/ID del tablero"; } }
+        //=> TEXTO PRESENTADO COMO PLACE HOLDER PARA LA ENTRADA DEL ID DEL TABLERO
         public string SAPIDPH { get { return "Ingrese el codigo SAP asignado al tablero"; } }
+        //=> TEXTO PRESENTADO COMO PLACE HOLDER PARA LA ENTRADA DEL ID SAP ASIGNADA AL TABLERO
         public string FilialPH { get { return "¿A que filial pertenece el tablero?"; } }
+        //=> TEXTO PRESENTADO COMO PLACE HOLDER PARA LA ENTRADA DE LA FILIAL A LA QUE PERTENECE EL TABLERO
         public string AreaPH { get { return "¿A que area pertenece el tablero?"; } }
+        //=> TEXTO PRESENTADO COMO PLACE HOLDER PARA LA ENTRADA DEL AREA DE LA FILIAL A LA QUE PERTENECE EL TABLERO
         public string DescripcionPH { get { return "Descripcion corta del item"; } }
+        //=> TEXTO PRESENTADO COMO PLACE HOLDER PARA LA ENTRADA DE LA DESCRIPCION DEL ITEM
         public string CantidadPH { get { return "Cantidad de items (unidades)"; } }
+        //=> TEXTO PRESENTADO COMO PLACE HOLDER PARA LA ENTRADA DE LA CANTIDAD DE UN ITEM EN ESPECIFICO
         public string ColumnaCant { get { return "Cantidad"; } }
+        //=> TEXTO DE LA COLUMNA "Cantidad" DE LA LISTA DE ITEMS DEL TABLERO
         public string ColumnaDescripcion { get { return "Descripcion"; } }
+        //=> TEXTO DE LA COLUMNA "Descripcion" DE LA LISTA DE ITEMS DEL TABLERO
         //----------------------------------PH PaginaConsultaTablero----------------------------------------
         public string ConsultaTableroIDPH { get { return "Ingresa el ID del tablero"; } }
+
         //----------------------------------PH BotonesPaginaRegistroTablero---------------------------------
         public string GenerarTableroPH { get { return "Generar"; } }
         public string AddItemPHP { get { return "Añadir Item"; } }
@@ -234,9 +226,22 @@ namespace MTTO_App.ViewModel
         //----------------------------------PH BotonesPaginaConsultaTablero---------------------------------
         public string BotonScanPH { get { return "Escanear Codigo"; } }
         public string BotonConsultaIDPH { get { return "Busqueda por ID"; } }
+
         //----------------------------------PH Titulo de las Paginas----------------------------------------
         public string TituloRegistro { get { return "Pagina de Registro"; } }
         public string TituloConsulta { get { return "Pagina de Consulta"; } }
+
+        //-----------------------------------TEXTOS MENSAJES POP-UP-----------------------------------------
+        //TEXTO USADO EN EL MENSAJE DEL TIPO POP-UP DE LA PAGINA "RegistroTablero" DONDE SE LE CONSULTA AL USUARIO
+        //SI DESEA CONTINUAR CON EL REGISTRO DEL TABLERO
+        public string RegistrarTableroMethodMessage { get { return "Esta a punto de registrar un nuevo tablero\n\n¿Desea continuar?"; } }
+        //TEXTOS UTILIZADOS PARA REPRESENTAR LA AFIRMACION O NEGACION DEL USUARIO ANTE UNA PETICION
+        //NOTA: DICHOS TEXTOS SON USADOS EN LOS DISPLAYALERT EN LAS SECCIONES DE AFIRMACION (SI) Y NEGACION (NO) DEL MENSAJE APARENTE
+        public string AffirmativeText { get { return App.AffirmativeText; } } //=> SI
+        public string NegativeText { get { return App.NegativeText; } } //=> NO
+        //TEXTO UTILIZADO PARA REPRESENTAR LA AFIRMACION ANTE UN MENSAJE INFORMATIVO
+        public string OkText { get { return App.OkText; } } //=>ENTENDIDO
+
         //-----------------------------------------COLORES--------------------------------------------------
         //COLOR DEL FONDO
         public string BackGroundColor { get { return App.BackGroundColor; } }
@@ -284,7 +289,7 @@ namespace MTTO_App.ViewModel
 
         //==================================================================================================
         //==================================================================================================
-        //METODO QUE ACTUALIZA LA INFORMACION DE LA PROPIEDAD CADA QUE SE DECTECTA UN CAMBIO
+        //FUNCION QUE ACTUALIZA LA INFORMACION DE LA PROPIEDAD CADA QUE SE DECTECTA UN CAMBIO
         protected void OnPropertyChanged([CallerMemberName] string nombre = "")
         {
             PropertyChanging?.Invoke(this, new System.ComponentModel.PropertyChangingEventArgs(nombre));
@@ -292,7 +297,7 @@ namespace MTTO_App.ViewModel
 
         //==================================================================================================
         //==================================================================================================
-        //ADICION DE ITEMS A LA LISTA
+        //FUNCION QUE ADICIONA ITEMS A LA LISTA DE ITEMS
         public List<ItemTablero> AddItem(string tableroID, string descripcion,
             int cantidad, List<ItemTablero> lista)
         {
@@ -304,45 +309,7 @@ namespace MTTO_App.ViewModel
 
         //==================================================================================================
         //==================================================================================================
-        //METODO DE IMPRESION POR CONSOLA
-        protected void NotificacionCambio(string source, string value)
-        {
-            //------------------------------------------------------------------------------------------------
-            /*
-             * ESTE METODO FUE DISENADO PARA NOTIFICAR POR MENSAJE DE CONSOLA EL CAMBIO DE LAS PROPIEDADES
-             * DE LA PAGINA QUE SE ENCUENTRAN EN CONSTANTE INTERACCION CON EL USUARIO EN LA PAGINA: "Pagina-
-             * Registro". ES IMPORTANTE QUE ESTE METODO ES DE UTILIDAD PARA PRUEBAS DE DESARROLLADOR CUANDO
-             * EL PROYECTO SE ENCUENTRE DEBUGIANDO
-             */
-            //------------------------------------------------------------------------------------------------
-
-            Console.WriteLine("\n\n=============================================");
-            Console.WriteLine("=============================================");
-            Console.WriteLine("\nPROPIEDAD: " + source);
-            Console.WriteLine("\nValor Actual: " + value);
-            Console.WriteLine("=============================================");
-            Console.WriteLine("=============================================\n\n");
-        }
-
-        //==================================================================================================
-        //==================================================================================================
-        //METODO DE IMPRESION POR CONSOLA
-        
-        protected void Mensaje(string mensaje)
-        {
-            //------------------------------------------------------------------------------------------------
-            //NOTA: METODO QUE PUEDE SER LLAMADO DESDE CUALQUIER SECCION DE LA CLASE
-            //------------------------------------------------------------------------------------------------
-
-            Console.WriteLine("\n\n\n=============================================");
-            Console.WriteLine("=============================================");
-            Console.WriteLine("\n" + mensaje);
-            Console.WriteLine("=============================================");
-            Console.WriteLine("=============================================\n\n\n");
-        }
-
-        //==================================================================================================
-        //==================================================================================================
+        //FUNCIONES LLAMADAS DENTRO DEL METODO REGISTRAR TABLERO
         //METODOS LLAMADOS PARA EVALUAR LOS CAMPOS/ATRIBUTOS PARA UN NUEVO REGISTRO DE TABLERO
         private bool Evaluacion1()
         {
@@ -374,11 +341,13 @@ namespace MTTO_App.ViewModel
             else
                 //SI EXISTE ALGUN REGISTRO CON EL MISMO ID O CON LA MISMA DATA DEL CODIGO QR SE DETIENE EL REGISTRO (FALSE)
                 return false;
-        }
+        } /*=> METODO USADO EN PARA EL REGISTRO DE USUARIO 
+                                                                   USADO CUANDO LA PLATAFORMA SE ENCUENTRE TRABAJANDO
+                                                                   STAND ALONE*/
 
         //==================================================================================================
         //==================================================================================================
-        //METODOS QUE RETORNAN UNA RESPUESTA CUANDO LAS FUNCIONES Evaluacion1, Evaluacion2 y Evaluacion3
+        //FUNCIONES QUE RETORNAN UNA RESPUESTA CUANDO LAS FUNCIONES Evaluacion1, Evaluacion2 y Evaluacion3
         //RETORNAN UN VALOR NEGATIVO O FALSO
         private string RespuestaEvaluacion1()
         {
@@ -446,11 +415,13 @@ namespace MTTO_App.ViewModel
 
             //SE RETORNA EL VALOR DE LA VARIABLE RESPUESTA
             return respuesta;
-        }
+        } /*=> METODO USADO EN PARA EL REGISTRO DE USUARIO 
+                                                                              USADO CUANDO LA PLATAFORMA SE ENCUENTRE TRABAJANDO
+                                                                              STAND ALONE*/
 
         //==================================================================================================
         //==================================================================================================
-        //METODO PARA LA CREACION DE CODIGOS QR (QRCoder)
+        //FUNCION PARA LA CREACION DE CODIGOS QR (QRCoder)
         private PngByteQRCode GenerarCodigoQR(string codevalue)
         {
             //------------------------------NOTA-------------------------------
@@ -511,17 +482,17 @@ namespace MTTO_App.ViewModel
 
         //==================================================================================================
         //==================================================================================================
-        //METODO PARA ALMACENAR IMAGENES (CodigoQR) EN LA GALERIA DEL TELEFONO
+        //FUNCION PARA ALMACENAR IMAGENES (CodigoQR) EN LA GALERIA DEL TELEFONO
         public void SaveImage()
         {
             //SE LLAMA LA FUNCION SavePicture
             //(CADA PLATAFORMA EJECUTARA METODOS DISTINTOS PARA GUARDAR LA IMAGEN)
-            DependencyService.Get<IPicture>().SavePicture(CodigoQRFileName, CodigoQRbyte);
+            DependencyService.Get<MTTO_App.Servicios.IPicture>().SavePicture(CodigoQRFileName, CodigoQRbyte);
         }
 
         //==================================================================================================
         //==================================================================================================
-        //METODO PARA REGISTRO DE TABLERO
+        //FUNCION PARA REGISTRO DE TABLERO
         public async Task<string> RegistrarTablero(List<ItemTablero> items)
         {
             //SE INICIALIZA LA VARIABLE LOCAL QUE FUNCIONARA PARA ALMACENAR Y RETORNAR
@@ -555,7 +526,7 @@ namespace MTTO_App.ViewModel
 
         //==================================================================================================
         //==================================================================================================
-        //METODO PARA LA BUSQUEDA DE UN TABLERO EN LA BASE DE DATOS
+        //FUNCION PARA LA BUSQUEDA DE UN TABLERO EN LA BASE DE DATOS
         public async Task<bool> BuscarTablero(string id)
         {
             //SE CREA LA BANDERA Y SE INICIALIZA EN FALSE (NO HAY MATCH DE TABLERO)
@@ -1267,6 +1238,45 @@ namespace MTTO_App.ViewModel
             }
 
                 return await Task.FromResult(flag);
+        }
+
+        //==================================================================================================
+        //==================================================================================================
+        //METODO DE IMPRESION POR CONSOLA
+        protected void NotificacionCambio(string source, string value)
+        {
+            //------------------------------------------------------------------------------------------------
+            /*
+             * ESTE METODO FUE DISENADO PARA NOTIFICAR POR MENSAJE DE CONSOLA EL CAMBIO DE LAS PROPIEDADES
+             * DE LA PAGINA QUE SE ENCUENTRAN EN CONSTANTE INTERACCION CON EL USUARIO EN LA PAGINA: "Pagina-
+             * Registro". ES IMPORTANTE QUE ESTE METODO ES DE UTILIDAD PARA PRUEBAS DE DESARROLLADOR CUANDO
+             * EL PROYECTO SE ENCUENTRE DEBUGIANDO
+             */
+            //------------------------------------------------------------------------------------------------
+
+            Console.WriteLine("\n\n=============================================");
+            Console.WriteLine("=============================================");
+            Console.WriteLine("\nPROPIEDAD: " + source);
+            Console.WriteLine("\nValor Actual: " + value);
+            Console.WriteLine("=============================================");
+            Console.WriteLine("=============================================\n\n");
+        }
+
+        //==================================================================================================
+        //==================================================================================================
+        //METODO DE IMPRESION POR CONSOLA
+
+        protected void Mensaje(string mensaje)
+        {
+            //------------------------------------------------------------------------------------------------
+            //NOTA: METODO QUE PUEDE SER LLAMADO DESDE CUALQUIER SECCION DE LA CLASE
+            //------------------------------------------------------------------------------------------------
+
+            Console.WriteLine("\n\n\n=============================================");
+            Console.WriteLine("=============================================");
+            Console.WriteLine("\n" + mensaje);
+            Console.WriteLine("=============================================");
+            Console.WriteLine("=============================================\n\n\n");
         }
 
     }

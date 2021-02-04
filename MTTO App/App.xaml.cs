@@ -3,8 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+
+using Xamarin.Essentials;
 
 namespace MTTO_App
 {
@@ -25,7 +28,6 @@ namespace MTTO_App
 
         //SI SE REALIZA ALGUN NUEVO REGISTRO DE USUARIO SE ACTIVA LA BANDERA
         public static bool RegistroFlag;
-
         //===============================================================================================
         //===============================================================================================
         //CONSTANTES QUE SERAN LLAMADOS EN LOS DISTINTOS "VIEWMODEL" EMPLEADOS PARA CADA PAGINA
@@ -55,12 +57,36 @@ namespace MTTO_App
         public const string ButtonColor = "#E53935";
 
         //DIRECCION URL BASE PARA LAS SOLICITUDES HTTP
-        //public const string BaseUrl = "https://192.168.1.99:8000/mttoapp";
-        public const string BaseUrl = "https://192.168.0.120:8000/mttoapp";
+        public const string BaseUrl = "https://192.168.1.99:8000/mttoapp";
+        //public const string BaseUrl = "https://192.168.0.120:8000/mttoapp";
         //public const string BaseUrl = "https://10.10.4.154:8000/mttoapp";
+
+        /*public string BaseUrl 
+        {
+            get
+            {
+                var ipadress = Dns.GetHostAddresses(Dns.GetHostName()).FirstOrDefault();
+
+                if(ipadress == )
+            }
+        }*/
 
         //TIEMPO DE ESPERA CUANDO SE REALIZA UNA SOLICITUD HTTP
         public const int TimeInSeconds = 5;
+
+        //TEXTO INFORMATIVO QUE USADO PARA INDICAR QUE EL DISPOSITIVO NO POSEE ACCESO A INTERNET 
+        public const string NoNetworkAccessMessage = "Sin Acceso a Internet Enciende el WIFI o la Red Movil para poder acceder";
+        //DIRECCION IP DEL DISPOSITIVO
+        public static string IPAddress { get { return DependencyService.Get<MTTO_App.Servicios.IIPAddressManager>().GetIPAddress(); } }
+
+        //TEXTO USADO PARA AFIRMAR (PROCEDER)
+        public const string AffirmativeText = "Si";
+        //TEXTO USADO PARA NEGAR (DENEGAR)
+        public const string NegativeText = "No";
+        //TEXTO USADO PARA AFIRMAR (ENTENDIDO)
+        public const string OkText = "Entendido";
+
+        public const string ForbiddenCharacters = "'!', '@', '#', '$', '%', '&', '(', ')', '+', '=', '/', '|'";
         //-----------------------------------------------------------------------------------------------
 
         //===============================================================================================
@@ -82,7 +108,7 @@ namespace MTTO_App
             ConfigChangedAdminFlag = false;
             RegistroFlag = false;
         }
-        
+
         //===============================================================================================
         //===============================================================================================
         //CONSTRUCTOR DE LA CLASE (EXISTEN DOS METODOS CONTRUCTORES, CON LA DIFERENCIA DE QUE UNO DE ELLOS 
@@ -139,7 +165,8 @@ namespace MTTO_App
             handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) =>
             {
                 //if(cert.Issuer.Equals("CN=localhost"))
-                if (cert.Issuer.Equals("CN=DESKTOP-BEEFDVC"))
+                if (cert.Issuer.Equals("CN=DESKTOP-BEEFDVC") ||
+                    cert.Issuer.Equals("CN=localhost"))
                     return true;
                 return errors == System.Net.Security.SslPolicyErrors.None;
             };

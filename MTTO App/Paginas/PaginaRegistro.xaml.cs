@@ -12,100 +12,113 @@ namespace MTTO_App.Paginas
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PaginaRegistro : ContentPage
     {
+        //================================================================================
+        //================================================================================
         //OBJETOS
-        //SE CREAN LAS VARIABLES GLOBALES DE LA CLASE
+        //SE CREAN LAS VARIABLES Y OBJETOS GLOBALES DE LA CLASE
         private ConfiguracionAdminViewModel ConexionDatos;
+        private Personas Persona; 
+        private Usuarios Usuario;
 
-        private Personas Persona; private Usuarios Usuario;
-
+        //===============================================================================================================================
+        //===============================================================================================================================
+        //CONSTRUCTOR DE LA CLASE
         public PaginaRegistro(Personas persona, Usuarios usuario)
         {
             InitializeComponent();
 
-            //SE CARGA LA INFORMACION DEL USUARIO QUE SE ENCUENTRA LOGGEADO ACTUALMENTE
+            //SE INSTANCIAN LOS OBJETOS Y SE EJECUTA EL ENLACE DE LA CLASE VISTA (VIEW) Y LA CLASE (VIEWMODEL)
             Persona = new Personas().NewPersona(persona);
             Usuario = new Usuarios().NewUsuario(usuario);
-
-            //SE GENERA LA CONEXION DE LA CLASE "PaginaRegistro2.xaml.cs" CON LA CLASE
             BindingContext = ConexionDatos = new ConfiguracionAdminViewModel(false, Persona, Usuario, Usuario.Cedula);
-
+            //SE DESACTIVA Y SE VUELVE INVISIBLE EL "ActivityIndicator"
             ActivityIndicatorA.IsRunning = ActivityIndicatorA.IsVisible = false;
+            //SE VUELVE INVISIBLE LA SECCION DE LOS DATOS DE USUARIO
             DatosUsuarioGrid.IsVisible = false;
+            //SE HABILITAN LOS ENTRY nombreEntry Y apellidosEntry
             nombresEntry.IsEnabled = apellidosEntry.IsEnabled = true;
+            //SE ASIGNA EL TEXTO "CONTINUAR" AL TEXTO DEL BOTON DE LA PAGINA
             Boton.Text = "CONTINUAR";
         }
 
         //===============================================================================================================================
         //===============================================================================================================================
-        //METODO PARA VERIFICAR SI correoEntry TIENE ESPACIOS EN BLANCO
-        private async void OnCompletedCorreo(object sender, EventArgs e)
+        //FUNCION PARA VERIFICAR SI correoEntry TIENE ESPACIOS EN BLANCO
+        private void OnCompletedCorreo(object sender, EventArgs e)
         {
             //BUSQUEDA DE ESPACIOS EN BLANCO
             //BANDERA QUE VERIFICA SI LA CADENA DE CARACTERES ALMACENA UN ESPACIO EN BLANCO
             if (Metodos.EspacioBlanco(ConexionDatos.Correo.ToLower()))
             {
+                //SE CAMBIA EL COLOR DEL TEXTO DEL correoEntry A ROJO
                 correoEntry.TextColor = Color.Red;
-                await DisplayAlert("Alerta", "El correo no puede contener espacios en blanco", "Entendido");
+                //SE LE NOTIFICA AL USUARIO QUE LA CONTRASEÑA NO PUEDE TENER ESPACIOS EN BLANCO
+                ConexionDatos.MensajePantalla(ConexionDatos.OnCompletedCorreoWhiteSpace);
             }
         }
 
         //===============================================================================================================================
         //===============================================================================================================================
-        //METODO PARA VERIFICAR QUE usernameEntry NO TENGA ESPACIOS EN BLANCO Y QUE NO TENGA LOS CARACTERES NO PERMITIDOS
-        private async void OnCompletedUserName(object sender, EventArgs e)
+        //FUNCION PARA VERIFICAR QUE usernameEntry NO TENGA ESPACIOS EN BLANCO Y QUE NO TENGA LOS CARACTERES NO PERMITIDOS
+        private void OnCompletedUserName(object sender, EventArgs e)
         {
             //BUSQUEDA DE ESPACIOS EN BLANCO
-
-            if (Metodos.EspacioBlanco(ConexionDatos.Username.ToLower()))
+            if (Metodos.EspacioBlanco(ConexionDatos.Username.ToLower())) //=> true => Existen espacios en blanco en el nombre de usuario
             {
+                //SE CAMBIA EL COLOR DEL TEXTO DEL usernameEntry A ROJO
                 usernameEntry.TextColor = Color.Red;
-                await DisplayAlert("Alerta", "El nombre de usuario no puede contener espacios en blanco", "Entendido");
+                //SE LE NOTIFICA AL USUARIO QUE EL NOMBR DE USUARIO NO PUEDE TENER ESPACIOS EN BLANCO
+                ConexionDatos.MensajePantalla(ConexionDatos.OnCompletedUsernameWhiteSpace);
             }
 
             //BUSQUEDA DE CARACTERES
-
-            if (Metodos.Caracteres(ConexionDatos.Username.ToLower()))
+            if (Metodos.Caracteres(ConexionDatos.Username.ToLower())) //=> true => Existen caracteres prohibidos en el nombre de usuario.
             {
+                //SE CAMBIA EL COLOR DEL TEXTO DEL usernameEntry A ROJO
                 usernameEntry.TextColor = Color.Red;
-                await DisplayAlert("Alerta", "No se aceptan los siguientes caracteres: '!', '@', '#', '$', '%', '&', '(', ')', '+', '=', '/', '|'", "Entendido");
+                //SE LE NOTIFICA AL USUARIO QUE EL NOMBRE DE USUARO NO PUEDE TENER CARACTERES ESPECIFICOS
+                ConexionDatos.MensajePantalla(ConexionDatos.ForbiddenCharacters);
             }
         }
 
         //===============================================================================================================================
         //===============================================================================================================================
-        //METODO PARA VERIFICAR QUE passwordEntry1 NO TENGA ESPACIOS EN BLANCO QUE NO SEA MENOR A 6 CARACTERES Y QUE NO POSEA LOS
+        //FUNCION PARA VERIFICAR QUE passwordEntry1 NO TENGA ESPACIOS EN BLANCO QUE NO SEA MENOR A 6 CARACTERES Y QUE NO POSEA LOS
         //CARACTERES NO PERMITIDOS
         private async void OnCompletedPassword1(object sender, EventArgs e)
         {
             //BUSQUEDA DE ESPACIOS EN BLANCO
-
-            if (Metodos.EspacioBlanco(ConexionDatos.Password.ToLower()))
+            if (Metodos.EspacioBlanco(ConexionDatos.Password.ToLower())) //=> true = Existen espacios en blanco
             {
+                //SE CAMBIA EL COLOR DEL TEXTO DEL passwordEntry1 A ROJO
                 passwordEntry1.TextColor = Color.Red;
-                await DisplayAlert("Alerta", "La contraseña no puede contener espacios en blanco", "Entendido");
+                //SE LE NOTIFICA AL USUARIO QUE LA CONTRASEÑA NO PUEDE TENER ESPACIOS EN BLANCO
+                ConexionDatos.MensajePantalla(ConexionDatos.OnCompletePasswordWhiteSpace);
             }
-            else
+            else //=> false = No existen espacios en blanco
             {
                 //VERIFICACION DE CANTIDAD DE CARACTERES
-
                 if (ConexionDatos.Password.Length < 6)
                 {
-                    await DisplayAlert("Alerta", "La contraseña no puede tener menos de 6 caracteres", "Entendido");
+                    //SE LE NOTIFICA AL USUARIO QUE LA CONTRASEÑA NO PUEDE TENER MENOS DE 6 CARACTERES
+                    ConexionDatos.MensajePantalla(ConexionDatos.OnCompletePasswordMinimunLenght);
                 }
             }
 
             //VERIFICACION DE CARACTERES NO PERMITIDOS
 
-            if (Metodos.Caracteres(ConexionDatos.Password.ToLower()))
+            if (Metodos.Caracteres(ConexionDatos.Password.ToLower())) //=> true = Existen caracteres prohibidos.
             {
+                //SE CAMBIA EL COLOR DEL TEXTO DEL passwordEntry1 A ROJO
                 passwordEntry1.TextColor = Color.Red;
-                await DisplayAlert("Alerta", "No se aceptan los siguientes caracteres: '!', '@', '#', '$', '%', '&', '(', ')', '+', '=', '/', '|'", "Entendido");
+                //SE LE NOTIFICA AL USUARIO QUE LA CONTRASEÑA NO PUEDE TENER NINGUNO DE LOS CARACTERES PROHIBIDOS
+                await DisplayAlert("Alerta", ConexionDatos.ForbiddenCharacters, ConexionDatos.OkText);
             }
         }
 
         //===============================================================================================================================
         //===============================================================================================================================
-        //METODO PARA VERIFICAR QUE passwordEntry2 NO TENGA ESPACIOS EN BLANCO, QUE NO SEA MENOR A 6 CARACTERES Y QUE NO POSEA LOS
+        //FUNCION PARA VERIFICAR QUE passwordEntry2 NO TENGA ESPACIOS EN BLANCO, QUE NO SEA MENOR A 6 CARACTERES Y QUE NO POSEA LOS
         //CARACTERES NO PERMITIDOS
         private async void OnCompletedPassword2(object sender, EventArgs e)
         {
@@ -113,37 +126,40 @@ namespace MTTO_App.Paginas
 
             //SI LAS CONTRASEÑAS SON DISTINTAS SE DISPARA LA BANDERA "flagdifferentPassword"
             if (ConexionDatos.flagdifferentPassword)
-                await DisplayAlert("Alerta", "Las contraseñas ingresadas no coinciden. \n\nVerefique e intente nuevamente",
-                    "Entendido");
+                await DisplayAlert("Alerta", ConexionDatos.PasswordDoesNotMatch ,ConexionDatos.OkText);
 
             //SI LA CONTRASEÑA TIENE ESPACIOS EN BLANCO SE DESPLIEGA UN MENSAJE DE NOTIFICACION
-            if (Metodos.EspacioBlanco(ConexionDatos.ConfirmacionPassword.ToLower()))
+            if (Metodos.EspacioBlanco(ConexionDatos.ConfirmacionPassword.ToLower())) //=> true = Existen espacios en blanco 
             {
+                //SE CAMBIA EL COLOR DEL TEXTO DEL passwordEntry2 A ROJO
                 passwordEntry2.TextColor = Color.Red;
-                await DisplayAlert("Alerta", "La contraseña no puede contener espacios en blanco", "Entendido");
+                //SE LE NOTIFICA AL USUARIO QUE LA CONTRASEÑA NO PUEDE TENER ESPACIOS EN BLANCO
+                ConexionDatos.MensajePantalla(ConexionDatos.OnCompletePasswordWhiteSpace);
             }
-            else
+            else //=> false = No existen espacios en blanco
             {
                 //VERIFICACION DE CANTIDAD DE CARACTERES
-
                 if (ConexionDatos.ConfirmacionPassword.Length < 6)
                 {
-                    await DisplayAlert("Alerta", "La contraseña no puede tener menos de 6 caracteres", "Entendido");
+                    //SE LE NOTIFICA AL USUARIO QUE LA CONTRASEÑA NO PUEDE TENER MENOS DE 6 CARACTERES
+                    ConexionDatos.MensajePantalla(ConexionDatos.OnCompletePasswordMinimunLenght);
                 }
             }
 
             //VERIFICACION DE CARACTERES NO PERMITIDOS
 
-            if (Metodos.EspacioBlanco(ConexionDatos.ConfirmacionPassword.ToLower()))
+            if (Metodos.EspacioBlanco(ConexionDatos.ConfirmacionPassword.ToLower())) //=> true = Existen caracteres prohibidos.
             {
+                //SE CAMBIA EL COLOR DEL TEXTO DEL passwordEntry2 A ROJO
                 passwordEntry2.TextColor = Color.Red;
-                await DisplayAlert("Alerta", "No se aceptan los siguientes caracteres: '!', '@', '#', '$', '%', '&', '(', ')', '+', '=', '/', '|'", "Entendido");
+                //SE LE NOTIFICA AL USUARIO QUE LA CONTRASEÑA NO PUEDE TENER NINGUNO DE LOS CARACTERES PROHIBIDOS
+                await DisplayAlert("Alerta", ConexionDatos.ForbiddenCharacters, ConexionDatos.OkText);
             }
         }
 
         //===============================================================================================================================
         //===============================================================================================================================
-        //METODO PARA REGRESAR A COLOR NEGRO CUANDO SE CORRIJAN LOS TEXTOS DE LOS ENTRY ASIGNADOS A: CORREO, USERNAME y PASSWORD(1 y 2)
+        //FUNCION PARA REGRESAR A COLOR NEGRO CUANDO SE CORRIJAN LOS TEXTOS DE LOS ENTRY ASIGNADOS A: CORREO, USERNAME y PASSWORD(1 y 2)
         private void CorreccionCorreo(object sender, TextChangedEventArgs e)
         {
             //LA ACCION DE ESTE LLAMADO SOLO SERA PERCEPTIBLE CUANDO LA CADENA DE CARACTERES
@@ -151,63 +167,58 @@ namespace MTTO_App.Paginas
             correoEntry.TextColor = Color.Black;
         }
 
+        //==================================================================================================================================
+        //==================================================================================================================================
+        //FUNCION PARA REALIZAR EL CAMBIO DE COLOR DE ACUERDO A LA CANTIDAD DE CARACTEREES QUE POSEE DE LA ENTRADA passwordEntry1
         private void CorreccionPassword1(object sender, TextChangedEventArgs e)
         {
-            //==================================================================================================================================
-            //==================================================================================================================================
-            //CONDICIONALES PARA REALIZAR EL CAMBIO DE COLOR DEL TEXTO ASIGNADO A LA ENTRADA "passwordEntry1"
-
-            if (ConexionDatos.Password.Length >= ConexionDatos.PasswordYellowColor && ConexionDatos.Password.Length <= ConexionDatos.PasswordGreenColor)
+            if (ConexionDatos.Password.Length >= ConexionDatos.PasswordYellowColorLegnth && 
+                ConexionDatos.Password.Length <= ConexionDatos.PasswordGreenColorLegnth)
                 passwordEntry1.TextColor = Color.Yellow;
 
-            if (ConexionDatos.Password.Length > ConexionDatos.PasswordGreenColor)
+            if (ConexionDatos.Password.Length > ConexionDatos.PasswordGreenColorLegnth)
                 passwordEntry1.TextColor = Color.Green;
 
-            if (ConexionDatos.Password.Length <= ConexionDatos.PasswordYellowColor)
+            if (ConexionDatos.Password.Length <= ConexionDatos.PasswordYellowColorLegnth)
                 passwordEntry1.TextColor = Color.Black;
         }
 
+        //==================================================================================================================================
+        //==================================================================================================================================
+        //FUNCION PARA REALIZAR EL CAMBIO DE COLOR DE ACUERDO A LA CANTIDAD DE CARACTEREES QUE POSEE DE LA ENTRADA passwordEntry1
         private async void CorreccionPassword2(object sender, TextChangedEventArgs e)
         {
-            //==================================================================================================================================
-            //==================================================================================================================================
-            //CONDICIONALES PARA REALIZAR EL CAMBIO DE COLOR DEL TEXTO ASIGNADO A LA ENTRADA "passwordEntry2"
 
-            if (ConexionDatos.ConfirmacionPassword.Length >= ConexionDatos.PasswordYellowColor && ConexionDatos.ConfirmacionPassword.Length <= ConexionDatos.PasswordGreenColor)
+            if (ConexionDatos.ConfirmacionPassword.Length >= ConexionDatos.PasswordYellowColorLegnth && 
+                ConexionDatos.ConfirmacionPassword.Length <= ConexionDatos.PasswordGreenColorLegnth)
                 passwordEntry2.TextColor = Color.Yellow;
 
-            if (ConexionDatos.ConfirmacionPassword.Length > ConexionDatos.PasswordGreenColor)
+            if (ConexionDatos.ConfirmacionPassword.Length > ConexionDatos.PasswordGreenColorLegnth)
                 passwordEntry2.TextColor = Color.Green;
 
-            if (ConexionDatos.ConfirmacionPassword.Length <= ConexionDatos.PasswordYellowColor)
+            if (ConexionDatos.ConfirmacionPassword.Length <= ConexionDatos.PasswordYellowColorLegnth)
                 passwordEntry2.TextColor = Color.Black;
 
             //==================================================================================================================================
             //==================================================================================================================================
             //SI LAS CONTRASEÑAS NO COINCIDEN SE DISPARA LA ALARMA "flagdifferentPassword"
-            if (ConexionDatos.flagdifferentPassword)
-                await DisplayAlert("Alerta", "Las contraseñas no coinciden", "Entendido");
+            if (ConexionDatos.flagdifferentPassword) //=> true = LAS CONTRASEÑAS (Password y ConfirmacionPassword) NO COINCIDEN
+                //SE LE NOTIFICA AL USUARIO QUE LAS CONTRASEÑAS NO COINCIDEN
+                await DisplayAlert("Alerta", ConexionDatos.PasswordDoesNotMatch, ConexionDatos.OkText);
         }
 
-        //===============================================================================================================================
-        //===============================================================================================================================
+        //==================================================================================================================================
+        //==================================================================================================================================
         //VERIFICACION FECHA DE NACIMIENTO: METODO ACTIVADO CUANDO SE SELECCIONA UNA FECHA DEL "fechaNacimientoPicker"
-        private async void OnDateSelected(object sender, DateChangedEventArgs args)
+        private void OnDateSelected(object sender, DateChangedEventArgs args)
         {
-            //SI LA FECHA DE NACIMIENTO SELECCIONADA ES IGUAL A LA FECHA ACTUAL
-            if (ConexionDatos.FechaNacimiento == DateTime.Today)
+            //SE EVALUA SI LA FECHA DE NACIMIENTO SELECCIONADA ES IGUAL O MAYOR/SUPERIOR A LA FECHA ACTUAL 
+            if (ConexionDatos.FechaNacimiento >= DateTime.Today)
             {
+                //SE CAMBIA EL COLOR DEL TEXTO DEL fechaNacimientoPicker A ROJO
                 fechaNacimientoPicker.TextColor = Color.Red;
-                await DisplayAlert("Alerta", "No se permite seleccionar la fecha actual como fecha de nacimiento", "Entendido");
-            }
-            else
-                fechaNacimientoPicker.TextColor = Color.Black;
-
-            //SI LA FECHA DE NACIMIENTO SELECCIONADA ES MAYOR A LA FECHA ACTUAL
-            if (ConexionDatos.FechaNacimiento > DateTime.Now)
-            {
-                fechaNacimientoPicker.TextColor = Color.Red;
-                await DisplayAlert("Alerta", "No se permite seleccionar una fecha que no a existido todavia", "Entendido");
+                //SE LE NOTIFICA AL USUARIO CUAL DE LAS DOS CONDICIONES MINIMAS NO SE HA CUMPLIDO.
+                ConexionDatos.MensajePantalla(ConexionDatos.OnDateSelectedMessage);
             }
             else
                 fechaNacimientoPicker.TextColor = Color.Black;
@@ -221,18 +232,19 @@ namespace MTTO_App.Paginas
             //CREACION E INICIALIZACION DE LA VARIABLE QUE RECIBIRA LA RESPUESTA DE LOS LLAMADOS DE LOS METODOS DE LA CLASE "ConfiguracionAdminViewModel.cs"
             string respuesta = string.Empty;
 
-            //------------------------------------------------------------------------------
-            ActivityIndicatorA.IsRunning = ActivityIndicatorA.IsVisible = true;
-            await Task.Delay(1250);
-            ActivityIndicatorA.IsRunning = ActivityIndicatorA.IsVisible = false;
-            //------------------------------------------------------------------------------
-
             //SE EVALUARA EL TEXTO QUE CONTIENE EL BOTON DE LA PAGINA
             switch (Boton.Text)
             {
                 //TEXTO CONTINUAR: EN ESTA SECCION EL RECUADRO QUE CONTIENE LAS ENTRADAS PARA LA INFORMACION DE USUARIO SE ENCUENTRA
                 //ESCONDIDA (NO ES VISIBLE). PRIMERO SE DEBEN LLENAR TODOS LOS CAMPOS DE LA INFORMACION PERSONAL
                 case "CONTINUAR":
+                    //ACTIVAMOS EL ActivityIndicator
+                    ActivityIndicatorA.IsRunning = ActivityIndicatorA.IsVisible = true;
+                    //ESPERAMOS 1.250 SEGUNDOS
+                    await Task.Delay(1250);
+                    //DESACTIVAMOS EL ActivityIndicator
+                    ActivityIndicatorA.IsRunning = ActivityIndicatorA.IsVisible = false;
+
                     //EVALUAMOS SI LOS CAMPOS DE INFORMACION PERSONAL SE ENCUENTRAN NO VACIO O NO NULOS
                     if (ConexionDatos.ContinuarRegistro(true))
                     {
@@ -263,41 +275,30 @@ namespace MTTO_App.Paginas
                 //e "Informacion de Usuario".
                 case "REGISTRAR":
                     //SE REALIZA UNA PREGUNTA Y SE EVALUA LA RESPUESTA
-                    if (await DisplayAlert("Alerta", "Esta a punto de realizar un nuevo registro." +
-                        "\n\n¿Desea continuar?", "Si", "No"))
+                    if (await DisplayAlert("Alerta", 
+                        ConexionDatos.OnButtonPushMethodMessage, ConexionDatos.AffirmativeText, ConexionDatos.NegativeText))
                     {
-                        //------------------------------------------------------------------------------------------------------
-                        //----------------------CODIGO PARA REGISTRAR UN USUARIO MEDIANTE CONSUMO DE API------------------------
-                        //LLAMAMOS AL METODO "Save" DE LA CLASE "ConfiguracionAdminViewModel" Y GUARDAMOS LA RESPUESTA OBTENIDA
                         //INICIAMOS EL ACTIVITY INDICATOR
                         ActivityIndicatorA.IsRunning = true;
-
+                        //INICIAMOS UNA SECCION DE CODIGO QUE SE EJECUTARA EN SEGUNDO PLANO UTILIZANDO LA FUNCION Run DE LA CLASE TasK
                         await Task.Run(async () =>
                         {
+                            //LLAMAMOS AL METODO "Save" DE LA CLASE "ConfiguracionAdminViewModel" Y GUARDAMOS LA RESPUESTA OBTENIDA
                             respuesta = await ConexionDatos.Save();
+                            //DETENEMOS EL ACTIVITY INDICATOR
                             ActivityIndicatorA.IsRunning = false;
                         });
 
                         //SE MUESTRA EL MENSAJE OBTENIDO
-                        Toast.MakeText(Android.App.Application.Context, respuesta, ToastLength.Long).Show();
-                        //SE HACE UN RETRAZO DE UN SEGUNDO
-                        await Task.Delay(1000);
-                        //SE CIERRA LA PAGINA "PaginaRegistro"
-                        await Navigation.PopAsync();
-
-                        //------------------------------------------------------------------------------------------------------
-                        //------------------------------------------------------------------------------------------------------
-                        //-----CODIGO PARA REGISTRAR UN USUARIO CUANDO LA APLICACION SE ENCUENTRA TRABAJANDO STAND ALONE--------
-                        /*respuesta = await ConexionDatos.Save();
-                        //SE EVALUA SI SE REALIZO ALGUN REGISTRO
-                        if (App.RegistroFlag)
-                            //SE DA SET A LA BANDERA
-                            App.RegistroFlag = false;
-                        else
-                            //SE MUESTRA EN PANATALLA MEDIANTE UN MENSAJE POP UP EL PORQUE NO SE PUDO REALIZAR EL REGISTRO DE USUARIO
-                            await DisplayAlert("Mensaje", respuesta, "Entendido");*/
-                        //------------------------------------------------------------------------------------------------------
-                        //------------------------------------------------------------------------------------------------------
+                        ConexionDatos.MensajePantalla(respuesta);
+                        //SE EVALUA SI LA RESPUESTA OBTENIDA ES "Registro Exitoso"
+                        if(respuesta.ToLower() == "registro existoso")
+                        {
+                            //SE HACE UN RETRAZO DE UN SEGUNDO
+                            await Task.Delay(1000);
+                            //SE CIERRA LA PAGINA "PaginaRegistro"
+                            await Navigation.PopAsync();
+                        }
                     }
                     break;
             }

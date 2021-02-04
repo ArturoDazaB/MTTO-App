@@ -1,4 +1,4 @@
-﻿namespace MTTO_App
+﻿namespace MTTO_App.Servicios
 {
     public interface IPicture
     {

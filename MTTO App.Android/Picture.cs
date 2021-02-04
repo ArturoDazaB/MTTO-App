@@ -3,6 +3,8 @@ using Android.Widget;
 using MTTO_App.Droid;
 using System;
 
+using MTTO_App.Servicios;
+
 [assembly: Xamarin.Forms.Dependency(typeof(Picture_Droid))]
 
 namespace MTTO_App.Droid

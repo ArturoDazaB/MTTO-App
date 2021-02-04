@@ -3,6 +3,8 @@ using MTTO_App.iOS;
 using System;
 using UIKit;
 
+using MTTO_App.Servicios;
+
 [assembly: Xamarin.Forms.Dependency(typeof(Picture_iOS))]
 
 namespace MTTO_App.iOS

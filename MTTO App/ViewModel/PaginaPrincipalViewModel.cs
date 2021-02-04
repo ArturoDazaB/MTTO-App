@@ -63,19 +63,36 @@ namespace MTTO_App.ViewModel
 
         //--------------------------------------------------------------------------------------------------------
         //TEXTOS
+        //TITULO DE LA APLICACION QUE SE VERA EN LA PARTE SUPERIOR DE LA PANTALLA DE INICIO (PantallaPrincipal)
         public string HeaderText { get { return "MTTO App"; } }
-
+        //TEXTO PLACEHOLDER DEL ENTRY USADO PARA INGRESAR EL NOMBRE DE USUARIO
         public string UsernamePH { get { return "Nombre de usuario"; } }
+        //TEXTO PLACEHOLDER DEL ENTRY USADO PARA INGRESAR EL NOMBRE DE USUARIO
         public string PasswordPH { get { return "Contraseña"; } }
+        //TEXTO DEL BOTON USADO PARA INGRESAR 
         public string ButtonPH { get { return "INGRESAR"; } }
+        //MENSAJE EMERGENTE CUANDO LA APLICACION DETECTE QUE NO HAY ACCESO A INTERNET 
+        public string NetWorkConnectivityChangeMessage 
+        { 
+            get { return App.NoNetworkAccessMessage; } 
+        }
+        //MENSAJE EMERGENTE QUE INFORMARÁ AL USUARIO CUANDO FALTEN EL NOMBRE DE USUARIO Y/O
+        //LA CONTRASEÑA PARA INGRESAR
+        public string UsernamePasswordEmptyMessage
+        {
+            get { return "Debe ingresar el nombre de usuario y la contraseña para poder ingresar"; }
+        }
+        //TEXTO USADO EN EL BOTON DEL MENSAJE DEL TIPO POP-UP INFORMATIVO
+        public string OkText { get { return App.OkText; } }
 
         //--------------------------------------------------------------------------------------------------------
-        //TAMAÑO DE LA FUENTE
+        //TAMAÑO DEL TEXTO
+        //TEXTO DE ETIQUETAS Y TEXTOS INFORMATIVOS
         public int LabelFontSize { get { return App.LabelFontSize; } }
-
+        //TEXTO DE ENTRADAS (ENTRYs)
         public int EntryFontSize { get { return App.EntryFontSize; } }
+        //TEXTO DE LOS TITULOS DE PAGINAS
         public int HeaderFontSize { get { return App.HeaderFontSize; } }
-
         //=========================================================================================================
         //---------------------------------------------------EVENTOS-----------------------------------------------
         public event PropertyChangingEventHandler PropertyChanging;

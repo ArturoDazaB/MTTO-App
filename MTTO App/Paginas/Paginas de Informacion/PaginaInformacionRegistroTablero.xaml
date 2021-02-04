@@ -130,7 +130,7 @@
                     <!--TEXTO: Ningun campo debe quedar vacio o nulo-->
                     <Label  TextColor="Black"
                             FontSize="{Binding EntryFontSize}"
-                            Grid.Row="2">
+                            Grid.Row="3">
 
                         <Label.FormattedText>
 
@@ -158,7 +158,7 @@
                                ID de SAP (SAP ID) asignado a dicho tablero.-->
                     <Label  TextColor="Black"
                             FontSize="{Binding EntryFontSize}"
-                            Grid.Row="3">
+                            Grid.Row="4">
 
                         <Label.FormattedText>
 
@@ -181,7 +181,7 @@
                     <!--TEXTO: No se permiten ninguno de los siguientes caracteres:
                     
                                 !, @, #, $, %, (, ), +, =, /, | .-->
-                    <StackLayout Grid.Row="4">
+                    <StackLayout Grid.Row="5">
 
                         <Label  TextColor="Black"
                         FontSize="{Binding EntryFontSize}">

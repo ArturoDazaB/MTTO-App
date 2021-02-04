@@ -134,8 +134,7 @@ namespace MTTO_App.Paginas
 
             //SE REALIZA LA PREGUNTA AL USUARIO SOBRE SI DERESEA REGISTRAR EL TABLERO EN LA BASE DE DATOS
             //SE EVALUA LA RESPUESTA OBTENIDA DIRECTAMENTE EN EL CONDICIONAL
-            if (await DisplayAlert("Alerta", "Esta apunto de realizar un nuevo registro de tablero." +
-                "\n¿Desea continuat?", "Si", "No, volver"))
+            if (await DisplayAlert("Alerta", DatosPagina.RegistrarTableroMethodMessage, DatosPagina.AffirmativeText, DatosPagina.NegativeText))
             {
                 //SE ACTIVA EL ACTIVITY INDICATOR MIENTRAS SE EJECUTA DE MANERA ASINCRONA LA FUNCION REGISTRARTABLERO
                 ActivityIndicator.IsVisible = true;
@@ -207,10 +206,10 @@ namespace MTTO_App.Paginas
             else
             {
                 if (string.IsNullOrEmpty(entryDescripcion.Text))
-                    await DisplayAlert("Mensaje", "El campo Descripcion no puede estar vacio", "Entendido");
+                    await DisplayAlert("Mensaje", "El campo Descripción no puede estar vacio", DatosPagina.OkText);
 
                 if (string.IsNullOrEmpty(entryCantidad.Text))
-                    await DisplayAlert("Mensaje", "El campo Cantidad no puede estar vacio", "Entendido");
+                    await DisplayAlert("Mensaje", "El campo Cantidad no puede estar vacio", DatosPagina.OkText);
             }
         }
 
@@ -292,7 +291,7 @@ namespace MTTO_App.Paginas
         //AL USUARIO QUE SE ENCUENTRE LOGGEADO
         private async void Mensaje(string Mensaje)
         {
-            await DisplayAlert("Alerta", Mensaje, "Entendido");
+            await DisplayAlert("Alerta", Mensaje, DatosPagina.OkText);
 
             Console.WriteLine("\n\n=============================================");
             Console.WriteLine("=============================================");
