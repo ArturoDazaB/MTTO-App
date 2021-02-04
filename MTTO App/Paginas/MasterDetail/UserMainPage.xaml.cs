@@ -13,7 +13,7 @@ namespace MTTO_App
     {
         private UltimaConexion UltimaConexion, UltimaConexionAux;
 
-        //CONSTRUCTOR DE LA CLASE "UserMainPage"
+        //CONSTRUCTOR DE LA CLASE "UserMainPage" (APP STAND ALONE)
         //NOTA: ESTE CONSTRUCTOR ES INVOCADO CUANDO LA APLICACION TRABAJA STAND ALONE
         public UserMainPage(Personas Persona, Usuarios Usuario)
         {
@@ -94,7 +94,7 @@ namespace MTTO_App
             Toast.MakeText(Android.App.Application.Context, "Bienvenido " + Usuario.Username, ToastLength.Short).Show();
         }
 
-        //CONSTRUCTOR DE LA CLASE "UserMainPage"
+        //CONSTRUCTOR DE LA CLASE "UserMainPage" (APP CONSUMO DE API)
         //NOTA: ESTE CONSTRUCTOR ES INVOCADO CUANDO LA APLICACION TRABAJA MEDIANTE EL CONSUMO DE APIS
         public UserMainPage(Personas Persona, Usuarios Usuario, DateTime UltimaFechaIngreso)
         {
