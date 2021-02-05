@@ -64,7 +64,7 @@
                 
                            1) Ningun campo debe quedar vacio o nulo
                 
-                           2) No se permiten espacioes en blanco al momento de ingresar el ID del tablero (TableroId) o el 
+                           2) No se permiten espacios en blanco al momento de ingresar el ID del tablero (TableroId) o el 
                               ID de SAP (SAP ID) asignado a dicho tablero.
                 
                            3) No se permiten ninguno de los siguientes caracteres:
@@ -154,7 +154,7 @@
 
                     <!--=====================================================================================================-->
                     <!--3) NUMERO DOS-->
-                    <!--TEXTO: No se permiten espacioes en blanco al momento de ingresar el ID del tablero (TableroId) o el 
+                    <!--TEXTO: No se permiten espacios en blanco al momento de ingresar el ID del tablero (TableroId) o el 
                                ID de SAP (SAP ID) asignado a dicho tablero.-->
                     <Label  TextColor="Black"
                             FontSize="{Binding EntryFontSize}"

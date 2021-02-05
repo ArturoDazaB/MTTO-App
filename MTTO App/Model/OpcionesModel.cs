@@ -4,19 +4,19 @@ namespace MTTO_App
 {
     public class OpcionesModel
     {
-        //============================================================================================================
-        //============================================================================================================
-        //VARIABLE LOCALES
-        private string nombreopcion, //=> NOMBRE QUE IDENTIFICARA A LA OPCION  
-                       iconfilename; //=> NOMBRE DEL ARCHIVO (IMAGEN) QUE REPRESENTARA A LA OPCION
 
         //============================================================================================================
         //============================================================================================================
         //PROPIEDADES
         //NOMBRE DE LA OPCION
-        //public string NombreOpcion { get { return nombreopcion; } }
+        public string NombreOpcion { get; private set; }
         //ICONO DE LA OPCION
-        //public string IconFileName { get { return iconfilename; } }
+        public string IconFileName { get; private set; }
+
+        public OpcionesModel()
+        {
+            NombreOpcion = IconFileName = string.Empty;
+        }
 
         //============================================================================================================
         //============================================================================================================
@@ -36,32 +36,32 @@ namespace MTTO_App
                 //CREACION E INICIALIZACION DE LA OPCION "Consulta de Tableros"
                 new OpcionesModel()
                 {
-                    nombreopcion = "Consulta",
-                    iconfilename = "Consulta.png"
+                    NombreOpcion = "Consulta",
+                    IconFileName = "Consulta.png"
                 },
                 //CREACION E INICIALIZACION DE LA OPCION "Registro de Tablero"
                 new OpcionesModel()
                 {
-                    nombreopcion = "Nuevo Tablero",
-                    iconfilename = "Plus.png",
+                    NombreOpcion = "Nuevo Tablero",
+                    IconFileName = "Plus.png",
                 },
                 //CREACION E INICIALIZACION DE LA OPCION "Registro de Usuario"
                 new OpcionesModel()
                 {
-                    nombreopcion = "Registro",
-                    iconfilename = "Registro.png"
+                    NombreOpcion = "Registro",
+                    IconFileName = "Registro.png"
                 },
                 //CREACION E INICIALIZACION DE LA OPCION "Configuracion" (Configuracion Administrator)
                 new OpcionesModel()
                 {
-                    nombreopcion = "Configuracion",
-                    iconfilename = "Configuracion.png"
+                    NombreOpcion = "Configuracion",
+                    IconFileName = "Configuracion.png"
                 },
                 //CREACION E INICIALIZACION DE LA OPCION "Salir"
                 new OpcionesModel()
                 {
-                    nombreopcion = "Salir",
-                    iconfilename = "Salir.png"
+                    NombreOpcion = "Salir",
+                    IconFileName = "Salir.png"
                 },
             };
         }
@@ -83,20 +83,20 @@ namespace MTTO_App
                 //CREACION E INICIALIZACION DE LA OPCION "Consulta de Tableros"
                 new OpcionesModel()
                 {
-                    nombreopcion = "Consulta",
-                    iconfilename = "Consulta.png"
+                    NombreOpcion = "Consulta",
+                    IconFileName = "Consulta.png"
                 },
                 //CREACION E INICIALIZACION DE LA OPCION "Configuracion de Informacion"
                 new OpcionesModel()
                 {
-                    nombreopcion = "Configuracion",
-                    iconfilename = "Configuracion.png"
+                    NombreOpcion = "Configuracion",
+                    IconFileName = "Configuracion.png"
                 },
                 //CREACION E INICIALIZACION DE LA OPCION "Salir"
                 new OpcionesModel()
                 {
-                    nombreopcion = "Salir",
-                    iconfilename = "Salir.png"
+                    NombreOpcion = "Salir",
+                    IconFileName = "Salir.png"
                 },
             };
         }
@@ -117,26 +117,26 @@ namespace MTTO_App
                 //CREACION E INICIALIZACION DE LA OPCION "Consulta de Tableros"
                 new OpcionesModel()
                 {
-                    nombreopcion = "Consulta",
-                    iconfilename = "Consulta.png",
+                    NombreOpcion = "Consulta",
+                    IconFileName = "Consulta.png",
                 },
                 //CREACION E INICIALIZACION DE LA OPCION "Registro de Usuarios"
                 new OpcionesModel()
                 {
-                    nombreopcion = "Registro",
-                    iconfilename = "Registro.png",
+                    NombreOpcion = "Registro",
+                    IconFileName = "Registro.png",
                 },
                 //CREACION E INICIALIZACION DE LA OPCION "Configuracion"
                 new OpcionesModel()
                 {
-                    nombreopcion = "Configuracion",
-                    iconfilename = "Configuracion.png",
+                    NombreOpcion = "Configuracion",
+                    IconFileName = "Configuracion.png",
                 },
                 //CREACION E INICIALIZACION DE LA OPCION "Salir"
                 new OpcionesModel()
                 {
-                    nombreopcion = "Salir",
-                    iconfilename = "Salir.png",
+                    NombreOpcion = "Salir",
+                    IconFileName = "Salir.png",
                 }
             };
         }

@@ -155,6 +155,12 @@
         //PROPIEDAD QUE RETORNA EN UN TEXTO (LISTA) LA INFORMACION QUE SE DESPLIEGA EN PANTALLA
         public string ListaInformacionTablero
         {
+            //EN ESTA PROPIEDAD SE RETORNA UN TEXTO EN FORMA DE "Lista" LA INFORMACION DEL TABLERO QUE SERA DESPLEGADA
+            //-----------------------------------------------------------------------------------------------------------------
+            //NOTA: PROPIEDAD QUE ES INVOCADA MEDIANTE UN ENLACE (Binding) HECHO ENTRE LA CLASE "PaginaConsultaTablero.xaml.cs"
+            //Y LA CLASE "PaginaInformacionViewModel.cs". ESTA INVOCACION SE REALIZA EN LA CLASE DE DISEÑO 
+            //"PaginaConsultaTablero.xaml"
+            //-----------------------------------------------------------------------------------------------------------------
             get
             {
                 return "       -Codigo del Tablero (ID).\n" +
@@ -167,7 +173,7 @@
         }
 
         //PROPIEDAD QUE RETORNA EN UN TEXTO LOS CARACTERES NO PERMITIDOS
-        public string Caracteres { get { return CaracteresNoPermitidos(); } }
+        public string Caracteres { get { return "       " + App.ForbiddenCharacters; ; } }
 
         //PROPIEDAD QUE RETORNA EL TEXTO QUE FUNCIONARA DE TITULO A LA PAGINA POP UP EMERGENTE
         public string TituloPH { get { return "INFORMACIÓN"; } }
@@ -184,9 +190,6 @@
         //============================================================================================================
         //============================================================================================================
         //FUNCION QUE RETORNA EN FORMA DE TEXTO LOS CARACTERES NO PERMITIDOS
-        public static string CaracteresNoPermitidos()
-        {
-            return "       " + App.ForbiddenCharacters;
-        }
+        public static string CaracteresNoPermitidos() { return "       " + App.ForbiddenCharacters; }
     }
 }
