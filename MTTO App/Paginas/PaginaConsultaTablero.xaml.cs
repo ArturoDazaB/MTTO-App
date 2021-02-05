@@ -136,7 +136,8 @@ namespace MTTO_App.Paginas
                         //SE VUELVE A REAJUSTAR EL TAMAÑO DE LA LISTA DE ITEMS 
                         listViewItems.HeightRequest = 0;
                         //SE INFORMA AL USUARIO QUE EL TABLERO QUE ACABA DE SER ESCANEADO NO FUE LOCALIZADO
-                        Toast.MakeText(Android.App.Application.Context, DatosPagina.HttpErrorResponse, ToastLength.Long).Show();
+                        //Toast.MakeText(Android.App.Application.Context, DatosPagina.HttpErrorResponse, ToastLength.Long).Show();
+                        DatosPagina.MensajePantalla(DatosPagina.HttpErrorResponse);
                     }
                     //=============================================================================
                     //=============================================================================
@@ -210,7 +211,8 @@ namespace MTTO_App.Paginas
                     //SE VUELVE A REAJUSTAR EL TAMAÑO DE LA LISTA DE ITEMS 
                     listViewItems.HeightRequest = 0;
                     //SE INFORMA AL USUARIO QUE EL TABLERO QUE ACABA DE SER ESCANEADO NO FUE LOCALIZADO
-                    Toast.MakeText(Android.App.Application.Context, DatosPagina.HttpErrorResponse, ToastLength.Long).Show();
+                    //Toast.MakeText(Android.App.Application.Context, DatosPagina.HttpErrorResponse, ToastLength.Long).Show();
+                    DatosPagina.MensajePantalla(DatosPagina.HttpErrorResponse);
                 }
             }
             //SI EL VALOR DEL ENTRY "entryTableroID" ESTA VACIO O NULO SE NOTIFICA AL USUARIO
@@ -221,10 +223,10 @@ namespace MTTO_App.Paginas
                 //CONDICIONAL ANTERIOR SE RETORNA UN MENSAJE INFORMANDOLE AL USUARIO CUAL DE LAS
                 //CONDICIONES PLANTEADAS NO SE CUMPLE
                 if (PickerOpciones.SelectedIndex == -1)
-                    await DisplayAlert("Mensaje", "Debe seleccionar la opcion de consulta", "Entendido");
+                    DatosPagina.MensajePantalla(DatosPagina.PickerSelectedIndex);
                 //-----------------------------------------------------------------------------------------
                 if (string.IsNullOrEmpty(entryTableroID.Text))
-                    await DisplayAlert("Mensaje", "Debe ingresar el parametro de consulta", "Entendido");
+                    DatosPagina.MensajePantalla(DatosPagina.ConsultaID);
                 //-----------------------------------------------------------------------------------------
             }
         }

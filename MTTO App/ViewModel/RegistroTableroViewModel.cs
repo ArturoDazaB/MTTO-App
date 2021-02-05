@@ -283,6 +283,13 @@ namespace MTTO_App.ViewModel
         //TEXTO USADO EN LA FUNCION "OnUnfocuseFilial" DE LA CLASE "PaginaRegistroTablero.xaml.cs"
         public string OnUnfocusedArea { get { return "El nombre del area no puede contener los siguientes caracteres:\n " + App.ForbiddenCharacters; } }
         //TEXTO USADO EN LA FUNCION "OnUnfocusedArea" DE LA CLASE "PaginaRegistroTablero.xaml.cs"
+        public string ConsultaID { get { return "Debe ingresar el parametro de consulta"; } }
+        //TEXTO USADO EN LA FUNCION "ConsultaID" DE LA CLASE "PaginaConsultaTablero.xaml.cs"
+        //ESTA PROPIEDAD SE UTILIZA CUANDO SE PRESIONA EL BOTON CONSULTAR Y NO SE HA INGRESADO EL ID EL TABLERO A CONSULTAR
+        public string PickerSelectedIndex { get { return "Debe seleccionar la opcion de consulta"; } }
+        //TEXTO USADO EN LA FUNCION "ConsultaID" DE LA CLASE "PaginaConsultaTablero.xaml.cs"
+        //ESTA PROPIEDAD SE UTILIZA CUANDO SE PRESIONA EL BOTON CONSULTAR Y NO SE HA SELECCIONADO CUAL METODO DE CONSULTA (CONSULTA POR TABLERO ID
+        //O CONSULTAPOR SAP ID) DE TABLEROS
         public string AffirmativeText { get { return App.AffirmativeText; } } //=> SI
         //TEXTO UTILIZADO PARA REPRESENTAR LA AFIRMACION ANTE UN MENSAJE DE CONSULTA
         public string NegativeText { get { return App.NegativeText; } } //=> NO
@@ -1348,7 +1355,7 @@ namespace MTTO_App.ViewModel
         //METODO DE IMPRESION POR CONSOLA
         public void MensajePantalla(string mensaje)
         {
-            Toast.MakeText(Android.App.Application.Context, mensaje, ToastLength.Short).Show();
+            Toast.MakeText(Android.App.Application.Context, mensaje, ToastLength.Long).Show();
 
             Mensaje(mensaje);
         }
