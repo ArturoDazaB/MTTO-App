@@ -13,7 +13,7 @@ namespace MTTO_App
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PaginaQueryAdmin : ContentPage
     {
-        //SE CREAN LAS CONSTANTES
+        //SE CREAN E INICIALIZAN LAS CONSTANTES
         private const int HeightRow = 45;
 
         //SE CREAN LOS OBJETOS
@@ -25,6 +25,9 @@ namespace MTTO_App
 
         //SE CREAN LAS VARIABLES
         private int Seleccion;
+        //========================================================================================================
+        //========================================================================================================
+        //CONSTRUCTOR
         public PaginaQueryAdmin(Personas persona, Usuarios usuario)
         {
             InitializeComponent();
@@ -66,6 +69,7 @@ namespace MTTO_App
                 ConexionDatos.MensajePantalla("Debe ingresar los datos a buscar");
             else
             {
+                //SE VUELVE VISIBLE EL ACTIVITY INDICATOR
                 ActivityIndicatorBusqueda.IsVisible = true;
 
                 //LUEGO SE EVALUA CUAL ES LA OPCION DE BUSQUEDA SELECCIONADA
@@ -84,6 +88,7 @@ namespace MTTO_App
                             ActivityIndicatorBusqueda.IsRunning = true;
                             await Task.Run(async () =>
                             {
+                                //SE REALIZA EL LLAMADO A LA FUNCION QUE GENERA LA SOLICITUD HTTP Y RETORNA UNA LISTA
                                 Lista = await ConexionDatos.ListaPersonasHttpClient(Seleccion, EntryDatos.Text);
                                 ActivityIndicatorBusqueda.IsRunning = false;
                             });
@@ -233,6 +238,7 @@ namespace MTTO_App
                 }
             }
 
+            //SE VUELVE INVISIBLE EL ACTIVITY INDICATOR
             ActivityIndicatorBusqueda.IsVisible = false;
         }
 

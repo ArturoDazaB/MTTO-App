@@ -20,12 +20,12 @@ namespace MTTO_App.ViewModel
         //==================================================================================================
         //==================================================================================================
         //SE CREAN LAS VARIABLES LOCALES DE LA CLASE
-        //ATRIBUTOS DEL OBJETO TABLERO: TableroID (Pagina de registro y consulta)
-        //                              Filial (Pagina de registro y consulta)
-        //                              Area (Pagina de registro y consulta)
-        //                              Fecha de Creacion (Pagina de registro y consulta)
-        //                              CodigoQRData (Pagina de registro y consulta)
-        //                              CodigoQRFilename (Pagina de registro y consulta)
+        //ATRIBUTOS/PROPIEDADES DEL OBJETO TABLERO: TableroID (Pagina de registro y consulta)
+        //                                          Filial (Pagina de registro y consulta)
+        //                                          Area (Pagina de registro y consulta)
+        //                                          Fecha de Creacion (Pagina de registro y consulta)
+        //                                          CodigoQRData (Pagina de registro y consulta)
+        //                                          CodigoQRFilename (Pagina de registro y consulta)
 
         protected string sapid, tableroID, filial, area, descripcion, cantidad;
         protected Personas Persona;
@@ -83,7 +83,6 @@ namespace MTTO_App.ViewModel
             {
                 filial = value;
                 OnPropertyChanged();
-
                 NotificacionCambio("Filial", Filial);
             }
         }
@@ -94,7 +93,6 @@ namespace MTTO_App.ViewModel
             {
                 area = value;
                 OnPropertyChanged();
-
                 NotificacionCambio("Area", Area);
             }
         }
@@ -215,32 +213,82 @@ namespace MTTO_App.ViewModel
         public string ColumnaDescripcion { get { return "Descripcion"; } }
         //=> TEXTO DE LA COLUMNA "Descripcion" DE LA LISTA DE ITEMS DEL TABLERO
         //----------------------------------PH PaginaConsultaTablero----------------------------------------
-        public string ConsultaTableroIDPH { get { return "Ingresa el ID del tablero"; } }
+        public string ConsultaTableroIDPH { get { return "Ingresa el ID a consultar (Tablero ID o SapID)"; } }
+        //=> TEXTO PRESENTADO COMO PLACE HOLDER PARA LA ENTRADA DEL ID DEL TABLERO
 
         //----------------------------------PH BotonesPaginaRegistroTablero---------------------------------
         public string GenerarTableroPH { get { return "Generar"; } }
+        //TEXTO DEL BOTON GENERAR CODIGO QR DE LA PAGINA "PaginaRegistroTablero"
         public string AddItemPHP { get { return "Añadir Item"; } }
+        //TEXTO DEL BOTON AÑADIR ITEM DE LA PAGINA "PaginaRegistroTablero"
         public string GuardarTableroPH { get { return "Guardar Imagen"; } }
+        //TEXTO DEL BOTON GUARDAR IMAGEN DE LA PAGINA "PaginaRegistroTablero"
         public string RegistrarTableroPH { get { return "Registrar"; } }
+        //TEXTO DEL BOTON REGISTRAR TABLERO DE LA PAGINA "PaginaRegistroTablero"
 
         //----------------------------------PH BotonesPaginaConsultaTablero---------------------------------
         public string BotonScanPH { get { return "Escanear Codigo"; } }
+        //TEXTO DEL BOTON ESCANEAR DE LA PAGINA "PaginaConsutaTablero"
         public string BotonConsultaIDPH { get { return "Busqueda por ID"; } }
-
+        //TEXTO DEL BOTON CONSULTA POR ID DE LA PAGINA "PaginaConsultaTablero"
         //----------------------------------PH Titulo de las Paginas----------------------------------------
         public string TituloRegistro { get { return "Pagina de Registro"; } }
+        //TEXTO DEL TITULO DE LA PAGINA "PaginaRegistroTablero"
         public string TituloConsulta { get { return "Pagina de Consulta"; } }
-
+        //TEXTO DEL TITULO DE LA PAGINA "PaginaConsultaTablero"
         //-----------------------------------TEXTOS MENSAJES POP-UP-----------------------------------------
+        public string RegistrarTableroMethodMessage { get { return "Esta a punto de registrar un nuevo tablero\n\n¿Desea continuar?"; } }
         //TEXTO USADO EN EL MENSAJE DEL TIPO POP-UP DE LA PAGINA "RegistroTablero" DONDE SE LE CONSULTA AL USUARIO
         //SI DESEA CONTINUAR CON EL REGISTRO DEL TABLERO
-        public string RegistrarTableroMethodMessage { get { return "Esta a punto de registrar un nuevo tablero\n\n¿Desea continuar?"; } }
-        //TEXTOS UTILIZADOS PARA REPRESENTAR LA AFIRMACION O NEGACION DEL USUARIO ANTE UNA PETICION
-        //NOTA: DICHOS TEXTOS SON USADOS EN LOS DISPLAYALERT EN LAS SECCIONES DE AFIRMACION (SI) Y NEGACION (NO) DEL MENSAJE APARENTE
+        public string AddItemMessage
+        {
+            get
+            {
+                //SE CREA E INICIALIA LA VARIABLE QUE RETORNARA EL MENSAJE NECESARIO
+                var mensaje = string.Empty;
+
+                //SE EVALUA SI LA PROPIEDAD "Descripcion" SE ENCUENTRA VACIA
+                if (string.IsNullOrEmpty(Descripcion))
+                    mensaje = "El campo 'Descripción' no puede estar vacio";
+
+                //SE EVALUA SI LA PROPIEDAD "Cantidad" SE ENCUENTRA VACIA
+                if (string.IsNullOrEmpty(Cantidad))
+                    mensaje = "El campo 'Cantidad' no puede estar vacío";
+
+                return mensaje;
+            }
+        }
+        //TEXTO USADO EN LA FUNCION "AddItem" DE LA CLASE "PaginaRegistroTablero.xaml.cs"
+        public string OnUnfocusedTableroID
+        {
+            get
+            {
+                //SE CREA E INICIALIZA LA VARIABLE QUE CONTENDRA EL MENSAJE A MOSTRAR
+                string mensaje = string.Empty;
+
+                //SE EVALUA SI LA PROPIEDAD "TableroID" TIENE ESPACIOS EN BLANCO
+                if(Metodos.EspacioBlanco(TableroID))
+                    mensaje = "El ID del tablero no puede contener espacios en blanco";
+
+                //SE EVALUA SI LA PROPIEDAD "TableroID" TIENE CARACTERES ESPECIFICOS PROHIBIDOS
+                if (Metodos.Caracteres(TableroID))
+                    mensaje = "El ID del tablero no puede contener los siguientes caracteres:\n " + App.ForbiddenCharacters;
+
+                //SE RETORNA LA VARIABLE "mensaje"
+                return mensaje;
+            }
+        }
+        //TEXTO USADO EN LA FUNCION "OnUnfocusedTableroID" DE LA CLASE "PaginaRegistroTablero.xaml.cs"
+        public string OnUnfocusedFilial { get { return "El nombre de la filial no puede contener los siguientes caracteres:\n "+App.ForbiddenCharacters; } }
+        //TEXTO USADO EN LA FUNCION "OnUnfocuseFilial" DE LA CLASE "PaginaRegistroTablero.xaml.cs"
+        public string OnUnfocusedArea { get { return "El nombre del area no puede contener los siguientes caracteres:\n " + App.ForbiddenCharacters; } }
+        //TEXTO USADO EN LA FUNCION "OnUnfocusedArea" DE LA CLASE "PaginaRegistroTablero.xaml.cs"
         public string AffirmativeText { get { return App.AffirmativeText; } } //=> SI
+        //TEXTO UTILIZADO PARA REPRESENTAR LA AFIRMACION ANTE UN MENSAJE DE CONSULTA
         public string NegativeText { get { return App.NegativeText; } } //=> NO
-        //TEXTO UTILIZADO PARA REPRESENTAR LA AFIRMACION ANTE UN MENSAJE INFORMATIVO
+        //TEXTO UTILIZADO PARA REPRESENTAR LA NEGACION ANTE UN MENSAJE DE CONSULTA
         public string OkText { get { return App.OkText; } } //=>ENTENDIDO
+        //TEXTO UTILIZADO PARA REPRESENTAR LA AFIRMACION ANTE UN MENSAJE INFORMATIVO
 
         //-----------------------------------------COLORES--------------------------------------------------
         //COLOR DEL FONDO
@@ -301,19 +349,22 @@ namespace MTTO_App.ViewModel
         public List<ItemTablero> AddItem(string tableroID, string descripcion,
             int cantidad, List<ItemTablero> lista)
         {
+            //SE CREA UN OBJETO DEL TIPO "ItemTablero" Y SE INICIALIZA MEDIANTE LA FUNCION "NewItem"
             var item = ItemTablero.NewItem(tableroID, descripcion, cantidad);
+            //SE AÑADE EL ITEM CREADO A LA LISTA DE ITEMS
             lista.Add(item);
-
+            //SE RETORNA LA LISTA CON EL ITEM NUEVO
             return lista;
         }
 
         //==================================================================================================
         //==================================================================================================
-        //FUNCIONES LLAMADAS DENTRO DEL METODO REGISTRAR TABLERO
-        //METODOS LLAMADOS PARA EVALUAR LOS CAMPOS/ATRIBUTOS PARA UN NUEVO REGISTRO DE TABLERO
+        //FUNCION QUE EVALUA QUE NINGUNO DE LOS CAMPOS DEL TABLERO SE ENCUENTRE VACIO
         private bool Evaluacion1()
         {
-            if (!string.IsNullOrEmpty(tableroID) &&  //EL ID DEL TABLERO NO SE PUEDE ENCONTRAR VACIO
+            //SE EVALUA QUE NINGUNO DE LOS CAMPOS SE ENCUENTRE VACIO
+            if (!string.IsNullOrEmpty(tableroID) && //EL ID DEL TABLERO NO SE PUEDE ENCONTRAR VACIO
+                !string.IsNullOrEmpty(sapid) &&     //EL ID DE SAP DEL TABLERO NO PUEDE SER VACIO
                 !string.IsNullOrEmpty(filial) &&  //LA FILIAL NO SE PUEDE ENCONTRAR VACIA
                 !string.IsNullOrEmpty(area))            //EL AREA NO SE PUEDE ENCONTRAR VACIA
                 return true;
@@ -321,10 +372,16 @@ namespace MTTO_App.ViewModel
                 return false;
         }
 
+        //==================================================================================================
+        //==================================================================================================
+        //FUNCION QUE EVALUA QUE TODOS LOS CAMPOS CUMLAN CON LAS CONDICIONES MINIMAS DE FORMATO
         private bool Evaluacion2()
         {
-            if (!Metodos.EspacioBlanco(tableroID) &&    //EL IF DEL TABLERO NO PUEDE CONTENER ESPACIOS EN BLANCO
+            //SE EVALUA QUE TODOS LOS CAMPOS CUMPLAN CON LAS CONDICIONES MINIMAS
+            if (!Metodos.EspacioBlanco(tableroID) &&    //EL ID DEL TABLERO NO PUEDE CONTENER ESPACIOS EN BLANCO
                 !Metodos.Caracteres(tableroID) &&       //EL ID DEL TABLERO NO PUEDE CONTENER CARACTERES ESPECIFICOS
+                !Metodos.EspacioBlanco(sapid) &&        //EL ID DE SAP DEL TABLERO NO PUEDE CONTENER ESPACIOS EN BLANCO
+                !Metodos.Caracteres(sapid) &&           //EL ID DE SAP DEL TABLERO NO PUEE CONTENER CARACTERES ESPECIFICOS
                 !Metodos.Caracteres(filial) &&          //LA FILIAL NO PUEDE CONTENER CARACTERES ESPECIFICOS
                 !Metodos.Caracteres(area))              //EL AREA NO PUEDE CONTENER CARACTERES ESPECIFICOS
                 return true;
@@ -332,6 +389,11 @@ namespace MTTO_App.ViewModel
                 return false;
         }
 
+        //==================================================================================================
+        //==================================================================================================
+        //FUNCION QUE EVALUA SI LA INFORMACION DEL TABLERO A REGISTRAR NO SE ENCUENTRA YA PREVIAMENTE
+        //REGISTRADA EN LA BASE DE DATOS.
+        //NOTA: ESTA FUNCION SOLO ES EJECUTADA CUANDO LA APLICACION SE ENCUENTRA TRABAJANDO STAND ALONE
         private bool Evaluacion3(List<Tableros> registros)
         {
             if (!Metodos.MatchTableroID(registros, TableroID) &&      //SE EVALUA SI EL TableroID YA SE ENCONTRABA REGISTRADO PREVIAMENTE
@@ -341,20 +403,17 @@ namespace MTTO_App.ViewModel
             else
                 //SI EXISTE ALGUN REGISTRO CON EL MISMO ID O CON LA MISMA DATA DEL CODIGO QR SE DETIENE EL REGISTRO (FALSE)
                 return false;
-        } /*=> METODO USADO EN PARA EL REGISTRO DE USUARIO 
-                                                                   USADO CUANDO LA PLATAFORMA SE ENCUENTRE TRABAJANDO
-                                                                   STAND ALONE*/
+        } 
 
         //==================================================================================================
         //==================================================================================================
-        //FUNCIONES QUE RETORNAN UNA RESPUESTA CUANDO LAS FUNCIONES Evaluacion1, Evaluacion2 y Evaluacion3
-        //RETORNAN UN VALOR NEGATIVO O FALSO
+        //FUNCION QUE EVALUA CUAL DE LOS CAMPOS EVALUADOS SE ENCUENTRA VACIO Y RETORNA UNA RESPUESTA PARA 
+        //INFORMAR AL USAURIO
         private string RespuestaEvaluacion1()
         {
-            //DE NO CUMPLIRSE ALGUNA DE LAS CONDICIONES MINIMAS SE ARROJA
-            //UN MENSAJE DE NOTIFICACION AL USUARIO CUALES SON LOS ELEMENTOS
-            //QUE NO CUMPLEN CON LAS CONDICIONES MINIMAS.
-
+            //DE NO CUMPLIRSE ALGUNA DE LAS CONDICIONES MINIMAS SE ARROJA UN MENSAJE DE NOTIFICACION 
+            //AL USUARIO CUALES SON LOS ELEMENTOS QUE NO CUMPLEN CON LAS CONDICIONES MINIMAS.
+            //SE CREA E INICIALIZA LA VARIABLE QUE RETORNARA LA RESPUESTA
             string respuesta = string.Empty;
 
             //CASO DE NO TENER NINGUN VALOR INGRESADO
@@ -378,6 +437,10 @@ namespace MTTO_App.ViewModel
             return respuesta;
         }
 
+        //==================================================================================================
+        //==================================================================================================
+        //FUNCION QUE RETORNA UNA RESPUESTA DESPUES DE EVALUAR CUAL DE LOS CAMPOS NO CUMPLE CON LAS 
+        //CONDICIONES MINIMAS DE FORMATO
         private string RespuestaEvaluacion2()
         {
             string respuesta = string.Empty;
@@ -399,7 +462,11 @@ namespace MTTO_App.ViewModel
 
             return respuesta;
         }
-
+        //==================================================================================================
+        //==================================================================================================
+        //FUNCION QUE RETORNA UNA RESPUESTA SI EL ID DEL TABLERO YA SE ENCUENTA REGISTRADO O SI EL CODIGO QR 
+        //CREADO YA SE ENCUENTRA 
+        //NOTA: ESTA FUNCION SOLO ES EJECUTADA CUANDO LA APLICACION SE ENCUENTRA TRABAJANDO STAND ALONE
         private string RespuestaEvaluacion3(List<Tableros> registros)
         {
             //SE CREA E INICIALIZA LA VARIABLE QUE CONTENDRA
@@ -415,9 +482,7 @@ namespace MTTO_App.ViewModel
 
             //SE RETORNA EL VALOR DE LA VARIABLE RESPUESTA
             return respuesta;
-        } /*=> METODO USADO EN PARA EL REGISTRO DE USUARIO 
-                                                                              USADO CUANDO LA PLATAFORMA SE ENCUENTRE TRABAJANDO
-                                                                              STAND ALONE*/
+        } 
 
         //==================================================================================================
         //==================================================================================================
@@ -1265,7 +1330,6 @@ namespace MTTO_App.ViewModel
         //==================================================================================================
         //==================================================================================================
         //METODO DE IMPRESION POR CONSOLA
-
         protected void Mensaje(string mensaje)
         {
             //------------------------------------------------------------------------------------------------
@@ -1279,5 +1343,14 @@ namespace MTTO_App.ViewModel
             Console.WriteLine("=============================================\n\n\n");
         }
 
+        //==================================================================================================
+        //==================================================================================================
+        //METODO DE IMPRESION POR CONSOLA
+        public void MensajePantalla(string mensaje)
+        {
+            Toast.MakeText(Android.App.Application.Context, mensaje, ToastLength.Short).Show();
+
+            Mensaje(mensaje);
+        }
     }
 }

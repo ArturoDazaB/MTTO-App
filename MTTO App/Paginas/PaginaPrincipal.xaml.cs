@@ -31,29 +31,36 @@ namespace MTTO_App
         //VALIDACION PARA EL INGRESO DE USUARIO
         async public void OnIngresar(Object sender, EventArgs e)
         {
-            //SE DA SET A LA ALARMA DE MATCH DE USUARIO
-
-            if(Connectivity.NetworkAccess == NetworkAccess.None)
+            //SE VERICA SI EL ESTADO DEL ACCESO A LA RED ES NULO
+            if(Connectivity.NetworkAccess == NetworkAccess.None) //=> true => NO HAY CONEXION A LA RED
             {
+                //SE LE NOTIFICA AL USUARIO MEDIANTE UN MENSAJE QUE NO HAY CONEXION A LA RED
                 await DisplayAlert("Mensaje", ConexionDatos.NetWorkConnectivityChangeMessage, ConexionDatos.OkText);
             }
-            else if (Connectivity.NetworkAccess != NetworkAccess.None)
+            else if (Connectivity.NetworkAccess != NetworkAccess.None) // true => SI HAY CONEXION A LA RED
             {
-                if (string.IsNullOrEmpty(ConexionDatos.Username) ||     //LOS ENTRY DEBEN TENER CARACTERES PARA PODER
-                string.IsNullOrEmpty(ConexionDatos.Password))       //REALIZAR LA BUSQUEDA DE USUARIO
+                //SE VERIFICA SI LAS PROPIEDADES DE LA CLASE VIEW MODEL SE ENCUENTREN VACIOS
+                if (string.IsNullOrEmpty(ConexionDatos.Username) || 
+                string.IsNullOrEmpty(ConexionDatos.Password))       //=> true => LAS PROPIEDADES SE ENCUENTRAN VACIAS O NULAS
                 {
-                    await DisplayAlert("Mensaje", ConexionDatos.UsernamePasswordEmptyMessage, ConexionDatos.OkText);
+                    //SE LE NOTIFICA AL USUARIO MEDIANE UN MENSAJE QUE NINGUNA DE LAS DOS PROPIEDADES PUEDE SER VACIAS 
+                    ConexionDatos.MensajePantalla(ConexionDatos.UsernamePasswordEmptyMessage);
                 }
-                else
+                else //=> false => NINGUNA DE LAS PROPIEDADES SE ENCUENTRA VACIA
                 {
                     //------------------------------------------------------------------------------
                     //CONEXION CON LA BASE DE DATOS (CLIENTE - SERVIDOR)
                     //SE LLAMA AL METODO QUE REALIZA LA SOLICITUD HTTP
+                    //SE HACE VISIBLE EL ACTIVITY INDICATOR
                     ActivityIndicator.IsVisible = true;
+                    //SE ACTIVA EL ACTIVITY INDICATOR
                     ActivityIndicator.IsRunning = true;
+                    //INICIAMOS UNA SECCION DE CODIGO QUE SE EJECUTARA EN SEGUNDO PLANO UTILIZANDO LA FUNCION Run DE LA CLASE TasK
                     await Task.Run(async () =>
                     {
+                        //LLAMAMOS AL METODO "LogInReques" DE LA CLASE "PaginaPrincipalViewModel" Y GUARDAMOS LA RESPUESTA OBTENIDA
                         loginresponse = await ConexionDatos.LogInRequest();
+                        //SE DESACTIVA EL ACTIVITY INDICATOR
                         ActivityIndicator.IsRunning = false;
                     });
 
@@ -75,7 +82,7 @@ namespace MTTO_App
                     {
                         //SI LA RESPUESTA ES NULA => NO SE OBTUVO RESULTADOS
                         //SE NOTIFICA AL USUARIO SOBRE EL INGRESO A LA PLATAFORMA
-                        await DisplayAlert("Mensaje", ConexionDatos.Result, ConexionDatos.OkText);
+                        ConexionDatos.MensajePantalla(ConexionDatos.Result);
                         passwordEntry.Text = String.Empty;
                     }
                 }

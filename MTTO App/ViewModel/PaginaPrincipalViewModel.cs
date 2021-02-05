@@ -14,9 +14,9 @@ namespace MTTO_App.ViewModel
 {
     public class PaginaPrincipalViewModel : INotifyPropertyChanging
     {
-        //=========================================================================================================
-        //=========================================================================================================
-        //VARIABLES DE LA CLASE
+        //===============================================================================================
+        //===============================================================================================
+        //VARIABLES LOCALES
         protected string username = string.Empty,
                          password = string.Empty;
 
@@ -24,28 +24,43 @@ namespace MTTO_App.ViewModel
 
         //=========================================================================================================
         //----------------------------------------PROPIEDADES DE LA CLASE------------------------------------------
+        //PROPIEDAD ASIGNADA A REPRESENTAR EL NOMBRE DE USUARIO
         public string Username
         {
             get { return username; }
             set
             {
+                //CADA QUE SE MODIFIQUE LA PROPIEDAD "Username" SE EJECUTARA ESTE CODIGO
+                //LLAMADO PARA DETECTAR CAMBIO DE LA PROPIEDAD
                 OnPropertyChanged();
+                //ASIGNACION DEL DATO QUE POSEA LA PROPIEDAD A LA VARIABLE
                 username = value;
+                //--------------------------------------------------------------
+                //NOTA:COMANDO UTIL CUANDO EL TELEFONO SE ENCUENTRE DEBUGGIANDO
+                //IMPRESION POR CONSOLA DEL VALOR DE LA VARIABLE "username"
                 ConsoleWriteline("USERNAME/NOMBRE DE USUARIO", username);
+                //--------------------------------------------------------------
             }
         }
-
+        //PROPIEDAD ASIGNADA A REPRESENTAR LA CONTRASEÑA DEL USUARIO
         public string Password
         {
             get { return password; }
             set
             {
+                //CADA QUE SE MODIFIQUE LA PROPIEDAD "Password" SE EJECUTARA ESTE CODIGO
+                //LLAMADO PARA DETECTAR CAMBIO DE LA PROPIEDAD
                 OnPropertyChanged();
+                //ASIGNACION DEL DATO QUE POSEA LA PROPIEDAD A LA VARIABLE
                 password = value;
+                //--------------------------------------------------------------
+                //NOTA:COMANDO UTIL CUANDO EL TELEFONO SE ENCUENTRE DEBUGGIANDO
+                //IMPRESION POR CONSOLA DEL VALOR DE LA VARIABLE "username"
                 ConsoleWriteline("PASSWORD/CONTRASEÑA", password);
+                //--------------------------------------------------------------
             }
         }
-
+        //PROPIEDAD ASIGNADA A REPRESENTAR LA RESPUESTA OBTENIDA POR LA SOLICITUD HTTP
         public string Result
         {
             get { return result; }
@@ -55,11 +70,10 @@ namespace MTTO_App.ViewModel
         //----------------------------------------PROPIEDADES DE LA PAGINA-----------------------------------------
         //=========================================================================================================
         //COLORES
-        public string BackGroundColor { get { return App.BackGroundColor; } }
-
-        public string HeaderBackGroundColor { get { return "#E53835"; } }
-        public string EntryBackGroundColor { get { return "#424242"; } }
-        public string IngresoDatosBackGroundColor { get { return "#ff6e60"; } }
+        public string BackGroundColor { get { return App.BackGroundColor; } } //=> COLOR DE FONDO DE LA PANTALLA PRINCIPAL
+        public string HeaderBackGroundColor { get { return "#E53835"; } } //=> COLOR DEL TEXTO DEL TITULO DE LA PANTALLA
+        public string EntryBackGroundColor { get { return "#424242"; } } //=> COLOR DEL TEXTO DE LAS ENTRADAS DE NOMBRE DE USUARIO Y CONTRASEÑA
+        public string IngresoDatosBackGroundColor { get { return "#ff6e60"; } } //=> COLOR DEL BOTON DE INGRESO
 
         //--------------------------------------------------------------------------------------------------------
         //TEXTOS
@@ -130,6 +144,14 @@ namespace MTTO_App.ViewModel
             Console.WriteLine("\nMENSAJE: \n" + mensaje);
             Console.WriteLine("==================================================");
             Console.WriteLine("==================================================\n\n");
+        }
+
+        //==================================================================================
+        //==================================================================================
+        //FUNCION PARA GENERAR UN MENSAJE NO INTERACTIVO POR PANTALLA
+        public void MensajePantalla(string mensaje)
+        {
+            Toast.MakeText(Android.App.Application.Context, mensaje, ToastLength.Short).Show();
         }
 
         //=========================================================================================================

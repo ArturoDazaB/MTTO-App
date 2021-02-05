@@ -13,14 +13,16 @@ namespace MTTO_App
 {
     internal class QueryAdminViewModel
     {
-        //---------------------------------------------------------------------------------------------------------
-        //VARIABLES DE LA CLASE
-        private Personas Persona;
-        private Usuarios Usuario;
-        private string errormessage;
+        //===============================================================================================
+        //===============================================================================================
+        //VARIABLES Y OBJETOS LOCALES 
+        private Personas Persona; //=> OBJETO QUE RECIBIRA LA INFORMACION PERSONAL COMPLETA DEL USUARIO QUE SE ENCUENTRA NAVEGANDO
+        private Usuarios Usuario; //=> OBJETO QUE RECIBIRA LA INFORMACION DE USUARIO COMPLETA DEL USUARIO QUE SE ENCUENTRA NAVEGANDO
+        private string errormessage; 
         public int OpcionSeleccionada;
         //---------------------------------------------------------------------------------------------------------
         //PROPIEDADES DE LA CLASE
+        //PROPIEDAD QUE RECIBIRA LA LISTA DE OPCIONES DE METODOS DE BUSQUEDA DE USUARIOS
         public List<QueryAdminModel> InfoConfig { get { return new QueryAdminModel().GetConfiguracion(); } }
         //---------------------------------------------------------------------------------------------------------
         //TEXTOS
@@ -88,14 +90,16 @@ namespace MTTO_App
         public string AffirmativeText { get { return App.AffirmativeText; } } //=> SI
         public string NegativeText { get { return App.NegativeText; } } //=> NO
         //TEXTO USADO EN EL BOTON DEL MENSAJE DEL TIPO POP-UP INFORMATIVO
-        public string OkText { get { return App.OkText; } }
+        public string OkText { get { return App.OkText; } } //=> Entendido
         //=========================================================================================================
         //-------------------------------------------------METODOS-------------------------------------------------
         //CONSTRUCTOR DE LA CLASE 
         public QueryAdminViewModel(Personas persona, Usuarios usuario)
         {
-            Persona = persona;
-            Usuario = usuario;
+            //SE ASIGNA LA INFORMACION DEL USUARIO QUE SE ENCUENTRA NAVEGANDO
+            Persona = new Personas().NewPersona(persona);
+            Usuario = new Usuarios().NewUsuario(usuario);
+            //SE INICIALIZA LA VARIABLE "errormessage"
             errormessage = string.Empty;
         }
 
@@ -315,12 +319,14 @@ namespace MTTO_App
                         }
                     }
                 }
+                //SECCION DE CODIGO QUE SE EJECUTA CUANDO EL COMANDO DE SOLICITUD HTTP FALLE
                 catch (Exception ex) when (ex is HttpRequestException ||
                                            ex is Javax.Net.Ssl.SSLException ||
                                            ex is Javax.Net.Ssl.SSLHandshakeException ||
                                            ex is System.Threading.Tasks.TaskCanceledException)
                 {
-                    await Task.FromResult(lista);
+                    //SE RETORNA LA LISTA NULA
+                    return await Task.FromResult(lista);
                 }
             }
 

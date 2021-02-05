@@ -17,10 +17,10 @@ namespace MTTO_App.Paginas
         //==========================================================================
         //==========================================================================
         //OBJETOS DE LA PAGINA:
-        private Personas Persona; private Usuarios Usuario;
+        private Personas Persona; 
+        private Usuarios Usuario;
 
-        //LISTA QUE ALMACENARA TODOS LOS OBJETOS PERSONAS
-        //QUE SON OBTENIDOS LUEGO DE REALIZAR LA BUSQUEDA
+        //LISTA QUE ALMACENARA TODOS LOS OBJETOS ItemsTablero QUE SON OBTENIDOS LUEGO DE REALIZAR LA BUSQUEDA
         private List<ItemTablero> Items;
 
         //SE CREAN LAS CONSTANTES
@@ -48,11 +48,14 @@ namespace MTTO_App.Paginas
             //===================================================================
             //SE GENERA EL ENLACE CON LA CLASE VIEWMODEL DE LA PAGINA
             BindingContext = DatosPagina = new RegistroTableroViewModel(Persona, Usuario, true);
-            CODIGO.IsVisible = ActivityIndicator.IsVisible = ActivityIndicator.IsRunning = false;
-
-            listViewItems.ItemsSource = null;
-            Items = new List<ItemTablero>();
-            FrameItemsTablero.IsVisible = listViewItems.IsVisible = false;
+            //INICIALIZAMOS LOS OBJETOS DE LA PAGINA
+            CODIGO.IsVisible =                      //=> VISIBILIDAD DEL FRAME QUE CONTENDRA EL OBJETO QUE REPRESENTARA EL CODIGO QR 
+            ActivityIndicator.IsVisible =           //=> VISIBILIDAD DEL ACTIVITY INDICATOR
+            ActivityIndicator.IsRunning = false;    //=> ACTIVIDAD DEL ACTIVITY INDICATOR
+            listViewItems.ItemsSource = null;       //=> SE VUELVE NULA LA LISTA DE ITEMS
+            Items = new List<ItemTablero>();        //=> SE INICIALIZA EL OBJETO QUE TENDRA LA LISTA DE ITEMS DE TABLERO
+            FrameItemsTablero.IsVisible =           //=> SE VUELVE INVISIBLE EL FRAME QUE CONTENDRA LA SECCION DE ITEMS 
+                listViewItems.IsVisible = false;    //=> SE VUELVE INVISIBLE LA LISTA DE ITEMS
         }
 
         //==========================================================================
@@ -153,8 +156,7 @@ namespace MTTO_App.Paginas
                 if (!string.IsNullOrEmpty(respuesta))
                 {
                     //SE MUESTRA POR MENSAJE DE CONSOLA Y DE ALERTA LA RESPUESTA OBTENIDA POR EL METODO REGISTRO TABLERO
-                    Mensaje(respuesta);
-                    Toast.MakeText(Android.App.Application.Context, respuesta, ToastLength.Short).Show();
+                    DatosPagina.MensajePantalla(respuesta);
 
                     //EVALUAMOS SI LA RESPUESTA OBTENIDA ES DE REGISRO EXITOSO 
                     if (respuesta.ToLower() == "registro exitoso")
@@ -181,7 +183,7 @@ namespace MTTO_App.Paginas
         //==========================================================================
         //==========================================================================
         //FUNCION PARA AÑADIR ITEMS A LA LISTA DE ITEMS DEL TABLERO
-        private async void AddItem(object sender, EventArgs e)
+        private void AddItem(object sender, EventArgs e)
         {
             //SE VERIFICAN QUE LOS CAMPOS DEL NUEVO ITEM A REGISTRAR NO SE
             //ENCUENTREN VACIOS
@@ -203,13 +205,10 @@ namespace MTTO_App.Paginas
                 listViewItems.IsVisible = true;
                 entryDescripcion.Text = entryCantidad.Text = string.Empty;
             }
-            else
+            else //=> false => ALGUNA, O AMBAS, E LAS PROPIEDADES EVALUADAS EN EL CONDICIONAL SUPERIOR SE ENCUENTRA VACIA
             {
-                if (string.IsNullOrEmpty(entryDescripcion.Text))
-                    await DisplayAlert("Mensaje", "El campo Descripción no puede estar vacio", DatosPagina.OkText);
-
-                if (string.IsNullOrEmpty(entryCantidad.Text))
-                    await DisplayAlert("Mensaje", "El campo Cantidad no puede estar vacio", DatosPagina.OkText);
+                //SE NOTIFICA POR PANTALLA AL USUARIO CUAL DE LAS DOS PROPIEDADES SE ENCUENTRA VACIA
+                DatosPagina.MensajePantalla(DatosPagina.AddItemMessage);
             }
         }
 
@@ -222,19 +221,11 @@ namespace MTTO_App.Paginas
             if (!string.IsNullOrEmpty(DatosPagina.TableroID))
             {
                 //SE EVALUA SI SE CUMPLEN LAS CONDICIONES MINIMAS
-                if (Metodos.EspacioBlanco(DatosPagina.TableroID))
+                if (Metodos.EspacioBlanco(DatosPagina.TableroID) || //=> El ID del tablero no puede contener espacios en blanco
+                   Metodos.Caracteres(DatosPagina.TableroID))       //=> El ID del tablero no puede contener caracteres especificos.
                 {
-                    //SE MANDA A NOTIFICAR AL USUARIO
-                    Mensaje("El ID del tablero no puede contener espacios en blanco");
-                }
-                else
-                {
-                    //SE EVALUA QUE LA PROPIEDAD "TableroID" NO POSEEA LOS CARACTERES NO PERMITIDOS
-                    if (Metodos.Caracteres(DatosPagina.TableroID))
-                    {
-                        Mensaje("El ID del tablero no puede contener los siguientes caracteres:\n " +
-                            "'!', '@', '#', '$', '%', '&', '(', ')', '=', '/', '|'");
-                    }
+                    //SI ALGUNA DE LAS DOS CONDICIONES MINIMAS NO SE CUMPLEN SE LE NOTIFICA AL USUARIO
+                    DatosPagina.MensajePantalla(DatosPagina.OnUnfocusedTableroID);
                 }
             }
         }
@@ -247,22 +238,17 @@ namespace MTTO_App.Paginas
             if (!string.IsNullOrEmpty(DatosPagina.Filial))
             {
                 //SE EVALUA SI EL TEXTO INGRESADO CUMPLE CON LAS CONDICIONES MINIMAS
-                if (Metodos.Caracteres(DatosPagina.Filial))
+                if (Metodos.Caracteres(DatosPagina.Filial)) //=> true => La propiedad Filial contiene caracteres especificos
                 {
-                    Mensaje("El nombre de la filial no puede contener los siguientes caracteres:\n " +
-                            "'!', '@', '#', '$', '%', '&', '(', ')', '+', '=', '/', '|'");
+                    DatosPagina.MensajePantalla(DatosPagina.OnUnfocusedFilial);
                 }
-                else
+                else //=> false => La propiedad Filial no contiene caracteres especificos
                 {
+                    //SE VUELVEN MAYUSCULA LAS LETRAS INICIALES DE CADA PALABRA QUE FORMA EL TEXTO 
                     DatosPagina.Filial = Metodos.Mayuscula(DatosPagina.Filial);
                 }
             }
         }
-
-        //===========================================================================
-        //===========================================================================
-        //FUNCION QUE SE ACTIVA CUANDO SE DEJE DE ENFOCAR LA ENTRADA "pickerFilial"
-        //private void OnUnfocusedFilial(object sender, FocusEventArgs e){}
 
         //===========================================================================
         //===========================================================================
@@ -273,13 +259,13 @@ namespace MTTO_App.Paginas
             if (!string.IsNullOrEmpty(DatosPagina.Area))
             {
                 //SE EVALUA SI EL TEXTO INGRESADO CUMPLE CON LAS CONDICIONES MINIMAS
-                if (Metodos.Caracteres(DatosPagina.Area))
+                if (Metodos.Caracteres(DatosPagina.Area)) //=> true => La propiedad Area contiene caracteres especificos
                 {
-                    Mensaje("El nombre del area no puede contener los siguientes caracteres:\n " +
-                            "'!', '@', '#', '$', '%', '&', '(', ')', '+', '=', '/', '|'");
+                    DatosPagina.MensajePantalla(DatosPagina.OnUnfocusedArea);
                 }
-                else
+                else //=> false => La propiedad Area no contiene caracteres especificos
                 {
+                    //SE VUELVEN MAYUSCULA LAS LETRAS INICIALES DE CADA PALABRA QUE FORMA EL TEXTO 
                     DatosPagina.Area = Metodos.Mayuscula(DatosPagina.Area);
                 }
             }
@@ -287,23 +273,7 @@ namespace MTTO_App.Paginas
 
         //==========================================================================
         //==========================================================================
-        //FUNCION QUE SE ACTIVA CUANDO SE NECESITA MOSTRAR UN MENSAJE
-        //AL USUARIO QUE SE ENCUENTRE LOGGEADO
-        private async void Mensaje(string Mensaje)
-        {
-            await DisplayAlert("Alerta", Mensaje, DatosPagina.OkText);
-
-            Console.WriteLine("\n\n=============================================");
-            Console.WriteLine("=============================================");
-            Console.WriteLine("\n" + Mensaje.ToUpper());
-            Console.WriteLine("=============================================");
-            Console.WriteLine("=============================================\n\n");
-        }
-
-        //==========================================================================
-        //==========================================================================
         //FUNCION PARA LLAMAR A LA PAGINA DE INFORMACION
-
         [Obsolete]
         private async void OnInfoClicked(object sender, EventArgs e)
         {
