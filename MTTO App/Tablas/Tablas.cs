@@ -42,9 +42,9 @@ namespace MTTO_App
 
         //======================================================================================================
         //======================================================================================================
-        //FUNCIONES QUE RETORNAN UN OBJETO DE TIPO PERSONA
+        //FUNCION QUE AL SER LLAMADA PERMITE LLENAR TODOS LOS ATRIBUTOS DE UN OBJETO PERSONA
 
-        public Personas NewPersona(Personas persona)    //=> SE PARA UN OBJETO DE TIPO PERSONA COMO PARAMETRO
+        public Personas NewPersona(Personas persona)
         {
             return new Personas()
             {
@@ -59,14 +59,8 @@ namespace MTTO_App
             };
         }
 
-        public Personas NewPersona(DateTime fechacreacion,  //=> SE ENVIA CADA UNA DE LAS PROPIEDADES COMO PARAMETRO
-                                   string nombres,
-                                   string apellidos,
-                                   string cedula,
-                                   string numeroficha,
-                                   DateTime fechanacimiento,
-                                   string telefono,
-                                   string correo)
+        public Personas NewPersona(DateTime fechacreacion, string nombres, string apellidos, string cedula, string numeroficha,
+            DateTime fechanacimiento, string telefono, string correo)
         {
             return new Personas()
             {
@@ -143,6 +137,10 @@ namespace MTTO_App
 
             return DefaultPersonas;
         }
+
+        //======================================================================================================
+        //======================================================================================================
+        //FUNCION PARA RETORNAR LOS NIVELES DE USUARIOS
     }
 
     //======================================================================================================
@@ -259,11 +257,8 @@ namespace MTTO_App
         //======================================================================================================
         //======================================================================================================
         //FUNCION PARA RETORNAR LOS NIVELES DE USUARIOS
-        //NOTA: FUNCION USADA PARA RETORNAR LA LISTA DE NIVELES DE USUARIO PARA EL Picker "nivelusuariosPicker"
-        //USADO EN LA PAGINA "PaginaRegistro"
         public List<string> NivelUsuarioLista()
         {
-            //SE RETORNA UNA LISTA DE CADENAS DE TEXTO
             return new List<string>()
             {
                 "Nivel bajo (0)",

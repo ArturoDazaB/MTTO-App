@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.Http;
 
 namespace MTTO_App
 {
@@ -7,10 +8,10 @@ namespace MTTO_App
     //QUE LA APLICACION UTILIZA EN TODO EL CODIGO
     public class Metodos
     {
-        //===============================================================================
-        //===============================================================================
-        //Convertir la iniciar de cada que conforme una cadena de caracteres
-        //en mayuscula
+        //================================================================================================================
+        //================================================================================================================
+        //FUNCION ENCARGADA DE CONVERTIR EN MAYUSCULA LA INICIAL DE LAS PALABRAS QUE CONFORMAN UN TEXTO
+        //NOTA: POR LOS MOMENTOS EL METODO REALIZA LA CONVERSION CUANDO EL TEXTO ENVIADO POSEE UN MAXIMO DE 3 PALABRAS
         public static string Mayuscula(string word)
         {
             //Se hace un llamado a la funcion Mayuscula almacenada en la clase Metodos
@@ -20,15 +21,15 @@ namespace MTTO_App
             //de caracteres los transforma en minisculas.
 
             //SE CREAN E INICIALIZAN LAS VARIABLES LOCALES DEL METODO
-            int cuantosespaciosblanco = 0;
-            int cont = 0;
-            bool flag = false;
-            string resultado = string.Empty;
-            string primero = string.Empty,
-                   segundo = string.Empty,
-                   tercero = string.Empty;
-            char[] first = null,
-                   second = null;
+            int cuantosespaciosblanco = 0;  //=> VARIABLE QUE IDENTIFICA CUANTOS ESPACIOS EN BLANCO EXISTEN EN LA CADENA DE TEXTO
+            int cont = 0;                   //=> VARIABLE QUE CUENTA CUANTOS ESPACIOS EN BLANCO EXISTEN EN LA CADENA DE TEXTOS ENVIADA
+            bool flag = false;              //=> VARIABLE QUE FUNCIONA COMO BANDERA Y SE DISPARA (TRUE) CUANDO SE DETECTE AL MENOS UN ESPACIO EN BLANCO
+            string resultado = string.Empty;    //=> VARIABLE CADENA DE TEXTO QUE RETORNARA LA CADENA DE TEXTO CON LAS INICIALES DE CADA PALABRA EN MAYUSCULA
+            string primero = string.Empty,      //=> VARIABLE CADENA DE TEXTO QUE RECIBIRA LA PRIMERA PALABRA DE LA CADENA DE TEXTO
+                   segundo = string.Empty,      //=> VARIABLE CADENA DE TEXTO QUE RECIBIRA LA SEGUNDA PALABRA DE LA CADENA DE TEXTO
+                   tercero = string.Empty;      //=> VARIABLE CADENA DE TEXTO QUE RECIBIRA LA TERCERA PALABRA DE LA CADENA DE TEXTO
+            char[] first = null,            //=> VARIABLE VECTOR DE CARACTERES QUE DESCOMPONDRA LA PRIMERA PALABRA DE LA CADENA DE TEXTO EN UN VECTOR DE CARACTERES
+                   second = null;           //=> VARIABLE VECTOR DE CARACTERES QUE DESCOMPONDRA LA PRIMERA PALABRA DE LA CADENA DE TEXTO EN UN VECTOR DE CARACTERES
 
             //SE RECORRE LA VARIABLE STRING QUE ES ENVIADA COMO PARAMETROS PARA IDENTIFICAR CUANTOS CARACTERS EN BLANCO EXISTEN
             //ESTO LO LOGRAMOS HACIENDO LLAMADO DEL METODO LOCAL "CuantosEspaciosBlanco"
@@ -143,8 +144,8 @@ namespace MTTO_App
             return resultado;
         }
 
-        //===============================================================================
-        //===============================================================================
+        //================================================================================================================
+        //================================================================================================================
         //Busqueda de espacios en blanco
         //FUNCION CREADA PARA VERIFICAR QUE CADENAS DE TEXTO NO TENGAN ESPACIOS EN BLANCO (' ' o " ")
         public static bool EspacioBlanco(string word)
@@ -175,9 +176,9 @@ namespace MTTO_App
             return flag;
         }
 
-        //===============================================================================
-        //===============================================================================
-        //Conteo de cantidad de espacios en blanco en una variable String
+        //================================================================================================================
+        //================================================================================================================
+        //FUNCION QUE CUENTA Y RETORNA LA CANTIDAD DE ESPACIOS EN BLANCO EXISTENTES EN UN TEXTO
         public static int CuantosEspaciosBlanco(string word)
         {
             //SE CREA E INICIALIZA LA VARIABLE LOCAL QUE FUNCIONARA COMO CONTADOR
@@ -203,8 +204,8 @@ namespace MTTO_App
             return cont;
         }
 
-        //===============================================================================
-        //===============================================================================
+        //================================================================================================================
+        //================================================================================================================
         //METODO QUE VERIFICA CUANDO EXISTE ALGUN CARACTER NO DESEADO
         public static bool Caracteres(string word)
         {
@@ -230,6 +231,34 @@ namespace MTTO_App
                         //SE DETIENE EL PROCESO DE BUSQUEDA DE CARACTERES
                         break;
                     }
+
+                    //----------------------------------------------------------------------------------------------------
+                    //----------------------------------------------------------------------------------------------------
+                    /*
+                    //SE EVALUA SI EL CARACTER EN EL QUE SE ENCUENTRA AL MOMENTO DEL RECORRIDO ES ALGUNO DE LOS CARACTERES
+                    //PROHIBIDOS.
+
+                    //INICIO DEL SEGUNDO CICLO
+                    for (int j = 0; j < App.ForbidenCharactersArray.Length; j++)
+                    { 
+                        //EVALUAMOS SI LA LETRA INSPECCIONADA EN EL PRIMER CICLO ES UN CARACTER PROHIBIDO DESCRITO EN EL 
+                        //VECTOR "ForbidenCharactersArray".
+                        if(word[i] == App.ForbidenCharactersArray[j])
+                        {
+                            //DE SER UN CARACTER NO PERMITIDO SE DISPARA LA BANDERA
+                            flag = true;
+                            //SE DETIENE EL RECORRIDO DEL SEGUNDO CICLO 
+                            break;
+                        }
+                    }
+
+                    //SI LA BANDERA SE DISPARO (TRUE) SE DETIENE EL RECORRIDO DEL PRIMER CICLO
+                    if (flag)
+                        break;
+
+                    */
+                    //----------------------------------------------------------------------------------------------------
+                    //----------------------------------------------------------------------------------------------------
                 }
             }
 
@@ -475,5 +504,20 @@ namespace MTTO_App
             Console.WriteLine("==============================================================");
             Console.WriteLine("==============================================================\n\n");
         }
+
+        //===============================================================================
+        //===============================================================================
+        
+
     }
+
+    /*
+    public class HttpClientHandler
+    {
+        public HttpClientHandler GetInsecureHandler()
+        {
+
+        }
+    }
+    */
 }
