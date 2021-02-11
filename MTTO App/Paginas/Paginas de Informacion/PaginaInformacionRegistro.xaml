@@ -78,7 +78,7 @@
                               un registro que contenga un nombre de usuario similar se vuelve a generar 
                               el nombre bajo el siguiente formato: 
                     
-                                       -Username = Inicial Primer Nombre + Inicial Segundo Nombre + Apellido
+                                       - Username = Inicial Primer Nombre + Inicial Segundo Nombre + Apellido
                 
                            5) El nivel de usuario es definido en la seccion de Datos de Usuario. Existen tres (3) niveles 
                               jerarquizados en una escala del uno (1) al diez (10): 
@@ -327,7 +327,7 @@
                                 <ColumnDefinition Width = "auto" />
                             </Grid.ColumnDefinitions>
 
-                            <Label  Text="       -Username = Inicial Primer Nombre + Inicial Segundo Nombre + Apellido"
+                            <Label  Text="       - Username = Inicial Primer Nombre + Inicial Segundo Nombre + Apellido"
                                     FontSize="{Binding LabelFontSize}"
                                     FontAttributes="Bold"
                                     TextColor="Black"

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net.Http;
 
 namespace MTTO_App
 {
@@ -476,20 +475,5 @@ namespace MTTO_App
             Console.WriteLine("==============================================================");
             Console.WriteLine("==============================================================\n\n");
         }
-
-        //===============================================================================
-        //===============================================================================
-        
-
     }
-
-    /*
-    public class HttpClientHandler
-    {
-        public HttpClientHandler GetInsecureHandler()
-        {
-
-        }
-    }
-    */
 }

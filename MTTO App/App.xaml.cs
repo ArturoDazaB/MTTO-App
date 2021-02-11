@@ -3,17 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Net;
-using System.Threading.Tasks;
 using Xamarin.Forms;
-
-using Xamarin.Essentials;
 
 namespace MTTO_App
 {
     public partial class App : Application
     {
-        //VARIABLE QUE ALMACENARA EL NOMBRE DEL ARCHIVO QUE TENDRA LA BASE DE DATOS 
+        //VARIABLE QUE ALMACENARA EL NOMBRE DEL ARCHIVO QUE TENDRA LA BASE DE DATOS
         //LOCAL QUE MANEJARA LA APLICACION CUANDO SE ENCUENTRE FUNCIONANDO STAND ALONE
         public static string FileName;
 
@@ -28,6 +24,7 @@ namespace MTTO_App
 
         //SI SE REALIZA ALGUN NUEVO REGISTRO DE USUARIO SE ACTIVA LA BANDERA
         public static bool RegistroFlag;
+
         //===============================================================================================
         //===============================================================================================
         //CONSTANTES QUE SERAN LLAMADOS EN LOS DISTINTOS "VIEWMODEL" EMPLEADOS PARA CADA PAGINA
@@ -52,6 +49,7 @@ namespace MTTO_App
 
         //COLOR DEL FONDO (PAGINAS DE INFORMACION)
         public const string BackGroundColorPopUp = "#FFFDE7";
+
         //COLOR DEL MARCO (PAGINAS DE INFORMACION)
         public const string FrameColorPopUp = "#000000";
 
@@ -59,36 +57,30 @@ namespace MTTO_App
         public const string ButtonColor = "#E53935";
 
         //DIRECCION URL BASE PARA LAS SOLICITUDES HTTP
-        public const string BaseUrl = "https://192.168.1.99:8000/mttoapp";
-        //public const string BaseUrl = "https://192.168.0.120:8000/mttoapp";
+        public const string BaseUrl = "https://192.168.1.99:8001/mttoapp";      //=> DIRECCION IP OFICINA DIGITALIZACION INDUSTRIAL
+
+        //public const string BaseUrl = "https://192.168.0.120:8000/mttoapp";   //=> DIRECCION IP OFICINA SERARCA
         //public const string BaseUrl = "https://10.10.4.154:8000/mttoapp";
-
-        /*public string BaseUrl 
-        {
-            get
-            {
-                var ipadress = Dns.GetHostAddresses(Dns.GetHostName()).FirstOrDefault();
-
-                if(ipadress == )
-            }
-        }*/
 
         //TIEMPO DE ESPERA CUANDO SE REALIZA UNA SOLICITUD HTTP
         public const int TimeInSeconds = 5;
 
-        //TEXTO INFORMATIVO QUE USADO PARA INDICAR QUE EL DISPOSITIVO NO POSEE ACCESO A INTERNET 
+        //TEXTO INFORMATIVO QUE USADO PARA INDICAR QUE EL DISPOSITIVO NO POSEE ACCESO A INTERNET
         public const string NoNetworkAccessMessage = "Sin Acceso a Internet Enciende el WIFI o la Red Movil para poder acceder";
+
         //DIRECCION IP DEL DISPOSITIVO
         public static string IPAddress { get { return DependencyService.Get<MTTO_App.Servicios.IIPAddressManager>().GetIPAddress(); } }
 
         //TEXTO USADO PARA AFIRMAR (PROCEDER)
         public const string AffirmativeText = "Si";
+
         //TEXTO USADO PARA NEGAR (DENEGAR)
         public const string NegativeText = "No";
+
         //TEXTO USADO PARA AFIRMAR (ENTENDIDO)
         public const string OkText = "Entendido";
 
-        public const string ForbiddenCharacters = "'!', '@', '#', '$', '%', '&', '(', ')', '+', '=', '/', '|'";
+        public const string ForbiddenCharacters = " ! ,  @ ,  # ,  $ ,  % ,  & ,  ( ,  ) ,  + ,  = ,  / ,  | ";
         //-----------------------------------------------------------------------------------------------
 
         //===============================================================================================
@@ -113,12 +105,12 @@ namespace MTTO_App
 
         //===============================================================================================
         //===============================================================================================
-        //CONSTRUCTOR DE LA CLASE (EXISTEN DOS METODOS CONTRUCTORES, CON LA DIFERENCIA DE QUE UNO DE ELLOS 
-        //REQUIERE QUE SEA ENVIADO UN PARAMETRO QUE LLEVA POR NOMBRE "filename" (PARAMETRO QUE LLEVARA EL 
-        //NOMBRE DE ARCHIVO CON EL  CUAL SE IDENTIFICARA LA BASE DE DATOS LOCAL Sqlite QUE UTILIZA LA 
+        //CONSTRUCTOR DE LA CLASE (EXISTEN DOS METODOS CONTRUCTORES, CON LA DIFERENCIA DE QUE UNO DE ELLOS
+        //REQUIERE QUE SEA ENVIADO UN PARAMETRO QUE LLEVA POR NOMBRE "filename" (PARAMETRO QUE LLEVARA EL
+        //NOMBRE DE ARCHIVO CON EL  CUAL SE IDENTIFICARA LA BASE DE DATOS LOCAL Sqlite QUE UTILIZA LA
         //APLICACION CUANDO SE ENCUENTRA FUNCIONANDO STAND ALONE)
         //-----------------------------------------------------------------------------------------------
-        //NOTA: ESTE METODO CONSTRUCTOR ES LLAMADO EN LAS CLASES "MainActivity" Y "AppDelegate" DE LOS 
+        //NOTA: ESTE METODO CONSTRUCTOR ES LLAMADO EN LAS CLASES "MainActivity" Y "AppDelegate" DE LOS
         //PROYECTOS MTTO_App.Android Y MTTO_App.iOS RESPECTIVAMENTE
         //-----------------------------------------------------------------------------------------------
         public App(string fileName)

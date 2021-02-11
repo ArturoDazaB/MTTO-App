@@ -4,12 +4,12 @@ namespace MTTO_App
 {
     public class OpcionesModel
     {
-
         //============================================================================================================
         //============================================================================================================
         //PROPIEDADES
         //NOMBRE DE LA OPCION
         public string NombreOpcion { get; private set; }
+
         //ICONO DE LA OPCION
         public string IconFileName { get; private set; }
 
@@ -25,8 +25,8 @@ namespace MTTO_App
         public List<OpcionesModel> OpcionesNivelAlto()
         {
             //------------------------------------------------------------------------------------
-            /*NOTA: LISTA DE OPCIONES DISPONIBLES PARA NAVEGAR DENTRO DE LA APLICACION A USUARIOS 
-             *DE ALTO NIVEL. EJ: USUARIOS QUE PUEDEN CREAR Y CONSULTAR TABLEROS; CREAR, CONSULTAR 
+            /*NOTA: LISTA DE OPCIONES DISPONIBLES PARA NAVEGAR DENTRO DE LA APLICACION A USUARIOS
+             *DE ALTO NIVEL. EJ: USUARIOS QUE PUEDEN CREAR Y CONSULTAR TABLEROS; CREAR, CONSULTAR
              Y MODIFICAR USUARIOS*/
             //------------------------------------------------------------------------------------
             //SE CREA E INICIALIZA UNA LISTA DE OBJETOS DE TIPO "OpcionesModel" (LISTA DE OPCIONES)
@@ -72,7 +72,7 @@ namespace MTTO_App
         public List<OpcionesModel> OpcionesNivelBajo()
         {
             //------------------------------------------------------------------------------------
-            /*NOTA: LISTA DE OPCIONES DISPONIBLES PARA NAVEGAR DENTRO DE LA APLICACION A USUARIOS 
+            /*NOTA: LISTA DE OPCIONES DISPONIBLES PARA NAVEGAR DENTRO DE LA APLICACION A USUARIOS
              *DE BAJO NIVEL. EJ: USUARIOS QUE SOLO TIENEN PERMITIDA LA CONSULTA Y MODIFICACION
               DE DATOS PERSONALES*/
             //------------------------------------------------------------------------------------
@@ -107,7 +107,7 @@ namespace MTTO_App
         public List<OpcionesModel> OpcionesNivelMedio()
         {
             //------------------------------------------------------------------------------------
-            /*NOTA: LISTA DE OPCIONES DISPONIBLES PARA NAVEGAR DENTRO DE LA APLICACION A USUARIOS 
+            /*NOTA: LISTA DE OPCIONES DISPONIBLES PARA NAVEGAR DENTRO DE LA APLICACION A USUARIOS
              *DE MEDIO NIVEL. EJ: USUARIOS ASIGNADOS A SUPERVISORES O GERENTES(?), PERMITIENDO
              *EL REGISTRO DE NUEVOS USUARIOS DENTRO DE LA PLATAFORMA, Y CONSULTA DE TABLEROS*/
             //------------------------------------------------------------------------------------

@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using System.Net.Http;
 using Xamarin.Essentials;
 using System.Net.Http.Headers;
+using Android.Widget;
 
 namespace MTTO_App.ViewModel
 {
@@ -227,7 +228,7 @@ namespace MTTO_App.ViewModel
                     //SE MANDA A IMPRIMIR POR CONSOLA EL ERROR OBTENIDO (EJECUTADO SOLO CUANDO SE DEPURA EL PROYECTO)
                     ConsoleWriteline("\nOcurrio un error => \n\n" + ex.Message.ToString());
                     //SE NOTIFICA AL USUARIO QUE NO SE PUDO REALIZAR LA SOLICITUD WEB.
-                    result = "\nProblemas de conexion con el servidor";
+                    result = "Problemas de conexion con el servidor\nIntentelo más tarde";
                     //PUESTO QUE NO SE OBTUVO EL CODIGO 200 OK RETORNAREMOS NULL COMO RESPUESTA AL LLAMADO DEL METODO
                     return null;
                 }
