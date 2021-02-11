@@ -8,8 +8,7 @@
 
         //============================================================================================================
         //CREACION E INICIALIZACION DE VARIABLES LOCALES
-        private string SourceOfCalling = string.Empty;  //=> VARIABLE UTILIZADA PARA IDENTIFICAR DESDE QUE PAGINA DE
-
+        private string SourceOfCalling = string.Empty;  //=> VARIABLE UTILIZADA PARA IDENTIFICAR DESDE QUE PAGINA DE 
                                                         // CONFIGURACION ("PaginaConfiguracion" y "PaginaConfiguracionAdmin")
 
         //============================================================================================================
@@ -17,13 +16,11 @@
         //PROPIEDADES DE LA CLASE
         //-----------------------------------------TAMAÑO DE LA FUENTE------------------------------------------------
         public int HeaderFontSize { get { return App.HeaderFontSize; } } //=> TAMAÑO DE TEXTO PARA TITULOS
-
         public int EntryFontSize { get { return App.EntryFontSize; } } //=> TAMAÑO DE TEXTO PARA ENTRADAS
         public int LabelFontSize { get { return App.LabelFontSize; } } //=> TAMAÑO DE TEXTO PARA ETIQUETAS Y SUBTITULOS
 
         //--------------------------------------------COLOR DE FONDO--------------------------------------------------
         public string BackGroundColor { get { return App.BackGroundColorPopUp; } } //=> COLOR DE FONDO PAGINAS INFORMACION (POP-UP)
-
         public string FrameColor { get { return App.FrameColorPopUp; } } //=> COLOR PARA EL MARCO DE LAS PAGINAS INFORMACION (POP-UP)
 
         //-----------------------------------------------IMAGENES-----------------------------------------------------
@@ -33,7 +30,7 @@
             //Cerrar ventana icon by a target="_blank"
             //href "https://iconos8.es"*/
 
-            get { return "Cerrar24px2.png"; }
+            get { return "Cerrar24px2.png"; } 
         }
 
         //------------------------------------------TEXTOS DINAMICOS--------------------------------------------------
@@ -57,7 +54,6 @@
                     //EVALUAMOS LA INFORMACION CONTENIDA EN "SourceOfCalling"
                     switch (SourceOfCalling.ToUpper())
                     {
-                        //-----------------------------------------------------------------------------------------------------------
                         //"CONFIGURACION" => "PaginaInformacionConfiguracion" INVOCADA DESDE LA CLASE "PaginaConfiguacion"
                         case "CONFIGURACION":
                             //EN LA PAGINA "PaginaConfiguracion" EL USUARIO QUE SE ENCUENTRE LOGEADO SOLO PODRA MODIFICAR
@@ -66,7 +62,6 @@
                                     "       -Correo electronico.\n" +
                                     "       -Contraseña.";
                             break;
-                        //-----------------------------------------------------------------------------------------------------------
                         //"CONFIGURACION" => "PaginaInformacionConfiguracion" INVOCADA DESDE LA CLASE "PaginaConfiguacionAdmin"
                         case "CONFIGURACIONADMIN":
                             //EN LA PAGINA "PaginaConfiguracionAdmin" EL USUARIO (ACTUALMENTE ADMINISTRATOR) PODRA MODIFICAR
@@ -97,11 +92,11 @@
             //Y LA CLASE "PaginaInformacionViewModel.cs". ESTA INVOCACION SE REALIZA EN LA CLASE DE DISEÑO "PaginaQueryAdmin.xaml"
             //-----------------------------------------------------------------------------------------------------------------
             get
-            {
+            {   
                 return "       -Consulta por ID (Cedula)\n" +
-                       "       -Consulta por Ficha\n" +
-                       "       -Consulta por Nombre(s)\n" +
-                       "       -Consulta por Apellido(s)\n" +
+                       "       -Consulta por Ficha\n"+
+                       "       -Consulta por Nombre(s)\n"+
+                       "       -Consulta por Apellido(s)\n"+
                        "       -Consulta por Usuario";
             }
         }
@@ -110,11 +105,11 @@
         public string ListaUltimasModificaciones
         {
             //EN ESTA PROPIEDAD SE RETORNA UN TEXTO EN FORMA DE "Lista" DE LOS CAMPOS QUE SE REGISTRARAN EN LA TABLA
-            //"ModificacionesUsuarios" CADA QUE SE GENERE UNA MODIFICACION A LA INFORMACION DE UN USUARIO (MISMA
+            //"ModificacionesUsuarios" CADA QUE SE GENERE UNA MODIFICACION A LA INFORMACION DE UN USUARIO (MISMA 
             //LISTA PARA LAS PAGINAS "PaginaConfiguracionAdmin" Y "PaginaConfiguracion".
             //-----------------------------------------------------------------------------------------------------------------
-            //NOTA: PROPIEDAD QUE ES INVOCADA MEDIANTE UN ENLACE (Binding) HECHO ENTRE LAS CLASES "PaginaConfiguracion.xaml.cs"
-            //Y "PaginaConfiguracionAdmin.xaml.cs" Y LA CLASE "PaginaInformacionViewModel.cs". ESTA INVOCACION SE REALIZA EN LA
+            //NOTA: PROPIEDAD QUE ES INVOCADA MEDIANTE UN ENLACE (Binding) HECHO ENTRE LAS CLASES "PaginaConfiguracion.xaml.cs" 
+            //Y "PaginaConfiguracionAdmin.xaml.cs" Y LA CLASE "PaginaInformacionViewModel.cs". ESTA INVOCACION SE REALIZA EN LA 
             //CLASE DE DISEÑO "PaginaQueryAdmin.xaml".
             //-----------------------------------------------------------------------------------------------------------------
             get
@@ -144,7 +139,7 @@
 
         //PROPIEDAD QUE RETORNA EN UN TEXTO LAS OPCIONES DE METODO DE CONSULTA DE TABLEROS
         public string ListaOpcionesEscaneo
-        {
+        {   
             //EN ESTA PROPIEDAD SE RETORNA UN TEXTO EN FORMA DE "Lista" LAS OPCIONES DE CONSULTA PARA CONSULTAR TABLEROS
             //-----------------------------------------------------------------------------------------------------------------
             //NOTA: PROPIEDAD QUE ES INVOCADA MEDIANTE UN ENLACE (Binding) HECHO ENTRE LA CLASE "PaginaConsultaTablero.xaml.cs" Y LA
@@ -163,7 +158,7 @@
             //EN ESTA PROPIEDAD SE RETORNA UN TEXTO EN FORMA DE "Lista" LA INFORMACION DEL TABLERO QUE SERA DESPLEGADA
             //-----------------------------------------------------------------------------------------------------------------
             //NOTA: PROPIEDAD QUE ES INVOCADA MEDIANTE UN ENLACE (Binding) HECHO ENTRE LA CLASE "PaginaConsultaTablero.xaml.cs"
-            //Y LA CLASE "PaginaInformacionViewModel.cs". ESTA INVOCACION SE REALIZA EN LA CLASE DE DISEÑO
+            //Y LA CLASE "PaginaInformacionViewModel.cs". ESTA INVOCACION SE REALIZA EN LA CLASE DE DISEÑO 
             //"PaginaConsultaTablero.xaml"
             //-----------------------------------------------------------------------------------------------------------------
             get
@@ -172,7 +167,7 @@
                        "       -Filial (filial a la que pertenece).\n" +
                        "       -Area (area/zona de la filial).\n" +
                        "       -Ultima consulta del tablero (fecha).\n" +
-                       "       -Items del tablero (lista).\n" +
+                       "       -Items del tablero (lista).\n"+
                        "       -Codigo QR asignado al tablero (imagen).";
             }
         }
