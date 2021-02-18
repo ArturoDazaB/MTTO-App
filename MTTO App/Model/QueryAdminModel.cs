@@ -20,7 +20,14 @@ namespace MTTO_App
                 (new QueryAdminModel()
                 {
                     Titulo = "Busqueda",
-                    Opciones = new List<string>() { "ID", "Numero de Ficha", "Nombre", "Apellido", "Usuario", },
+                    Opciones = new List<string>() 
+                    { 
+                        "ID",               //=> OPCION CONSULTA POR ID
+                        "Numero de Ficha",  //=> OPCION CONSULTA POR NUMERO DE FICHA
+                        "Nombre",           //=> OPCION CONSULTA POR NOMBRE
+                        "Apellido",         //=> OPCION CONSULTA POR APELLIDOS
+                        "Usuario",          //=> OPCION CONSULTA POR NOMBRE DE USUARIO
+                    },
                 });
 
             //SE RETORNA LA LISTA
